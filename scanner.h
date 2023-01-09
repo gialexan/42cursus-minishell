@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:41 by gialexan          #+#    #+#             */
-/*   Updated: 2023/01/09 14:44:51 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/01/09 14:52:21 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,11 @@ typedef enum s_tk_type
 	TK_DLESS,
 	TK_DGREAT,
 }	t_tk_type;
+
+typedef struct s_token
+{
+	t_tk_type	token;
+	char		*lexema;
+	int			size;
+}	t_token;
 #endif
