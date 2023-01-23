@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:41 by gialexan          #+#    #+#             */
-/*   Updated: 2023/01/23 19:37:06 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:38:43 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # include <string.h>
 # include <string.h>
 # include <unistd.h>
+
+
+# define TRUE 1
+# define FALSE 0
 
 typedef enum s_tk_type
 {
@@ -38,9 +42,9 @@ typedef struct s_token
 
 typedef struct	s_scanner
 {
-	int		start;
 	int		curr;
-	t_token	token;
+	int		start;
+	const char	*cmd;
 }	t_scanner;
 
 #endif
