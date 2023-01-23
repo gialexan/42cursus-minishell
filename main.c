@@ -6,35 +6,52 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/01/09 19:39:53 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/01/23 19:44:40 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scanner.h"
 
 
-
-char	advance(t_scanner *scan)
-{
-	scan->index++;
-	return (scan->start[scan->index - 1]);
-}
-
 int	main(void)
 {
-	t_scanner scanner;
+	t_scanner scan;
 
-	char *cmdline = ">>def";
+	char *cmdline = "<||||<<|||||||>";
+	t_token token;
+
+	int i = -1;
 	
-	scanner.index = 0;
-	scanner.start = cmdline;
-	
-	while(cmdline[scanner.index])
+	char *tmp1;
+	tmp1 = malloc(10 * sizeof(char));
+
+	scan.start = 0;
+	scan.curr = -1;
+	while (cmdline[++scan.curr] != '\0')
 	{
-		char c = advance(&scanner);
-		printf("%c\n", c);
+		tmp1 = malloc(10 * sizeof(char));
+		scan.start = scan.curr;
+		if (cmdline[scan.curr] == '<')
+		{
+			scan.curr++;
+			if (cmdline[scan.curr] == '<')
+			{
+				scan.curr++;
+				strncat(tmp1, cmdline + scan.start, scan.curr - scan.start);
+				printf("%s\n", tmp1);
+			}
+			//strncat(tmp1, cmdline + scan.start, scan.curr - scan.start);
+		}
+		if (cmdline[scan.curr] == '>')
+		{
+			scan.curr++;
+			strncat(tmp1, cmdline + scan.start, scan.curr - scan.start);
+			printf("%s\n", tmp1);
+		}
+		free(tmp1);
 	}
 }
+
 
 
 

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:41 by gialexan          #+#    #+#             */
-/*   Updated: 2023/01/09 19:32:27 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/01/23 19:37:06 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SCANNER_H
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <string.h>
 # include <unistd.h>
 
@@ -30,15 +31,16 @@ typedef enum s_tk_type
 
 typedef struct s_token
 {
-	t_tk_type	token;
-	char		*lexema;
-	int			size;
+	t_tk_type		tk_type;
+	const char		*lexema;
+	struct s_token	*next;
 }	t_token;
 
 typedef struct	s_scanner
 {
-	char	*start;
-	int		index;
-	t_token	tk_next;
+	int		start;
+	int		curr;
+	t_token	token;
 }	t_scanner;
+
 #endif
