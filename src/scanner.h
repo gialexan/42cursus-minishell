@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:41 by gialexan          #+#    #+#             */
-/*   Updated: 2023/01/23 22:38:43 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/01/24 23:34:19 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <string.h>
 # include <string.h>
 # include <unistd.h>
+# include "../libft/libft.h"
 
 
 # define TRUE 1
