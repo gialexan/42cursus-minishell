@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/01/24 23:31:29 by gialexan         ###   ########.fr        #
+#    Updated: 2023/01/26 21:08:56 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,15 +28,12 @@ RM = 				rm -f
 
 CFLAGS = 			-Wall -Wextra -Werror
 
-CC = 				gcc
+CC = 				gcc -g
 
 all:	$(NAME)
 
 $(NAME):			$(LIBFT) $(SRC_OBJ)
 					$(CC) $(CFLAGS) $(SRC_OBJ) $(LIBFT) -o $(NAME)
-
-run:
-	./push_swap    1 3 5 2 200 10 8 30 32 50
 
 $(LIBFT):
 					$(MAKE) -C $(LIBFT_DIR)

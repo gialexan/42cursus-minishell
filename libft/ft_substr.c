@@ -6,11 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 14:54:07 by gialexan          #+#    #+#             */
-/*   Updated: 2022/06/18 16:22:31 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:31:46 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "string.h"
+#include <bsd/string.h>
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
