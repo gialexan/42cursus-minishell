@@ -6,20 +6,17 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 15:34:02 by gialexan          #+#    #+#              #
-#    Updated: 2023/01/25 01:52:45 by gialexan         ###   ########.fr        #
+#    Updated: 2023/01/27 22:05:25 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 <REDIRECTION> ::=  '>' <WORD>
                 |  '<' <WORD>
 				|  '<<' <WORD>
 				|  '>>' <WORD>
 
-<COMMAND> ::= <WORD>
+<ASSIGNMENT-WORD> ::= <WORD> '=' <WORD>
+
+<COMMAND> ::= 		<WORD>
                 |	<REDIRECTION>
 				|	<PIPELINE>
-
-
-
-ACIsbciDVIJ
