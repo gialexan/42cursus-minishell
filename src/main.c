@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/01/29 12:54:08 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/01/29 13:11:53 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,6 @@ t_token		*make_token(t_scanner *scanner, t_tk_type type)
 			scanner->curr - scanner->start);
 	token->tk_type = type;
 	return (token);
-}
-
-int	is_quote(char c)
-{
-	return (c == '\'' || c == '"');
 }
 
 t_token	*word_quote(t_scanner *scanner, char c)
@@ -95,17 +90,16 @@ t_token	*scan_token(t_scanner *scanner)
 	}
 	else
 	{
-		if (is_quote(c))
+		if (ft_isquote(c))
 			return (word_quote(scanner, c));
-		else
-			return (word(scanner));
+		return (word(scanner));
 	}
 }
 
 int	main(void)
 {
 	t_scanner scanner;
-	const char *command = "ola<<>>";
+	const char *command = "'ola'<<>>";
 
 	init_scanner(&scanner, command);
 

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:39:28 by gialexan          #+#    #+#             */
-/*   Updated: 2022/12/21 20:42:04 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/01/29 13:12:12 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 //my function
+int		ft_isquote(char c);
 void	ft_free(void **ptr);
-char	**ft_array_dup(char **array);
 void	ft_free_split(void **str);
+char	**ft_array_dup(char **array);
 #endif
