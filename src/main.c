@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/01/29 15:13:58 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/01/29 18:54:33 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,25 @@ t_token	*word(t_scanner *scanner)
 	return (make_token(scanner, TK_WORD));
 }
 
+void	skip_whitespace(t_scanner *scanner)
+{
+	while(ft_isspace(scanner->cmd[scanner->curr]))
+		advance(scanner);
+	scanner->start = scanner->curr;
+}
+
+// int	ft_isnull(int c)
+// {
+// 	return (c == 0);
+// }
+
 t_token	*scan_token(t_scanner *scanner)
 {
 	char	c;
 
+	skip_whitespace(scanner);
+	// if (ft_isnull(scanner->cmd[scanner->curr]))
+	// 	return (make_token(scanner, TK_EOF));
 	c = advance(scanner);
 	if (c == '|')
 		return(make_token(scanner, TK_PIPE));
@@ -100,15 +115,14 @@ t_token	*scan_token(t_scanner *scanner)
 int	main(void)
 {
 	t_scanner scanner;
-	const char *command = "<>>>|'oi''<<'<<<|>>>";
+	const char *command = "			<<";
 
 	init_scanner(&scanner, command);
-	while (scanner.curr < (int)ft_strlen(command)) 
+	while (scanner.curr < (int)ft_strlen(command))
 	{
 		scanner.start = scanner.curr;
 		t_token *tk = scan_token(&scanner);
-		printf("%-3d $ %s\n", tk->tk_type, tk->lexema);
-		sleep(1);
+		printf("type: %-3d <> lexema: %-3s\n", tk->tk_type, tk->lexema);
 	}
 
 	// char *test = "oi";
