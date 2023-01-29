@@ -6,11 +6,12 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/01/29 13:11:53 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/01/29 15:13:58 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scanner.h"
+#include <time.h>
 
 char	advance(t_scanner *scanner)
 {
@@ -63,7 +64,7 @@ t_token	*word(t_scanner *scanner)
 {
 	char c;
 
-	c = scanner->cmd[scanner->curr--];
+	c = scanner->cmd[--scanner->curr];
 	while (!ft_strchr(METACHARS, c))
 		c = scanner->cmd[++scanner->curr];
 	return (make_token(scanner, TK_WORD));
@@ -80,7 +81,7 @@ t_token	*scan_token(t_scanner *scanner)
 	{
 		if (match(scanner, '<'))
 			return (make_token(scanner, TK_DLESS));
-		return (make_token(scanner, TK_LESS));		
+		return (make_token(scanner, TK_LESS));	
 	}
 	if (c == '>')
 	{
@@ -99,17 +100,26 @@ t_token	*scan_token(t_scanner *scanner)
 int	main(void)
 {
 	t_scanner scanner;
-	const char *command = "'ola'<<>>";
+	const char *command = "<>>>|'oi''<<'<<<|>>>";
 
 	init_scanner(&scanner, command);
-
-	while (command[scanner.curr] != '\0') 
+	while (scanner.curr < (int)ft_strlen(command)) 
 	{
 		scanner.start = scanner.curr;
 		t_token *tk = scan_token(&scanner);
-		printf("%d | %s\n", tk->tk_type, tk->lexema);
-		scanner.start = scanner.curr;
+		printf("%-3d $ %s\n", tk->tk_type, tk->lexema);
+		sleep(1);
 	}
+
+	// char *test = "oi";
+	// char *tmp = test;
+	// printf("%s\n", tmp);
+	// tmp++;
+	// printf("%s\n", tmp);
+	// tmp++;
+	// printf("%s\n", tmp);
+	// tmp++;
+	// printf("%s\n", tmp);
 
 	// char c = advance(&scanner);
 	// char *test = NULL;
