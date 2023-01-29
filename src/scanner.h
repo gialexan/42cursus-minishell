@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:41 by gialexan          #+#    #+#             */
-/*   Updated: 2023/01/24 23:34:19 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/01/29 12:43:21 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 # define TRUE 1
 # define FALSE 0
+# define METACHARS "|()<> \t\n"
 
 typedef enum s_tk_type
 {
@@ -31,6 +32,7 @@ typedef enum s_tk_type
 	TK_LESS,
 	TK_GREAT,
 	TK_DLESS,
+	TK_ERROR,
 	TK_DGREAT,
 }	t_tk_type;
 
