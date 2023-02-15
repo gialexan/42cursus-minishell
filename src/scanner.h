@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:41 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/15 13:48:29 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:43:44 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@
 # include <unistd.h>
 # include "../libft/libft.h"
 
-# define TRUE 1
-# define FALSE 0
 # define METACHARS "|()<> \t\n"
+
+typedef enum e_bool
+{
+	FALSE,
+	TRUE,
+}  t_bool;
 
 typedef enum s_tk_type
 {
@@ -44,10 +48,9 @@ typedef struct s_token
 
 typedef struct	s_scanner
 {
-	size_t		curr;
-	size_t		start;
-	t_token		*list; //desalocar.
-	const char	*cmd;
+	size_t			curr;
+	size_t			start;
+	const char		*cmd;
 }	t_scanner;
 
 #endif

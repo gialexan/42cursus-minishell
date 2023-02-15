@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/15 13:57:48 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:50:37 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	advance(t_scanner *scanner)
 	return (scanner->cmd[scanner->curr - 1]);
 }
 
-int	match(t_scanner *scanner, char expected)
+t_bool	match(t_scanner *scanner, char expected)
 {
 	if (scanner->cmd[scanner->curr] != expected)
 		return (FALSE);
@@ -32,7 +32,6 @@ int	match(t_scanner *scanner, char expected)
 void	init_scanner(t_scanner *scanner, const char *command)
 {
 	scanner->curr = 0;
-	scanner->list = NULL;
 	scanner->cmd = command;
 }
 
@@ -80,7 +79,7 @@ void	skip_space (t_scanner *scanner)
 	scanner->start = scanner->curr;
 }
 
-int	is_at_end(t_scanner *scanner)
+t_bool	is_at_end(t_scanner *scanner)
 {
 	return (scanner->cmd[scanner->curr] == 0);
 }
@@ -138,25 +137,32 @@ void	lstadd_back(t_token **lst, t_token *new)
 	}
 }
 
-void	stack_token(t_scanner *scanner)
+t_token	*lexical_analysis(t_scanner *scanner, t_token *tokens)
 {
 	if (scanner->curr >= ft_strlen(scanner->cmd))
-		return ;
+		return (tokens);
 	scanner->start = scanner->curr;
-	lstadd_back(&scanner->list, scan_token(scanner));
-	stack_token(scanner);
+	lstadd_back(&tokens, scan_token(scanner));
+	return (lexical_analysis(scanner, tokens));
 }
 
-void	print_stack(t_scanner *scanner)
+void	print_stack(t_token *tokens)
 {
 	t_token *tmp;
 
-	tmp = scanner->list;
+	tmp = tokens;
 	while(tmp != NULL)
 	{
 		printf("TK_TYPE -> %d   |   TK_LEXEMA -> %s\n", tmp->tk_type, tmp->lexema);
 		tmp = tmp->next;
 	}
+}
+
+//---------------------------------------PARSER---------------------------------------------------------------//
+
+void	syntax_analisys(t_token *tokens)
+{
+	(void)tokens;
 }
 
 //---------------------------------------TESTES---------------------------------------------------------------//
@@ -165,11 +171,15 @@ void	print_stack(t_scanner *scanner)
  * To do:
  * Começar análise sintática
 */
+
 int	main(void)
 {
-	t_scanner scanner;
+	t_scanner	scanner;
+	t_token		*tokens = NULL;
+
 	const char *command = "<<<>>>	|>|<<    |>>'ola42'\"ola42\"    ola42     ";
+
 	init_scanner(&scanner, command);
-	stack_token(&scanner);
-	print_stack(&scanner);
+	tokens = lexical_analysis(&scanner, tokens);
+	print_stack(tokens);
 }
