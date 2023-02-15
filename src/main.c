@@ -6,12 +6,14 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/14 22:49:56 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/15 13:57:48 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scanner.h"
 #include <time.h>
+
+//------------------------------------------SCANNER---------------------------------------------------------------//
 
 char	advance(t_scanner *scanner)
 {
@@ -30,7 +32,7 @@ int	match(t_scanner *scanner, char expected)
 void	init_scanner(t_scanner *scanner, const char *command)
 {
 	scanner->curr = 0;
-	scanner->start = 0;
+	scanner->list = NULL;
 	scanner->cmd = command;
 }
 
@@ -113,6 +115,8 @@ t_token	*scan_token(t_scanner *scanner)
 	}
 }
 
+//------------------------------------------LINKED LIST---------------------------------------------------------------//
+
 t_token	*lstlast(t_token *lst)
 {
 	if (lst)
@@ -134,23 +138,38 @@ void	lstadd_back(t_token **lst, t_token *new)
 	}
 }
 
+void	stack_token(t_scanner *scanner)
+{
+	if (scanner->curr >= ft_strlen(scanner->cmd))
+		return ;
+	scanner->start = scanner->curr;
+	lstadd_back(&scanner->list, scan_token(scanner));
+	stack_token(scanner);
+}
+
+void	print_stack(t_scanner *scanner)
+{
+	t_token *tmp;
+
+	tmp = scanner->list;
+	while(tmp != NULL)
+	{
+		printf("TK_TYPE -> %d   |   TK_LEXEMA -> %s\n", tmp->tk_type, tmp->lexema);
+		tmp = tmp->next;
+	}
+}
+
+//---------------------------------------TESTES---------------------------------------------------------------//
+
+/*
+ * To do:
+ * Começar análise sintática
+*/
 int	main(void)
 {
 	t_scanner scanner;
-	const char *command = "<<<>>> | 'test1' | \"teste2\" >>> |";
-
+	const char *command = "<<<>>>	|>|<<    |>>'ola42'\"ola42\"    ola42     ";
 	init_scanner(&scanner, command);
-	t_token *tk = NULL;
-	while (scanner.curr < (int)ft_strlen(command))
-	{
-		scanner.start = scanner.curr;
-		lstadd_back(&tk, scan_token(&scanner));
-	}
-
-	while(tk != NULL)
-	{
-		printf("TK_TYPE -> %d   |   TK_LEXEMA -> %s\n", tk->tk_type, tk->lexema);
-		tk = tk->next;
-	}
-
+	stack_token(&scanner);
+	print_stack(&scanner);
 }
