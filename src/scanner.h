@@ -6,26 +6,19 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:41 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/15 21:43:44 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:43:01 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCANNER_H
 # define SCANNER_H
+
 # include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
 # include <string.h>
 # include <unistd.h>
 # include "../libft/libft.h"
 
 # define METACHARS "|()<> \t\n"
-
-typedef enum e_bool
-{
-	FALSE,
-	TRUE,
-}  t_bool;
 
 typedef enum s_tk_type
 {

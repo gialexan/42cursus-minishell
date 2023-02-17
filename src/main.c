@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/15 21:50:37 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:06:51 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	init_scanner(t_scanner *scanner, const char *command)
 	scanner->cmd = command;
 }
 
-t_token		*make_token(t_scanner *scanner, t_tk_type type)
+t_token	*make_token(t_scanner *scanner, t_tk_type type)
 {
 	t_token *token;
 
@@ -137,20 +137,20 @@ void	lstadd_back(t_token **lst, t_token *new)
 	}
 }
 
-t_token	*lexical_analysis(t_scanner *scanner, t_token *tokens)
+t_token	*lexical_analysis(t_scanner *scanner, t_token *token)
 {
 	if (scanner->curr >= ft_strlen(scanner->cmd))
-		return (tokens);
+		return (token);
 	scanner->start = scanner->curr;
-	lstadd_back(&tokens, scan_token(scanner));
-	return (lexical_analysis(scanner, tokens));
+	lstadd_back(&token, scan_token(scanner));
+	return (lexical_analysis(scanner, token));
 }
 
-void	print_stack(t_token *tokens)
+void	print_stack(t_token *token)
 {
 	t_token *tmp;
 
-	tmp = tokens;
+	tmp = token;
 	while(tmp != NULL)
 	{
 		printf("TK_TYPE -> %d   |   TK_LEXEMA -> %s\n", tmp->tk_type, tmp->lexema);
@@ -160,26 +160,62 @@ void	print_stack(t_token *tokens)
 
 //---------------------------------------PARSER---------------------------------------------------------------//
 
-void	syntax_analisys(t_token *tokens)
+int	io_word(t_token *token)
 {
-	(void)tokens;
+	if (token == NULL)
+		return (printf("success\n"));
+	else if (token->tk_type == TK_WORD)
+		return (io_word(token->next)); //printf("%s\n", token->lexema);
+	else
+		return (printf("error\n"));
 }
+
+
+int	syntax_analisys(t_token *token)
+{
+	(void)token;
+	if (token->tk_type == TK_LESS || token->tk_type == TK_GREAT
+		|| token->tk_type == TK_DLESS || token->tk_type == TK_DGREAT)
+	{
+		if (token->next == NULL)
+			return (printf("error\n")); //Se não houver next depois redirecionadores retorna erro pq precisa arq.
+		return (io_word(token->next)); //Se ouver next vai para IO_WORD validar token.
+	}
+	else if (token->tk_type == TK_WORD)
+	{
+		if (token->next == NULL)
+			return (printf("success\n")); //Se for apenas 1 comando EX: ls.
+		return (io_word(token->next)); // Se não vai para recursiva validar gramática.
+	}
+	else
+		return (FALSE);
+}
+
+
+int	main(void)
+{
+	t_scanner	scanner;
+	t_token		*token = NULL;
+	t_bool		parser;
+
+	const char command[] = "ls -l -a -b -cd";
+
+	init_scanner(&scanner, command);
+	token = lexical_analysis(&scanner, token);
+	print_stack(token);
+	parser = syntax_analisys(token);
+}
+
 
 //---------------------------------------TESTES---------------------------------------------------------------//
 
 /*
  * To do:
- * Começar análise sintática
+ * Começar análise sintática | parser
+ *
+ * Se chegou no token EOF e não encontrou nenhum token de erro pelo caminho
+ * e nenhum problema gramática significa que está tudo certo?
+ *
+ * testes:
+ * "<<<>>>	|>|<<    |>>'ola42'\"ola42\"    ola42     "
 */
-
-int	main(void)
-{
-	t_scanner	scanner;
-	t_token		*tokens = NULL;
-
-	const char *command = "<<<>>>	|>|<<    |>>'ola42'\"ola42\"    ola42     ";
-
-	init_scanner(&scanner, command);
-	tokens = lexical_analysis(&scanner, tokens);
-	print_stack(tokens);
-}

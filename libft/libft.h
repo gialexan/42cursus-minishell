@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:39:28 by gialexan          #+#    #+#             */
-/*   Updated: 2023/01/29 18:44:00 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:41:10 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 # define INT_MAX	2147483647
 
 # define BUFFER_SIZE 42
+
+typedef enum e_bool
+{
+	FALSE,
+	TRUE,
+}  t_bool;
 
 typedef struct s_list
 {
