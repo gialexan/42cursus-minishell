@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/17 15:06:51 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/17 20:07:40 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,33 +159,43 @@ void	print_stack(t_token *token)
 }
 
 //---------------------------------------PARSER---------------------------------------------------------------//
+int	syntax_analisys(t_token *token);
 
-int	io_word(t_token *token)
+/*
+ * To do: Io_Word
+ * Confirmar se o token que veio é type word, se for existe um proximo? se sim, chamar syntax error...
+ * se não, o que devo retornar?
+ *
+*/
+
+int	consume(t_token *token, t_tk_type expected)
 {
-	if (token == NULL)
-		return (printf("success\n"));
-	else if (token->tk_type == TK_WORD)
-		return (io_word(token->next)); //printf("%s\n", token->lexema);
-	else
-		return (printf("error\n"));
+	if (token->tk_type == expected && token->next != NULL) { printf("consume: %s\n", token->lexema);
+		return (syntax_analisys(token->next));
+	}
+	else if (token->tk_type == expected) { printf("consume: %s\n", token->lexema);
+		return (printf("success 3\n")); //"<ls -l -a -b -cd>test" esse teste sai aqui.
+	}
+	return (printf("error3\n"));
 }
-
 
 int	syntax_analisys(t_token *token)
 {
-	(void)token;
+	printf("syntax: %s\n", token->lexema);
+	if (token == NULL)
+		return (printf("test\n"));
 	if (token->tk_type == TK_LESS || token->tk_type == TK_GREAT
 		|| token->tk_type == TK_DLESS || token->tk_type == TK_DGREAT)
 	{
 		if (token->next == NULL)
-			return (printf("error\n")); //Se não houver next depois redirecionadores retorna erro pq precisa arq.
-		return (io_word(token->next)); //Se ouver next vai para IO_WORD validar token.
+			return (printf("erro 1\n")); //Se não houver next depois redirecionadores retorna erro pq precisa arq.
+		return (consume(token->next, TK_WORD)); //Se ouver next vai para IO_WORD validar token.
 	}
 	else if (token->tk_type == TK_WORD)
 	{
 		if (token->next == NULL)
-			return (printf("success\n")); //Se for apenas 1 comando EX: ls.
-		return (io_word(token->next)); // Se não vai para recursiva validar gramática.
+			return (printf("success 2\n")); //Se for apenas 1 comando EX: ls.
+		return (syntax_analisys(token->next)); // Se não vai para recursiva validar gramática.
 	}
 	else
 		return (FALSE);
@@ -198,7 +208,7 @@ int	main(void)
 	t_token		*token = NULL;
 	t_bool		parser;
 
-	const char command[] = "ls -l -a -b -cd";
+	const char command[] = "< infile ls -l -a -b -cd > outfile";
 
 	init_scanner(&scanner, command);
 	token = lexical_analysis(&scanner, token);
@@ -219,3 +229,26 @@ int	main(void)
  * testes:
  * "<<<>>>	|>|<<    |>>'ola42'\"ola42\"    ola42     "
 */
+
+
+
+
+
+// int	io_word(t_token *token)
+// {
+// 	if (token == NULL)
+// 		return (printf("success\n"));
+// 	else if (token->tk_type == TK_WORD)
+// 		return (io_word(token->next)); //printf("%s\n", token->lexema);
+
+// 	else if (token->tk_type == TK_LESS || token->tk_type == TK_GREAT
+// 		|| token->tk_type == TK_DLESS || token->tk_type == TK_DGREAT) ls || 
+// 	{
+// 		if (token->next == NULL)
+// 			return (printf("error\n"));
+// 		return (io_word(token->next));
+// 	}
+
+// 	else
+// 		return (printf("error\n"));
+// }
