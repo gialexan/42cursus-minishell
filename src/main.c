@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/19 09:53:44 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/19 10:09:05 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,15 +171,12 @@ t_bool parse(t_token *token);
 
 t_bool	marry(t_token *token, t_tk_type expected)
 {
-	if (token->tk_type == expected && token->next != NULL)
+	if (token->tk_type == expected)
 	{
-		printf("consume: %s\n", token->lexema);
+		printf("married: %s\n", token->lexema);
+		if (token->next == NULL)
+			return (printf("success 2\n"));
 		return (parse(token->next));
-	}
-	else if (token->tk_type == expected)
-	{
-		printf("consume: %s\n", token->lexema);
-		return (printf("success 2\n")); //"<ls -l -a -b -cd>test" esse teste sai aqui.
 	}
 	return (printf("error2\n"));
 }
@@ -237,11 +234,10 @@ t_bool syntax_analisys(t_token *token)
  * "< infile ls -l -a -b -cd > outfile | < outfile"
  *
  *              <---------------------True Parser Testes---------------------->
- *	1 = < infile, 2 = ls > outfile, 3 = ls > outfile | cat, 4 = << infile >> outfile, ls wc-l,
- *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 10 = <<infile>>>, 11 = <<<infile, 12 = ls | >, 13 = ls > |,
- *
- *
- *
+ * No error:
+ *	1 = < infile, 2 = ls > outfile, 3 = ls > outfile | cat, 4 = << infile >> outfile, ls wc-l
+ * Error:
+ *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 10 = <<infile>>>, 11 = <<<infile, 12 = ls | >, 13 = ls > |
  *
 */
  
@@ -251,7 +247,7 @@ int main(void)
     t_token *token = NULL;
     t_bool parser;
 
-    const char command[] = "ls ||| wc-l";
+    const char command[] = "<ls -l -a -b -cd>test";
 
     init_scanner(&scanner, command);
     token = lexical_analysis(&scanner, token);
