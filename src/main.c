@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/17 23:21:57 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/19 09:53:44 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ void	print_stack(t_token *token)
 }
 
 //---------------------------------------PARSER---------------------------------------------------------------//
-int	syntax_analisys(t_token *token);
 
 /*
  * To do: Io_Word
@@ -168,12 +167,14 @@ int	syntax_analisys(t_token *token);
  *
 */
 
-int	tk_match(t_token *token, t_tk_type expected)
+t_bool parse(t_token *token);
+
+t_bool	marry(t_token *token, t_tk_type expected)
 {
 	if (token->tk_type == expected && token->next != NULL)
 	{
 		printf("consume: %s\n", token->lexema);
-		return (syntax_analisys(token->next));
+		return (parse(token->next));
 	}
 	else if (token->tk_type == expected)
 	{
@@ -183,7 +184,7 @@ int	tk_match(t_token *token, t_tk_type expected)
 	return (printf("error2\n"));
 }
 
-int	syntax_analisys(t_token *token)
+t_bool	parse(t_token *token)
 {
 	printf("syntax: %s\n", token->lexema);
 	// if (token == NULL)
@@ -193,37 +194,33 @@ int	syntax_analisys(t_token *token)
 	{
 		if (token->next == NULL)
 			return (printf("erro 1\n")); //Se não houver next depois redirecionadores retorna erro pq precisa arq.
-		return (tk_match(token->next, TK_WORD)); //Se ouver next vai para IO_WORD validar token.
+		return (marry(token->next, TK_WORD)); //Se ouver next vai para IO_WORD validar token.
 	}
 	else if (token->tk_type == TK_WORD)
 	{
 		if (token->next == NULL)
 			return (printf("success 1\n")); //Se for apenas 1 comando EX: ls.
-		return (syntax_analisys(token->next)); // Se não vai para recursiva validar gramática.
+		return (parse(token->next)); // Se não vai para recursiva validar gramática.
 	}
 	else if (token->tk_type == TK_PIPE)
 	{
 		if (token->next == NULL)
 			return (printf("erro 3\n"));
-		return (syntax_analisys(token->next));
+		else if (token->next->tk_type == TK_PIPE)
+			return (printf("erro 4\n"));
+		return (parse(token->next));
 	}
 	else
 		return (FALSE);
 }
 
-
-int	main(void)
+t_bool syntax_analisys(t_token *token)
 {
-	t_scanner	scanner;
-	t_token		*token = NULL;
-	t_bool		parser;
-
-	const char command[] = "<> infile ls -l -a -b -cd > outfile | <";
-
-	init_scanner(&scanner, command);
-	token = lexical_analysis(&scanner, token);
-	print_stack(token);
-	parser = syntax_analisys(token);
+	if (token == NULL)
+		return (FALSE);
+	else if (token->tk_type == TK_PIPE)
+		return (FALSE);
+	return(parse(token));
 }
 
 //---------------------------------------TESTES---------------------------------------------------------------//
@@ -237,4 +234,27 @@ int	main(void)
  *
  * testes:
  * "<<<>>>	|>|<<    |>>'ola42'\"ola42\"    ola42     "
+ * "< infile ls -l -a -b -cd > outfile | < outfile"
+ *
+ *              <---------------------True Parser Testes---------------------->
+ *	1 = < infile, 2 = ls > outfile, 3 = ls > outfile | cat, 4 = << infile >> outfile, ls wc-l,
+ *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 10 = <<infile>>>, 11 = <<<infile, 12 = ls | >, 13 = ls > |,
+ *
+ *
+ *
+ *
 */
+ 
+int main(void)
+{
+    t_scanner scanner;
+    t_token *token = NULL;
+    t_bool parser;
+
+    const char command[] = "ls ||| wc-l";
+
+    init_scanner(&scanner, command);
+    token = lexical_analysis(&scanner, token);
+    print_stack(token);
+    parser = syntax_analisys(token);
+}
