@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/19 10:09:05 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/19 10:42:41 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,14 +160,7 @@ void	print_stack(t_token *token)
 
 //---------------------------------------PARSER---------------------------------------------------------------//
 
-/*
- * To do: Io_Word
- * Confirmar se o token que veio é type word, se for existe um proximo? se sim, chamar syntax error...
- * se não, o que devo retornar?
- *
-*/
-
-t_bool parse(t_token *token);
+t_bool	parse(t_token *token);
 
 t_bool	marry(t_token *token, t_tk_type expected)
 {
@@ -184,8 +177,6 @@ t_bool	marry(t_token *token, t_tk_type expected)
 t_bool	parse(t_token *token)
 {
 	printf("syntax: %s\n", token->lexema);
-	// if (token == NULL)
-	// 	return (printf("test\n"));
 	if (token->tk_type == TK_LESS || token->tk_type == TK_GREAT
 		|| token->tk_type == TK_DLESS || token->tk_type == TK_DGREAT)
 	{
@@ -211,7 +202,7 @@ t_bool	parse(t_token *token)
 		return (FALSE);
 }
 
-t_bool syntax_analisys(t_token *token)
+t_bool syntax_analysis(t_token *token)
 {
 	if (token == NULL)
 		return (FALSE);
@@ -224,20 +215,24 @@ t_bool syntax_analisys(t_token *token)
 
 /*
  * To do:
- * Começar análise sintática | parser
+ * Finalizar análise sintática | parser
  *
  * Se chegou no token EOF e não encontrou nenhum token de erro pelo caminho
  * e nenhum problema gramática significa que está tudo certo?
  *
- * testes:
- * "<<<>>>	|>|<<    |>>'ola42'\"ola42\"    ola42     "
- * "< infile ls -l -a -b -cd > outfile | < outfile"
+ * Se o token EOF for depois do redirecionador deve-se invalidar o comando?
+ * Se o token EOF for primeiro token o que fazer?
  *
- *              <---------------------True Parser Testes---------------------->
+ *				<---------------------Lexical Analysis Testes---------------------->
+ * teste:
+ * 1 = "<<<>>>	|>|<<    |>>'ola42'\"ola42\"    ola42     "
+ * 2 = "< infile ls -l -a -b -cd > outfile | < outfile"
+ *
+ *              <---------------------Syntax Analysis Testes----------------------->
  * No error:
- *	1 = < infile, 2 = ls > outfile, 3 = ls > outfile | cat, 4 = << infile >> outfile, ls wc-l
+ *	1 = < infile, 2 = ls > outfile, 3 = ls > outfile | cat infile, 4 = << infile >> outfile, 5 = ls wc-l
  * Error:
- *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 10 = <<infile>>>, 11 = <<<infile, 12 = ls | >, 13 = ls > |
+ *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 6 = <<infile>>>, 7 = <<<infile, 8 = ls | >, 9 = ls > |
  *
 */
  
@@ -247,10 +242,10 @@ int main(void)
     t_token *token = NULL;
     t_bool parser;
 
-    const char command[] = "<ls -l -a -b -cd>test";
+    const char command[] = "< ls -l -a -b -cd > test";
 
     init_scanner(&scanner, command);
     token = lexical_analysis(&scanner, token);
     print_stack(token);
-    parser = syntax_analisys(token);
+    parser = syntax_analysis(token);
 }

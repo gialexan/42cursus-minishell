@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 15:34:02 by gialexan          #+#    #+#              #
-#    Updated: 2023/02/18 09:04:51 by gialexan         ###   ########.fr        #
+#    Updated: 2023/02/19 10:45:44 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,24 +20,3 @@
 <COMMAND> ::= 		<WORD>
                 |	<REDIRECTION>
 				|	<PIPELINE>
-
-
-<WORD-LIST> ::= <WORD>
-             |  <WORD-LIST> <WORD>
-
-<REDIRECTION> ::=  '>' <WORD>
-                |  '<' <WORD>
-				|  '<<' <WORD>
-				|  '>>' <WORD>
-
-<SIMPLE-COMMAND-ELEMENT> ::= <WORD>
-                          |  <ASSIGNMENT-WORD>
-                          |  <REDIRECTION>
-
-<REDIRECTION-LIST> ::= <REDIRECTION>
-                    |  <REDIRECTION-LIST> <REDIRECTION>
-
-<SIMPLE-COMMAND> ::=  <SIMPLE-COMMAND-ELEMENT>
-                   |  <SIMPLE-COMMAND> <SIMPLE-COMMAND-ELEMENT>
-
-<COMMAND> ::=  <SIMPLE-COMMAND>
