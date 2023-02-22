@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/22 15:53:33 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/22 21:13:57 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,27 +49,50 @@ t_token	*make_token(t_scanner *scanner, t_tk_type type)
 	return (token);
 }
 
-t_token	*word_quote(t_scanner *scanner, char c)
-{
-	char	close;
+// t_token	*word_quote(t_scanner *scanner, char c)
+// {
+// 	char	close;
 
-	close = c;
-	c = advance(scanner);
-	while (c != 0 && c != close)
+// 	close = c;
+// 	c = advance(scanner);
+// 	while (c != 0 && c != close)
+// 		c = advance(scanner);
+// 	if (c == 0 && c != close)
+// 		return (make_token(scanner, TK_ERROR));
+// 	return (make_token(scanner, TK_WORD));
+// }
+
+// t_token	*word(t_scanner *scanner)
+// {
+// 	char c;
+
+// 	c = scanner->cmd[--scanner->curr];
+// 	while (!ft_strchr(METACHARS, c))
+// 		c = scanner->cmd[++scanner->curr];
+// 	return (make_token(scanner, TK_WORD));
+// }
+
+t_token *string(t_scanner *scanner, char c)
+{
+	char close;
+
+	if (ft_isquote(c))
+	{
+		close = c;
 		c = advance(scanner);
-	if (c == 0 && c != close)
-		return (make_token(scanner, TK_ERROR));
-	return (make_token(scanner, TK_WORD));
-}
-
-t_token	*word(t_scanner *scanner)
-{
-	char c;
-
-	c = scanner->cmd[--scanner->curr];
-	while (!ft_strchr(METACHARS, c))
+		while (c != 0 && c != close)
+		c = advance(scanner);
+		if (c == 0 && c != close)
+			return (make_token(scanner, TK_ERROR));
+		return (make_token(scanner, TK_WORD));
+	}
+	else
+	{
+		c = scanner->cmd[--scanner->curr];
+		while (!ft_strchr(METACHARS, c))
 		c = scanner->cmd[++scanner->curr];
-	return (make_token(scanner, TK_WORD));
+		return (make_token(scanner, TK_WORD));
+	}
 }
 
 void	skip_space (t_scanner *scanner)
@@ -87,26 +110,22 @@ t_token	*scan_token(t_scanner *scanner)
 	c = advance(scanner);
 	if (c == '\0')
 		return (make_token(scanner, TK_EOF));
-	if (c == '|')
+	else if (c == '|')
 		return (make_token(scanner, TK_PIPE));
-	if (c == '<')
+	else if (c == '<')
 	{
 		if (match(scanner, '<'))
 			return (make_token(scanner, TK_DLESS));
 		return (make_token(scanner, TK_LESS));	
 	}
-	if (c == '>')
+	else if (c == '>')
 	{
 		if (match(scanner, '>'))
 			return (make_token(scanner, TK_DGREAT));
 		return (make_token(scanner, TK_GREAT));
 	}
 	else
-	{
-		if (ft_isquote(c))
-			return (word_quote(scanner, c));
-		return (word(scanner));
-	}
+		return (string(scanner, c));
 }
 
 //------------------------------------------LINKED LIST---------------------------------------------------------------//
@@ -134,7 +153,7 @@ void	lstadd_back(t_token **lst, t_token *new)
 
 t_token	*lexical_analysis(t_scanner *scanner, t_token *token)
 {
-	if (scanner->curr >= strlen(scanner->cmd) + 1)
+	if (scanner->curr > ft_strlen(scanner->cmd)) //if (scanner->curr >= ft_strlen(scanner->cmd) + 1)
 		return (token);
 	scanner->start = scanner->curr;
 	lstadd_back(&token, scan_token(scanner));
@@ -157,41 +176,50 @@ void	print_stack(t_token *token)
 
 t_bool	parse(t_token *token);
 
-t_bool	marry(t_token *token, t_tk_type expected)
+t_token *next(t_token *token)
 {
-	if (token->tk_type == expected)
+	return (token->next);
+}
+
+t_tk_type next_tk_type(t_token *token)
+{
+	return (token->next->tk_type);
+}
+
+t_bool	word(t_token *token)
+{
+	if (IS_WORD(token->tk_type))
 	{
 		printf("married: %s\n", token->lexema);
-		if (token->next == NULL)
-			return (printf("success 2\n"));
-		return (parse(token->next));
+		if (next_tk_type(token) == TK_EOF)
+			return (TRUE); //return (printf("success 2\n"));
+		return (parse(next(token)));
 	}
-	return (printf("error2\n"));
+	return (FALSE); //printf("error2\n")
 }
 
 t_bool	parse(t_token *token)
 {
 	printf("syntax: %s\n", token->lexema);
-	if (token->tk_type == TK_LESS || token->tk_type == TK_GREAT
-		|| token->tk_type == TK_DLESS || token->tk_type == TK_DGREAT)
+	if (IS_REDIRECTION(token->tk_type))
 	{
-		if (token->next == NULL)
-			return (printf("erro 1\n")); //Se não houver next depois redirecionadores retorna erro pq precisa arq.
-		return (marry(token->next, TK_WORD)); //Se ouver next vai para IO_WORD validar token.
+		if (next_tk_type(token) == TK_EOF)
+			return (FALSE); //return (printf("erro 1\n"))
+		return (word(next(token)));
 	}
-	else if (token->tk_type == TK_WORD)
+	else if (IS_WORD(token->tk_type))
 	{
-		if (token->next == NULL)
-			return (printf("success 1\n")); //Se for apenas 1 comando EX: ls.
-		return (parse(token->next)); // Se não vai para recursiva validar gramática.
+		if (next_tk_type(token) == TK_EOF)
+			return (TRUE); //return (printf("success 1\n"));
+		return (parse(next(token)));
 	}
-	else if (token->tk_type == TK_PIPE)
+	else if (IS_PIPE(token->tk_type))
 	{
-		if (token->next == NULL)
-			return (printf("erro 3\n"));
-		else if (token->next->tk_type == TK_PIPE)
-			return (printf("erro 4\n"));
-		return (parse(token->next));
+		if (next_tk_type(token) == TK_EOF)
+			return (FALSE); //return (printf("erro 3\n"))
+		else if (next_tk_type(token) == TK_PIPE)
+			return (FALSE); //return (printf("erro 4\n"));
+		return (parse(next(token)));
 	}
 	else
 		return (FALSE);
@@ -201,9 +229,12 @@ t_bool syntax_analysis(t_token *token)
 {
 	if (token == NULL)
 		return (FALSE);
+	else if (token->tk_type == TK_EOF)
+		return (FALSE);
 	else if (token->tk_type == TK_PIPE)
 		return (FALSE);
-	return(parse(token));
+	else
+		return(parse(token));
 }
 
 //---------------------------------------TESTES---------------------------------------------------------------//
@@ -228,7 +259,7 @@ t_bool syntax_analysis(t_token *token)
  *	1 = < infile, 2 = ls > outfile, 3 = ls > outfile | cat infile, 4 = << infile >> outfile, 5 = ls wc-l
  * Error:
  *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 6 = <<infile>>>, 7 = <<<infile, 8 = ls | >, 9 = ls > |
- *	//"< ls -l -a -b -cd > 'test'"
+ *	"< ls -l -a -b -cd > 'test'"
 */
  
 int main(void)
@@ -237,9 +268,10 @@ int main(void)
     t_token *token = NULL;
     //t_bool parser;
 
-    char command[] = "< ls -l -a -b -cd > \"test\" ";
+    char command[] = "< ls -l -a -b -cd > 'test'";
     init_scanner(&scanner, command);
     token = lexical_analysis(&scanner, token);
     print_stack(token);
     //parser = syntax_analysis(token);
+	//printf("%d\n", parser);
 }

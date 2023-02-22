@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:41 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/17 22:58:20 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/22 21:08:39 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include "../libft/libft.h"
 
 # define METACHARS "|()<> \t\n"
+# define IS_WORD(type) (type == TK_WORD)
+# define IS_PIPE(type) (type == TK_PIPE)
+# define IS_REDIRECTION(type)	(type == TK_LESS || \
+								type == TK_GREAT || \
+                            	type == TK_DLESS || \
+								type == TK_DGREAT)							  
 
 typedef enum s_tk_type
 {
