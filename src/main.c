@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/19 10:42:41 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:53:33 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,14 @@ void	skip_space (t_scanner *scanner)
 	scanner->start = scanner->curr;
 }
 
-t_bool	is_at_end(t_scanner *scanner)
-{
-	return (scanner->cmd[scanner->curr] == 0);
-}
-
 t_token	*scan_token(t_scanner *scanner)
 {
 	char	c;
 
 	skip_space(scanner);
-	if (is_at_end(scanner))
-		return (make_token(scanner, TK_EOF));
 	c = advance(scanner);
+	if (c == '\0')
+		return (make_token(scanner, TK_EOF));
 	if (c == '|')
 		return (make_token(scanner, TK_PIPE));
 	if (c == '<')
@@ -139,7 +134,7 @@ void	lstadd_back(t_token **lst, t_token *new)
 
 t_token	*lexical_analysis(t_scanner *scanner, t_token *token)
 {
-	if (scanner->curr >= ft_strlen(scanner->cmd))
+	if (scanner->curr >= strlen(scanner->cmd) + 1)
 		return (token);
 	scanner->start = scanner->curr;
 	lstadd_back(&token, scan_token(scanner));
@@ -233,19 +228,18 @@ t_bool syntax_analysis(t_token *token)
  *	1 = < infile, 2 = ls > outfile, 3 = ls > outfile | cat infile, 4 = << infile >> outfile, 5 = ls wc-l
  * Error:
  *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 6 = <<infile>>>, 7 = <<<infile, 8 = ls | >, 9 = ls > |
- *
+ *	//"< ls -l -a -b -cd > 'test'"
 */
  
 int main(void)
 {
     t_scanner scanner;
     t_token *token = NULL;
-    t_bool parser;
+    //t_bool parser;
 
-    const char command[] = "< ls -l -a -b -cd > test";
-
+    char command[] = "< ls -l -a -b -cd > \"test\" ";
     init_scanner(&scanner, command);
     token = lexical_analysis(&scanner, token);
     print_stack(token);
-    parser = syntax_analysis(token);
+    //parser = syntax_analysis(token);
 }
