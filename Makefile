@@ -6,46 +6,61 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/01/26 21:08:56 by gialexan         ###   ########.fr        #
+#    Updated: 2023/02/23 12:10:09 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = 				lexer
+LIBFT_PATH		=	./libft
 
-SRC_FILE = 			main.c
+LIBFT			=	$(LIBFT_PATH)/libft.a
 
-SRC_DIR = 			src
+SOURCES_FILES	=	main.c \
+					scanner.c \
+					scanner_utils.c
 
-LIBFT_DIR = 		libft
+SOURCES_DIR		=	src
 
-SRC = 				$(addprefix $(SRC_DIR)/, $(SRC_FILE))
+OBJ_DIR			=	obj
 
-SRC_OBJ = 			$(SRC:.c=.o)
+HEADERS			=	./include/minishell.h \
+					./include/scanner.h
 
-LIBFT = 			./libft/libft.a
+INCLUDES		=	-I./include
 
-RM = 				rm -f
+VPATH			=	src src/scanner
 
-CFLAGS = 			-Wall -Wextra -Werror
+OBJECTS			=	$(SOURCES_FILES:%.c=$(OBJ_DIR)/%.o)
 
-CC = 				gcc -g
+NAME			=	minishell
 
-all:	$(NAME)
+CC				=	gcc
 
-$(NAME):			$(LIBFT) $(SRC_OBJ)
-					$(CC) $(CFLAGS) $(SRC_OBJ) $(LIBFT) -o $(NAME)
+RM				=	rm -rf
+
+CFLAGS			=	-Wall -Wextra -Werror $(INCLUDES)
+
+$(OBJ_DIR)/%.o:	%.c $(HEADERS) | $(OBJ_DIR)
+				$(CC) $(CFLAGS) -c $< -o $@
+
+all:			$(NAME)
+
+$(NAME):		$(LIBFT) $(OBJ_DIR) $(OBJECTS) $(HEADERS)
+				$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
-					$(MAKE) -C $(LIBFT_DIR)
+				$(MAKE) -C $(LIBFT_PATH)
+
+$(OBJ_DIR):
+				mkdir -p $(OBJ_DIR)
 
 clean:
-					$(MAKE) clean -C $(LIBFT_DIR)
-					$(RM) $(SRC_OBJ)
-					
-fclean:				clean
-					$(MAKE) fclean -C $(LIBFT_DIR)
-					$(RM) $(NAME)
+				$(MAKE) -C $(LIBFT_PATH) clean
+				$(RM) $(OBJ_DIR)
 
-re:					fclean all
+fclean:			clean
+				$(MAKE) -C $(LIBFT_PATH) fclean
+				$(RM) $(NAME) $(NAME_BONUS)
 
-.PHONY:				all clean fclean re libft
+re:				fclean all
+
+.PHONY:			all clean fclean re libft

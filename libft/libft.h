@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:39:28 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/15 22:41:10 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/22 21:34:07 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-//GNL
+/*	GNL		*/
 char	*ft_get_next_line(int fd);
 
-//PRINTF
+/*	PRINTF	*/
 int		ft_printf(const char *format, ...);
 int		ft_hex(unsigned long nb, char *base);
 char	*ft_itoa(int n);
@@ -50,7 +50,7 @@ int		md_putstr(char *str);
 int		md_putnbr(int nb);
 int		md_unsigned_putnbr(unsigned int nb);
 
-//LIBFT
+/*	LIBFT	*/
 int		ft_atoi(const char *nptr);
 int		ft_strcmp(char *s1, char *s2);
 void	ft_bzero(void *str, size_t n);
@@ -95,7 +95,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-//my function
+/*	My		*/
 int		ft_isquote(int c);
 int		ft_isspace(int c);
 void	ft_free(void **ptr);
