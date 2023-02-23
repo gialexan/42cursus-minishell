@@ -6,61 +6,62 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/02/23 12:10:09 by gialexan         ###   ########.fr        #
+#    Updated: 2023/02/23 17:39:27 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LIBFT_PATH		=	./libft
+# Definições de variáveis
 
-LIBFT			=	$(LIBFT_PATH)/libft.a
+NAME = minishell
 
-SOURCES_FILES	=	main.c \
-					scanner.c \
-					scanner_utils.c
+LIBFT_PATH = ./libft
+LIBFT = $(LIBFT_PATH)/libft.a
 
-SOURCES_DIR		=	src
+SOURCES_FILES = main.c \
+				scanner.c \
+				scanner_utils.c
 
-OBJ_DIR			=	obj
+SOURCES_BASE = src
+VPATH = $(SOURCES_BASE) \
+		$(SOURCES_BASE)/scanner
 
-HEADERS			=	./include/minishell.h \
-					./include/scanner.h
+OBJ_DIR = obj
+INCLUDES = -I./include
 
-INCLUDES		=	-I./include
+INC_BASE = include
+HEADERS =	$(INC_BASE)/minishell.h \
+			$(INC_BASE)/scanner.h
 
-VPATH			=	src src/scanner
+OBJECTS = $(SOURCES_FILES:%.c=$(OBJ_DIR)/%.o)
 
-OBJECTS			=	$(SOURCES_FILES:%.c=$(OBJ_DIR)/%.o)
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror $(INCLUDES)
 
-NAME			=	minishell
+RM = rm -rf
 
-CC				=	gcc
+# Regras do Makefile
+all: $(NAME)
 
-RM				=	rm -rf
-
-CFLAGS			=	-Wall -Wextra -Werror $(INCLUDES)
-
-$(OBJ_DIR)/%.o:	%.c $(HEADERS) | $(OBJ_DIR)
-				$(CC) $(CFLAGS) -c $< -o $@
-
-all:			$(NAME)
-
-$(NAME):		$(LIBFT) $(OBJ_DIR) $(OBJECTS) $(HEADERS)
-				$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME)
+$(NAME): $(LIBFT) $(OBJ_DIR) $(OBJECTS) $(HEADERS)
+	$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
-				$(MAKE) -C $(LIBFT_PATH)
+	$(MAKE) -C $(LIBFT_PATH)
 
 $(OBJ_DIR):
-				mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o: %.c $(HEADERS) | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-				$(MAKE) -C $(LIBFT_PATH) clean
-				$(RM) $(OBJ_DIR)
+	$(MAKE) -C $(LIBFT_PATH) clean
+	$(RM) $(OBJ_DIR)
 
-fclean:			clean
-				$(MAKE) -C $(LIBFT_PATH) fclean
-				$(RM) $(NAME) $(NAME_BONUS)
+fclean: clean
+	$(MAKE) -C $(LIBFT_PATH) fclean
+	$(RM) $(NAME)
 
-re:				fclean all
+re: fclean all
 
-.PHONY:			all clean fclean re libft
+.PHONY: all clean fclean re

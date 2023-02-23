@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/23 12:07:50 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:08:09 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,42 +214,42 @@
 // 		return(parse(token));
 // }
 
-// //---------------------------------------TESTES---------------------------------------------------------------//
+//---------------------------------------TESTES---------------------------------------------------------------//
 
-// /*
-//  * To do:
-//  * Finalizar análise sintática | parser
-//  *
-//  * Se chegou no token EOF e não encontrou nenhum token de erro pelo caminho
-//  * e nenhum problema gramática significa que está tudo certo?
-//  *
-//  * Se o token EOF for depois do redirecionador deve-se invalidar o comando?
-//  * Se o token EOF for primeiro token o que fazer?
-//  *
-//  *				<---------------------Lexical Analysis Testes---------------------->
-//  * teste:
-//  * 1 = "<<<>>>	|>|<<    |>>'ola42'\"ola42\"    ola42     "
-//  * 2 = "< infile ls -l -a -b -cd > outfile | < outfile"
-//  *
-//  *              <---------------------Syntax Analysis Testes----------------------->
-//  * No error:
-//  *	1 = < infile, 2 = ls > outfile, 3 = ls > outfile | cat infile, 4 = << infile >> outfile, 5 = ls wc-l
-//  * Error:
-//  *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 6 = <<infile>>>, 7 = <<<infile, 8 = ls | >, 9 = ls > |
-//  *	"< ls -l -a -b -cd > 'test'"
-// */
- 
+/*
+ * To do:
+ * Finalizar análise sintática | parser
+ *
+ * Se chegou no token EOF e não encontrou nenhum token de erro pelo caminho
+ * e nenhum problema gramática significa que está tudo certo?
+ *
+ * Se o token EOF for depois do redirecionador deve-se invalidar o comando?
+ * Se o token EOF for primeiro token o que fazer?
+ *
+ *				<---------------------Lexical Analysis Testes---------------------->
+ * teste:
+ * 1 = "<<<>>>	|>|<<    |>>'ola42'\"ola42\"    ola42     "
+ * 2 = "< infile ls -l -a -b -cd > outfile | < outfile"
+ *
+ *              <---------------------Syntax Analysis Testes----------------------->
+ * No error:
+ *	1 = < infile, 2 = ls > outfile, 3 = ls > outfile | cat infile, 4 = << infile >> outfile, 5 = ls wc-l
+ * Error:
+ *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 6 = <<infile>>>, 7 = <<<infile, 8 = ls | >, 9 = ls > |
+ *	"< ls -l -a -b -cd > 'test'"
+*/
+
 int main(void)
 {
-    // t_scanner scanner;
-    // t_token *token = NULL;
-    // //t_bool parser;
+    // t_scanner	scanner;
+    // t_bool		parser;
+    // t_token		*token = NULL;
 
-    // char command[] = "< ls -l -a -b -cd > 'test'";
+    // char command[] = "< algo";
     // init_scanner(&scanner, command);
     // token = lexical_analysis(&scanner, token);
     // print_stack(token);
-    //parser = syntax_analysis(token);
-	//printf("%d\n", parser);
+    // parser = syntax_analysis(token);
+	// printf("%d\n", parser);
 	printf("TESTE\n");
 }
