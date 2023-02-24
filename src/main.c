@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/24 21:07:38 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/24 21:10:35 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ void	print_stack(t_token *token)
 
 //---------------------------------------TESTES---------------------------------------------------------------//
 /*
- * To do:
- * Finalizar análise sintática | parser
- *
- * Se chegou no token EOF e não encontrou nenhum token de erro pelo caminho
- * e nenhum problema gramática significa que está tudo certo?
- *
- * Se o token EOF for depois do redirecionador deve-se invalidar o comando?
- * Se o token EOF for primeiro token o que fazer?
- *
  *				<---------------------Lexical Analysis Testes---------------------->
  * teste:
  * 1 = "<<<>>>	|>|<<    |>>'ola42'\"ola42\"    ola42     "

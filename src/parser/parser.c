@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/24 21:08:43 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/24 21:13:09 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,7 @@
 static t_bool words(t_token *token);
 static t_bool pipes(t_token *token);
 static t_bool parser(t_token *token);
-
-t_bool syntax_error(t_token *token)
-{
-	dprintf(STDERR_FILENO, "minihell: ");
-	if (marry(tk_type(token), TK_ERROR))
-		dprintf(STDERR_FILENO, "error unclosed quotes %s\n", token->lexema);
-	else
-	{
-		dprintf(STDERR_FILENO, "syntax error near unexpected token ");
-		if (marry(tk_type(token), TK_EOF))
-			dprintf(STDERR_FILENO, "'newline'\n");
-		else
-			dprintf(STDERR_FILENO, "'%s'\n", token->lexema);
-	}
-	return (FALSE);
-}
+static t_bool syntax_error(t_token *token);
 
 t_bool syntax_analysis(t_token *token)
 {
@@ -59,6 +44,22 @@ static t_bool parser(t_token *token)
 	else if (marry(tk_type(token), TK_EOF))
 		return (TRUE);
 	return (syntax_error(token));
+}
+
+static t_bool syntax_error(t_token *token)
+{
+	dprintf(STDERR_FILENO, "minihell: ");
+	if (marry(tk_type(token), TK_ERROR))
+		dprintf(STDERR_FILENO, "error unclosed quotes %s\n", token->lexema);
+	else
+	{
+		dprintf(STDERR_FILENO, "syntax error near unexpected token ");
+		if (marry(tk_type(token), TK_EOF))
+			dprintf(STDERR_FILENO, "'newline'\n");
+		else
+			dprintf(STDERR_FILENO, "'%s'\n", token->lexema);
+	}
+	return (FALSE);
 }
 
 static	t_bool pipes(t_token *token)
