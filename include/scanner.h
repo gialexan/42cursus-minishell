@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:58:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/24 01:25:28 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/24 14:26:08 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef enum s_tk_type
 	TK_DGREAT,
 }	t_tk_type;
 
-typedef struct s_token
+typedef struct s_token //desalocar a linkedlist
 {
 	t_tk_type		tk_type;
 	const char		*lexema; //campo lexema foi malocado.

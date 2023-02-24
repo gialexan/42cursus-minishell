@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/02/24 01:23:06 by gialexan         ###   ########.fr        #
+#    Updated: 2023/02/24 14:28:23 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,14 @@ LIBFT = $(LIBFT_PATH)/libft.a
 
 SOURCES_FILES = main.c \
 				scanner.c \
-				scanner_utils.c
+				scanner_utils.c \
+				parser.c \
+				parser_utils.c
 
 SOURCES_BASE = src
 VPATH = $(SOURCES_BASE) \
-		$(SOURCES_BASE)/scanner
+		$(SOURCES_BASE)/scanner \
+		$(SOURCES_BASE)/parser
 
 OBJ_DIR = obj
 INCLUDES = -I./include
@@ -31,6 +34,7 @@ INCLUDES = -I./include
 INC_BASE = include
 HEADERS =	$(INC_BASE)/minishell.h \
 			$(INC_BASE)/scanner.h	\
+			$(INC_BASE)/parser.h
 
 OBJECTS = $(SOURCES_FILES:%.c=$(OBJ_DIR)/%.o)
 
