@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/24 15:09:35 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/24 21:07:38 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	print_stack(t_token *token)
 }
 
 //---------------------------------------TESTES---------------------------------------------------------------//
-
 /*
  * To do:
  * Finalizar análise sintática | parser
@@ -56,14 +55,10 @@ int main(void)
     t_bool		parser;
     t_token		*token = NULL;
 
-    char command[] = "ls wc-l";
+    char command[] = "ls > outfile";
     init_scanner(&scanner, command);
     token = lexical_analysis(&scanner, token);
     print_stack(token);
     parser = syntax_analysis(token);
-	if (parser == 0)
-		printf("Comando inválido!\n");
-	else
-		printf("Comando válido!\n");
-
+	printf("%d\n", parser);
 }
