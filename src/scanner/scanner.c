@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/24 20:55:25 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/24 21:32:19 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ static t_token *scan_token(t_scanner *scanner)
 			return (make_token(scanner, TK_DGREAT));
 		return (make_token(scanner, TK_GREAT));
 	}
-	else
-		return (string(scanner, c));
+	return (string(scanner, c));
 }
 
 static t_token *lstlast(t_token *lst)

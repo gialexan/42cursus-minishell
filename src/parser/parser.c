@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/24 21:13:09 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/24 21:30:32 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ t_bool syntax_analysis(t_token *token)
 		return (FALSE);
 	else if (marry(tk_type(token), TK_PIPE))
 		return (syntax_error(token)); //OK
-	else
-		return (parser(token));
+	return (parser(token));
 }
 
 static t_bool parser(t_token *token)
@@ -46,7 +45,7 @@ static t_bool parser(t_token *token)
 	return (syntax_error(token));
 }
 
-static t_bool syntax_error(t_token *token)
+t_bool syntax_error(t_token *token)
 {
 	dprintf(STDERR_FILENO, "minihell: ");
 	if (marry(tk_type(token), TK_ERROR))

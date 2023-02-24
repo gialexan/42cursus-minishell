@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/24 21:10:35 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/24 21:33:50 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int main(void)
     t_bool		parser;
     t_token		*token = NULL;
 
-    char command[] = "ls > outfile";
+    char command[] = "ls > ";
     init_scanner(&scanner, command);
     token = lexical_analysis(&scanner, token);
     print_stack(token);
