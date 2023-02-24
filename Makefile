@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/02/23 17:39:27 by gialexan         ###   ########.fr        #
+#    Updated: 2023/02/24 01:23:06 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ INCLUDES = -I./include
 
 INC_BASE = include
 HEADERS =	$(INC_BASE)/minishell.h \
-			$(INC_BASE)/scanner.h
+			$(INC_BASE)/scanner.h	\
 
 OBJECTS = $(SOURCES_FILES:%.c=$(OBJ_DIR)/%.o)
 
@@ -40,6 +40,7 @@ CFLAGS = -Wall -Wextra -Werror $(INCLUDES)
 RM = rm -rf
 
 # Regras do Makefile
+
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ_DIR) $(OBJECTS) $(HEADERS)

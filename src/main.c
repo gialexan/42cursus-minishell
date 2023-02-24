@@ -6,14 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/23 17:08:09 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/24 00:56:15 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scanner.h"
-#include <time.h>
+#include "minishell.h"
 
-// //------------------------------------------SCANNER---------------------------------------------------------------//
+//------------------------------------------SCANNER---------------------------------------------------------------//
 
 // char	advance(t_scanner *scanner)
 // {
@@ -105,7 +104,7 @@
 // 		return (string(scanner, c));
 // }
 
-// //------------------------------------------LINKED LIST---------------------------------------------------------------//
+//------------------------------------------LINKED LIST---------------------------------------------------------------//
 
 // t_token	*lstlast(t_token *lst)
 // {
@@ -137,19 +136,19 @@
 // 	return (lexical_analysis(scanner, token));
 // }
 
-// void	print_stack(t_token *token)
-// {
-// 	t_token *tmp;
+void	print_stack(t_token *token)
+{
+	t_token *tmp;
 
-// 	tmp = token;
-// 	while(tmp != NULL)
-// 	{
-// 		printf("TK_TYPE -> %d   |   TK_LEXEMA -> %s\n", tmp->tk_type, tmp->lexema);
-// 		tmp = tmp->next;
-// 	}
-// }
+	tmp = token;
+	while(tmp != NULL)
+	{
+		printf("TK_TYPE -> %d   |   TK_LEXEMA -> %s\n", tmp->tk_type, tmp->lexema);
+		tmp = tmp->next;
+	}
+}
 
-// //---------------------------------------PARSER---------------------------------------------------------------//
+//---------------------------------------PARSER---------------------------------------------------------------//
 
 // t_bool	parse(t_token *token);
 
@@ -241,14 +240,14 @@
 
 int main(void)
 {
-    // t_scanner	scanner;
-    // t_bool		parser;
-    // t_token		*token = NULL;
+    t_scanner	scanner;
+    //t_bool		parser;
+    t_token		*token = NULL;
 
-    // char command[] = "< algo";
-    // init_scanner(&scanner, command);
-    // token = lexical_analysis(&scanner, token);
-    // print_stack(token);
+    char command[] = "< algo";
+    init_scanner(&scanner, command);
+    token = lexical_analysis(&scanner, token);
+    print_stack(token);
     // parser = syntax_analysis(token);
 	// printf("%d\n", parser);
 	printf("TESTE\n");

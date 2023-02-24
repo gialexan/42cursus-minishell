@@ -6,25 +6,16 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:58:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/23 00:58:52 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/24 01:25:28 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCANNER_H
 # define SCANNER_H
 
-# include <stdio.h>
-# include <string.h>
-# include <unistd.h>
 # include "../libft/libft.h"
 
 # define METACHARS "|()<> \t\n"
-# define IS_WORD(type) (type == TK_WORD)
-# define IS_PIPE(type) (type == TK_PIPE)
-# define IS_REDIRECTION(type)	(type == TK_LESS || \
-								type == TK_GREAT || \
-                            	type == TK_DLESS || \
-								type == TK_DGREAT)							  
 
 typedef enum s_tk_type
 {
@@ -51,5 +42,13 @@ typedef struct	s_scanner
 	size_t			start;
 	const char		*cmd;
 }	t_scanner;
+
+char	advance(t_scanner *scanner);
+void	skip_space (t_scanner *scanner);
+t_token	*string(t_scanner *scanner, char c);
+t_bool	match(t_scanner *scanner, char expected);
+t_token	*make_token(t_scanner *scanner, t_tk_type type);
+void	init_scanner(t_scanner *scanner, const char *command);
+t_token	*lexical_analysis(t_scanner *scanner, t_token *token);
 
 #endif

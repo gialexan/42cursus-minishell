@@ -6,7 +6,58 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/23 00:00:03 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/24 01:33:20 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <scanner.h>
+
+void	skip_space (t_scanner *scanner)
+{
+	while (ft_isspace(scanner->cmd[scanner->curr]))
+		advance (scanner);
+	scanner->start = scanner->curr;
+}
+
+char	advance(t_scanner *scanner)
+{
+	scanner->curr++;
+	return (scanner->cmd[scanner->curr - 1]);
+}
+
+t_bool	match(t_scanner *scanner, char expected)
+{
+	if (scanner->cmd[scanner->curr] != expected)
+		return (FALSE);
+	advance(scanner);
+	return (TRUE);
+}
+
+void	init_scanner(t_scanner *scanner, const char *command)
+{
+	scanner->curr = 0;
+	scanner->cmd = command;
+}
+
+t_token *string(t_scanner *scanner, char c)
+{
+	char close;
+
+	if (ft_isquote(c))
+	{
+		close = c;
+		c = advance(scanner);
+		while (c != 0 && c != close)
+		c = advance(scanner);
+		if (c == 0 && c != close)
+			return (make_token(scanner, TK_ERROR));
+		return (make_token(scanner, TK_WORD));
+	}
+	else
+	{
+		c = scanner->cmd[--scanner->curr];
+		while (!ft_strchr(METACHARS, c))
+		c = scanner->cmd[++scanner->curr];
+		return (make_token(scanner, TK_WORD));
+	}
+}
