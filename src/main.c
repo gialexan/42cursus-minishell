@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/24 14:41:43 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:09:35 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,14 @@ int main(void)
     t_bool		parser;
     t_token		*token = NULL;
 
-    char command[] = "< algo";
+    char command[] = "ls wc-l";
     init_scanner(&scanner, command);
     token = lexical_analysis(&scanner, token);
     print_stack(token);
     parser = syntax_analysis(token);
-	// printf("%d\n", parser);
+	if (parser == 0)
+		printf("Comando inválido!\n");
+	else
+		printf("Comando válido!\n");
 
 }
