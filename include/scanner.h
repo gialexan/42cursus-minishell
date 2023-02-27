@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:58:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/24 14:26:08 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:15:15 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct	s_scanner
 char	advance(t_scanner *scanner);
 void	skip_space (t_scanner *scanner);
 t_token	*string(t_scanner *scanner, char c);
-t_bool	match(t_scanner *scanner, char expected);
 t_token	*make_token(t_scanner *scanner, t_tk_type type);
 void	init_scanner(t_scanner *scanner, const char *command);
 t_token	*lexical_analysis(t_scanner *scanner, t_token *token);

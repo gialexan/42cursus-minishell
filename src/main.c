@@ -6,23 +6,23 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/24 21:33:50 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:24:54 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+// #include "minishell.h"
 
-void	print_stack(t_token *token)
-{
-	t_token *tmp;
+// void	print_stack(t_token *token)
+// {
+// 	t_token *tmp;
 
-	tmp = token;
-	while(tmp != NULL)
-	{
-		printf("TK_TYPE -> %d   |   TK_LEXEMA -> %s\n", tmp->tk_type, tmp->lexema);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = token;
+// 	while(tmp != NULL)
+// 	{
+// 		printf("TK_TYPE -> %d   |   TK_LEXEMA -> %s\n", tmp->tk_type, tmp->lexema);
+// 		tmp = tmp->next;
+// 	}
+// }
 
 //---------------------------------------TESTES---------------------------------------------------------------//
 /*
@@ -40,16 +40,18 @@ void	print_stack(t_token *token)
  *
 */
 
+# include <stdio.h>
+
 int main(void)
 {
-    t_scanner	scanner;
-    t_bool		parser;
-    t_token		*token = NULL;
+    // t_scanner	scanner;
+    // t_bool		parser;
+    // t_token		*token = NULL;
 
-    char command[] = "ls > ";
-    init_scanner(&scanner, command);
-    token = lexical_analysis(&scanner, token);
-    print_stack(token);
-    parser = syntax_analysis(token);
-	printf("%d\n", parser);
+    // char command[] = "ls > "; //< ls
+    // init_scanner(&scanner, command);
+    // token = lexical_analysis(&scanner, token);
+    // print_stack(token);
+    // parser = syntax_analysis(token);
+	// printf("%d\n", parser);
 }

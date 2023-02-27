@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/24 01:33:20 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:14:48 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,24 @@ char	advance(t_scanner *scanner)
 	return (scanner->cmd[scanner->curr - 1]);
 }
 
-t_bool	match(t_scanner *scanner, char expected)
-{
-	if (scanner->cmd[scanner->curr] != expected)
-		return (FALSE);
-	advance(scanner);
-	return (TRUE);
-}
-
 void	init_scanner(t_scanner *scanner, const char *command)
 {
 	scanner->curr = 0;
 	scanner->cmd = command;
+}
+
+t_token *make_token(t_scanner *scanner, t_tk_type type)
+{
+	t_token *token;
+
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->lexema = ft_substr(scanner->cmd, scanner->start,
+			scanner->curr - scanner->start);
+	token->tk_type = type;
+	token->next = NULL;
+	return (token);
 }
 
 t_token *string(t_scanner *scanner, char c)

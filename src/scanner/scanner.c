@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/24 21:32:19 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:17:13 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static	t_token	*lstlast(t_token *lst);
 static	t_token	*scan_token(t_scanner *scanner);
+static	t_bool	match(t_scanner *scanner, char expected);
 static	void	lstadd_back(t_token **lst, t_token *new);
 
 t_token	*lexical_analysis(t_scanner *scanner, t_token *token)
@@ -23,20 +24,6 @@ t_token	*lexical_analysis(t_scanner *scanner, t_token *token)
 	scanner->start = scanner->curr;
 	lstadd_back(&token, scan_token(scanner));
 	return (lexical_analysis(scanner, token));
-}
-
-t_token *make_token(t_scanner *scanner, t_tk_type type)
-{
-	t_token *token;
-
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->lexema = ft_substr(scanner->cmd, scanner->start,
-			scanner->curr - scanner->start);
-	token->tk_type = type;
-	token->next = NULL;
-	return (token);
 }
 
 static t_token *scan_token(t_scanner *scanner)
@@ -62,6 +49,14 @@ static t_token *scan_token(t_scanner *scanner)
 		return (make_token(scanner, TK_GREAT));
 	}
 	return (string(scanner, c));
+}
+
+static t_bool	match(t_scanner *scanner, char expected)
+{
+	if (scanner->cmd[scanner->curr] != expected)
+		return (FALSE);
+	advance(scanner);
+	return (TRUE);
 }
 
 static t_token *lstlast(t_token *lst)
