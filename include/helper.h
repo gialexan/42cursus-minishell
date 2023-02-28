@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   helper.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 11:32:17 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/28 21:23:36 by gialexan         ###   ########.fr       */
+/*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
+/*   Updated: 2023/02/28 21:57:49 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.h>
+#ifndef HELPER_H
+# define HELPER_H
 
-t_tk_type type(t_token *token)
-{
-	return (token->tk_type);
-}
+#include <scanner.h>
 
-t_bool match(t_tk_type tk_type, t_tk_type expected)
-{
-	return (tk_type == expected);
-}
+void	lstadd_back(t_token **lst, t_token *new);
+
+#endif

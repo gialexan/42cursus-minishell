@@ -6,20 +6,19 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/27 14:17:13 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 22:07:35 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <scanner.h>
+#include <helper.h>
 
-static	t_token	*lstlast(t_token *lst);
-static	t_token	*scan_token(t_scanner *scanner);
+static	t_token *scan_token(t_scanner *scanner);
 static	t_bool	match(t_scanner *scanner, char expected);
-static	void	lstadd_back(t_token **lst, t_token *new);
 
 t_token	*lexical_analysis(t_scanner *scanner, t_token *token)
 {
-	if (scanner->curr > ft_strlen(scanner->cmd)) //if (scanner->curr >= ft_strlen(scanner->cmd) + 1)
+	if (scanner->curr > ft_strlen(scanner->cmd))
 		return (token);
 	scanner->start = scanner->curr;
 	lstadd_back(&token, scan_token(scanner));
@@ -51,31 +50,10 @@ static t_token *scan_token(t_scanner *scanner)
 	return (string(scanner, c));
 }
 
-static t_bool	match(t_scanner *scanner, char expected)
+static t_bool match(t_scanner *scanner, char expected)
 {
 	if (scanner->cmd[scanner->curr] != expected)
 		return (FALSE);
 	advance(scanner);
 	return (TRUE);
-}
-
-static t_token *lstlast(t_token *lst)
-{
-	if (lst)
-		while (lst->next != NULL)
-			lst = lst->next;
-	return (lst);
-}
-
-static void lstadd_back(t_token **lst, t_token *new)
-{
-	t_token	*tmp;
-
-	if (!*lst)
-		*lst = new;
-	else
-	{
-		tmp = lstlast(*lst);
-		tmp->next = new;
-	}
 }

@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   linkedlist.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 11:32:17 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/28 21:23:36 by gialexan         ###   ########.fr       */
+/*   Created: 2023/02/28 17:18:19 by gialexan          #+#    #+#             */
+/*   Updated: 2023/02/28 21:23:43 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.h>
+#include <helper.h>
 
-t_tk_type type(t_token *token)
+t_token	*lstlast(t_token *lst)
 {
-	return (token->tk_type);
+	if (lst)
+		while (lst->next != NULL)
+			lst = lst->next;
+	return (lst);
 }
 
-t_bool match(t_tk_type tk_type, t_tk_type expected)
+void	lstadd_back(t_token **lst, t_token *new)
 {
-	return (tk_type == expected);
+	t_token	*tmp;
+
+	if (!*lst)
+		*lst = new;
+	else
+	{
+		tmp = lstlast(*lst);
+		tmp->next = new;
+	}
 }

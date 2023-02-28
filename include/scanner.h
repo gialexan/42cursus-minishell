@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:58:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/27 14:15:15 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 22:02:33 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SCANNER_H
 
 # include "../libft/libft.h"
+# include <stdio.h>
 
 # define METACHARS "|()<> \t\n"
 
@@ -43,11 +44,11 @@ typedef struct	s_scanner
 	const char		*cmd;
 }	t_scanner;
 
-char	advance(t_scanner *scanner);
-void	skip_space (t_scanner *scanner);
-t_token	*string(t_scanner *scanner, char c);
-t_token	*make_token(t_scanner *scanner, t_tk_type type);
-void	init_scanner(t_scanner *scanner, const char *command);
-t_token	*lexical_analysis(t_scanner *scanner, t_token *token);
+char		advance(t_scanner *scanner);
+void		skip_space (t_scanner *scanner);
+t_token		*string(t_scanner *scanner, char c);
+t_token		*make_token(t_scanner *scanner, t_tk_type type);
+t_scanner	init_scanner(const char *command);
+t_token		*lexical_analysis(t_scanner *scanner, t_token *token);
 
 #endif

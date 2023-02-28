@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 11:32:17 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/28 21:23:36 by gialexan         ###   ########.fr       */
+/*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
+/*   Updated: 2023/02/28 22:06:05 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.h>
+#ifndef EXEC_H
+# define EXEC_H
 
-t_tk_type type(t_token *token)
+typedef struct s_cmd
 {
-	return (token->tk_type);
-}
+	t_token			*list;
+	struct s_cmd	*next;
+}	t_cmd;
 
-t_bool match(t_tk_type tk_type, t_tk_type expected)
-{
-	return (tk_type == expected);
-}
+#endif

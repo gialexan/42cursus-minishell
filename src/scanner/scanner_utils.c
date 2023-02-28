@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/27 14:14:48 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:38:19 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@ char	advance(t_scanner *scanner)
 	return (scanner->cmd[scanner->curr - 1]);
 }
 
-void	init_scanner(t_scanner *scanner, const char *command)
+t_scanner	init_scanner(const char *command)
 {
-	scanner->curr = 0;
-	scanner->cmd = command;
+	t_scanner scanner;
+
+	scanner.curr = 0;
+	scanner.cmd = command;
+	return (scanner);
 }
 
 t_token *make_token(t_scanner *scanner, t_tk_type type)
