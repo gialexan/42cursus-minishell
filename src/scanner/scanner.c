@@ -6,13 +6,14 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/28 22:07:35 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/01 12:36:07 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <scanner.h>
 #include <helper.h>
 
+static	void	skip_space (t_scanner *scanner);
 static	t_token *scan_token(t_scanner *scanner);
 static	t_bool	match(t_scanner *scanner, char expected);
 
@@ -56,4 +57,11 @@ static t_bool match(t_scanner *scanner, char expected)
 		return (FALSE);
 	advance(scanner);
 	return (TRUE);
+}
+
+static	void	skip_space (t_scanner *scanner)
+{
+	while (ft_isspace(scanner->cmd[scanner->curr]))
+		advance (scanner);
+	scanner->start = scanner->curr;
 }

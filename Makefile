@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/02/28 21:17:41 by gialexan         ###   ########.fr        #
+#    Updated: 2023/02/28 23:36:50 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SOURCES_FILES = main.c			\
 				scanner_utils.c	\
 				parser.c		\
 				parser_utils.c	\
+				parser_type.c   \
 				linkedlist.c
 
 SOURCES_BASE = src

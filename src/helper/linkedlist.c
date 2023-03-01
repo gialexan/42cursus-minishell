@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:18:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/28 21:23:43 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/01 12:43:34 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,11 @@ void	lstadd_back(t_token **lst, t_token *new)
 		tmp = lstlast(*lst);
 		tmp->next = new;
 	}
+}
+
+void	lstdelone(t_token *lst, void (*del)(void*))
+{
+	del((void *)lst->lexema);
+	free(lst);
+	lst = NULL;
 }

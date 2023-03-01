@@ -6,18 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/28 12:38:19 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/01 12:35:08 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <scanner.h>
-
-void	skip_space (t_scanner *scanner)
-{
-	while (ft_isspace(scanner->cmd[scanner->curr]))
-		advance (scanner);
-	scanner->start = scanner->curr;
-}
 
 char	advance(t_scanner *scanner)
 {

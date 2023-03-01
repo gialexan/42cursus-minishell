@@ -1,0 +1,11 @@
+total 64
+-rw-r--r-- 1 coder coder  1104 Feb 19 10:45 gramatic
+drwxr-xr-x 2 coder coder  4096 Feb 28 17:17 include
+-rw-r--r-- 1 coder coder     0 Mar  1 14:19 infile
+drwxr-xr-x 2 coder coder  4096 Mar  1 13:49 libft
+-rw-r--r-- 1 coder coder  2001 Feb 28 23:36 Makefile
+-rwxr-xr-x 1 coder coder 31648 Mar  1 14:15 minishell
+drwxr-xr-x 2 coder coder  4096 Mar  1 14:15 obj
+-rw-r--r-- 1 coder coder    75 Mar  1 13:51 outfile
+-rw-r--r-- 1 coder coder    14 Jan 23 14:29 README.md
+drwxr-xr-x 5 coder coder  4096 Feb 28 17:18 src

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/02/28 22:30:50 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/01 17:39:26 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,43 @@ void	print_stack(t_token *token)
 	}
 }
 
+void print_cmd(t_cmd *cmd) {
+    t_token *curr_token;
+
+    while (cmd != NULL) {
+        printf("Command:\n");
+        curr_token = cmd->list;
+        while (curr_token != NULL) {
+            printf("\t%s\n", curr_token->lexema);
+            curr_token = curr_token->next;
+        }
+        cmd = cmd->next;
+    }
+}
+
+void	lstclear(t_token **lst, void (*del)(void *))
+{
+	t_token	*tmp;
+	t_token *next;
+
+	if (!*lst)
+		return ;
+	tmp = *lst;
+	next = tmp->next;
+	del((void *)tmp->lexema);
+	del(tmp);
+	lstclear(&next, del);
+}
+
+void	clear_dlst(t_cmd *lst, void (*del)(void *))
+{
+	if (!lst)
+		return ;
+	lstclear(&lst->list, del);
+	clear_dlst(lst->next, del);
+	del(lst);
+}
+
 //---------------------------------------TESTES---------------------------------------------------------------//
 /*
  *				<---------------------Lexical Analysis Testes---------------------->
@@ -39,20 +76,6 @@ void	print_stack(t_token *token)
  *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 6 = <<infile>>>, 7 = <<<infile, 8 = ls | >, 9 = ls > |
  *
 */
-void	lstclear(t_token **lst, void (*del)(void *))
-{
-	t_token	*tmp;
-
-	while (*lst != NULL)
-	{
-		tmp = *lst;
-		*lst = (*lst)->next;
-		del((void *)tmp->lexema);
-		free(tmp);
-	}
-	*lst = NULL;
-}
-void print_cmd(t_cmd *cmd);
 
 int main(void)
 {
@@ -60,35 +83,13 @@ int main(void)
     t_token		*token = NULL;
 	t_cmd		*parser = NULL;
 
-    char command[] = "test1 | test2 | test3 | test4 | test5 | test6 | test7"; //< ls
+    char command[] = "ls > outfile | test2 | test3 | test4 | test5 | test6 | test7"; 
     scanner = init_scanner(command);
-    token = lexical_analysis(&scanner, token);
 
+    token = lexical_analysis(&scanner, token);
 	print_stack(token);
+
 	parser = syntax_analysis(token);
 	print_cmd(parser);
-	
-	token = NULL;
-	t_cmd *test = parser;
-	while(test != NULL)
-	{
-		t_cmd *aux = test;
-		lstclear(&aux->list, free);
-		test = test->next;
-		free(aux);
-	}
-}
-
-void print_cmd(t_cmd *cmd) {
-    t_token *curr_token;
-
-    while (cmd != NULL) {
-        printf("Command:\n");
-        curr_token = cmd->list;
-        while (curr_token != NULL) {
-            printf("\t%s\n", curr_token->lexema);
-            curr_token = curr_token->next;
-        }
-        cmd = cmd->next;
-    }
+	clear_dlst(parser, free);
 }
