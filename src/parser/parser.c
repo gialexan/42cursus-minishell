@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/01 17:01:17 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:07:59 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ static	t_cmd *pipes(t_token *token, t_cmd *cmd, t_cmd *head)
 	node = addnode(cmd);
 	lstadd_back(&node->list, c);
 	if (is_redirect(c))
-		return (words(token, cmd, head));
+		return (words(token, node, head));
 	return (parser(token, node, head));
 }

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/01 17:39:26 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:06:26 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,17 @@ void	print_stack(t_token *token)
 
 void print_cmd(t_cmd *cmd) {
     t_token *curr_token;
+	int count;
 
+	count = 0;
     while (cmd != NULL) {
-        printf("Command:\n");
+        printf("Command %d:\n\t", ++count);
         curr_token = cmd->list;
         while (curr_token != NULL) {
-            printf("\t%s\n", curr_token->lexema);
+            printf("%s ", curr_token->lexema);
             curr_token = curr_token->next;
         }
+		printf("\n");
         cmd = cmd->next;
     }
 }
@@ -83,7 +86,7 @@ int main(void)
     t_token		*token = NULL;
 	t_cmd		*parser = NULL;
 
-    char command[] = "ls > outfile | test2 | test3 | test4 | test5 | test6 | test7"; 
+    char command[] = "< infile test1 > outfile | << EOF test2 >> outfile | cat infile test3"; 
     scanner = init_scanner(command);
 
     token = lexical_analysis(&scanner, token);
@@ -91,5 +94,6 @@ int main(void)
 
 	parser = syntax_analysis(token);
 	print_cmd(parser);
+	//exec_command()
 	clear_dlst(parser, free);
 }
