@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 01:25:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/01 12:39:09 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/02 13:38:27 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 # define PARSER_H
 
 # include <scanner.h>
-# include <exec.h>
 # include <helper.h>
+
+typedef struct s_cmd
+{
+	t_token			*list;
+	struct s_cmd	*next;
+}	t_cmd;
 
 t_cmd	*cmdnew();
 t_cmd *addnode(t_cmd *cmd);

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/01 18:06:26 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:01:10 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	clear_dlst(t_cmd *lst, void (*del)(void *))
  *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 6 = <<infile>>>, 7 = <<<infile, 8 = ls | >, 9 = ls > |
  *
 */
+#include <unistd.h>
 
 int main(void)
 {
@@ -86,7 +87,7 @@ int main(void)
     t_token		*token = NULL;
 	t_cmd		*parser = NULL;
 
-    char command[] = "< infile test1 > outfile | << EOF test2 >> outfile | cat infile test3"; 
+    char command[] = "EOF"; 
     scanner = init_scanner(command);
 
     token = lexical_analysis(&scanner, token);
@@ -96,4 +97,5 @@ int main(void)
 	print_cmd(parser);
 	//exec_command()
 	clear_dlst(parser, free);
+	here_doc(command);
 }
