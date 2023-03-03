@@ -6,16 +6,16 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/01 18:07:59 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/03 09:28:23 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.h>
 
 static t_token *advanced(t_token **token);
-static t_cmd *words(t_token *token, t_cmd *cmd, t_cmd *first);
-static t_cmd *pipes(t_token *token, t_cmd *cmd, t_cmd *first);
-static t_cmd *parser(t_token *token, t_cmd *cmd, t_cmd *first);
+static t_cmd *words(t_token *token, t_cmd *cmd, t_cmd *head);
+static t_cmd *pipes(t_token *token, t_cmd *cmd, t_cmd *head);
+static t_cmd *parser(t_token *token, t_cmd *cmd, t_cmd *head);
 
 t_cmd *syntax_analysis(t_token *token)
 {

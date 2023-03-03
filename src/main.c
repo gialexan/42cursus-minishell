@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/02 15:01:10 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/03 09:37:08 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,25 @@ void print_cmd(t_cmd *cmd) {
     }
 }
 
-void	lstclear(t_token **lst, void (*del)(void *))
+void	lstclear(t_token *lst, void (*del)(void *))
 {
 	t_token	*tmp;
 	t_token *next;
 
-	if (!*lst)
+	if (!lst)
 		return ;
-	tmp = *lst;
+	tmp = lst;
 	next = tmp->next;
 	del((void *)tmp->lexema);
 	del(tmp);
-	lstclear(&next, del);
+	lstclear(next, del);
 }
 
 void	clear_dlst(t_cmd *lst, void (*del)(void *))
 {
 	if (!lst)
 		return ;
-	lstclear(&lst->list, del);
+	lstclear(lst->list, del);
 	clear_dlst(lst->next, del);
 	del(lst);
 }
@@ -79,7 +79,29 @@ void	clear_dlst(t_cmd *lst, void (*del)(void *))
  *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 6 = <<infile>>>, 7 = <<<infile, 8 = ls | >, 9 = ls > |
  *
 */
-#include <unistd.h>
+
+/* TO DO
+ *
+ * Verificar questão de redirecionadores, como eles funcionam e o preciso produzir sobre.
+ *
+ * Criar estrutura que executa os comandos.
+ * Como vou me livrar dos nó da linkedlist que forem redirect
+ * 1° Redirect a ser executado é sempre heredoc (dless)
+ * 2° Redirect a ser executado é sempre input (less)
+ * 3° Redirect a ser executado é sempre exit (great) e (dgreat). Obs: O que vale é qual está por último
+ *
+ *
+ * run_cmdlst vai estar dentro da execute_command
+ *
+*/
+
+// void	run_cmdlst(t_cmd *cmd)
+// {
+// 	if (cmd == NULL)
+// 		return ;
+// 	//exec_cmdlst(cmd->list);
+// 	run_cmdlst(cmd->next);
+// }
 
 int main(void)
 {
@@ -87,15 +109,14 @@ int main(void)
     t_token		*token = NULL;
 	t_cmd		*parser = NULL;
 
-    char command[] = "EOF"; 
+    char command[] = "cat  | ls | wc -l"; 
     scanner = init_scanner(command);
 
     token = lexical_analysis(&scanner, token);
-	print_stack(token);
-
+	//print_stack(token);
 	parser = syntax_analysis(token);
-	print_cmd(parser);
-	//exec_command()
+	//print_cmd(parser);
+	//execute_command();
+	//run_cmdlst(parser);
 	clear_dlst(parser, free);
-	here_doc(command);
 }

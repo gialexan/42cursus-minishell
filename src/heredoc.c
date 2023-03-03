@@ -6,14 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:00:51 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/02 15:03:47 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:59:38 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
 
 /*
 * Prototipagem inicial da função heredoc.
@@ -28,8 +27,8 @@ void	here_doc(char *delimiter)
 {
 	int fd;
 	char *input;
-	
-	fd = open ("/tmp/heredoc_tmp", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+
+	fd = open("/tmp/heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	while (TRUE)
 	{
 		input = readline("> ");
