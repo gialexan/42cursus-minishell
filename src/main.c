@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/03 09:37:08 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/04 00:10:18 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	print_stack(t_token *token)
 	}
 }
 
-void print_cmd(t_cmd *cmd) {
+void	print_cmd(t_cmd *cmd)
+{
     t_token *curr_token;
 	int count;
 
@@ -91,17 +92,57 @@ void	clear_dlst(t_cmd *lst, void (*del)(void *))
  * 3° Redirect a ser executado é sempre exit (great) e (dgreat). Obs: O que vale é qual está por último
  *
  *
- * run_cmdlst vai estar dentro da execute_command
+ * run_cmdlst vai estar dentro da execute_command:
+ * ls <<EOF -l > outfile < infile
+ * cat > ./outfiles/outfiles1 < missing
+ * cat > outfile < missing
  *
 */
 
-// void	run_cmdlst(t_cmd *cmd)
-// {
-// 	if (cmd == NULL)
-// 		return ;
-// 	//exec_cmdlst(cmd->list);
-// 	run_cmdlst(cmd->next);
-// }
+void	exec_cmd(t_token *token, t_bool boolean) //essa função pode ter um ponteiro para uma função
+{
+	if (!token)
+		return ;
+	else if (match(type(token), TK_WORD)) //Aki vai executar depois que todos tk já forem executar.
+	{
+		exec_cmd(token->next, boolean);
+		printf("%8s | %3s \n", "WORD", token->lexema);
+		return ;
+	}
+	else if (match(type(token), TK_DLESS))
+	{
+		printf("%8s | %3s \n", "HEREDOC", token->lexema);
+		return(exec_cmd(token->next, boolean));
+	}
+	else if (match(type(token), TK_LESS))
+	{
+		//aqui vai chamar a função de abrir arq.
+		printf("%8s | %3s \n", "INPUT", token->lexema);
+		//return(exec_cmd(token->next, função que retorna boolean));
+		return(exec_cmd(token->next, TRUE));
+	}
+	else if (match(type(token), TK_GREAT) && boolean)
+	{
+		printf("%8s | %3s \n", "OUTPUT", token->lexema);
+		return (exec_cmd(token->next, boolean));
+	}
+	else if (match(type(token), TK_DGREAT) && boolean)
+	{
+		printf("%8s | %3s \n", "APPEND", token->lexema);
+		return (exec_cmd(token->next, boolean));
+	}
+	return (exec_cmd(token->next, FALSE));
+}
+
+void	run_cmdlst(t_cmd *cmd)
+{
+	if (!cmd)
+		return ;
+	exec_cmd(cmd->list, FALSE); //sempre enviar tudo como se fosse ter <
+	return (run_cmdlst(cmd->next));
+	/* Pode ou não limpar aqui. */
+	/* clear_dlst(cmd, free);*/
+}
 
 int main(void)
 {
@@ -109,14 +150,19 @@ int main(void)
     t_token		*token = NULL;
 	t_cmd		*parser = NULL;
 
-    char command[] = "cat  | ls | wc -l"; 
+    char command[] = "<< EOF test1 ls < test cat <<EOF -l << EOF1 >> test > test | ls > out"; 
     scanner = init_scanner(command);
 
     token = lexical_analysis(&scanner, token);
-	//print_stack(token);
+	print_stack(token);
+
 	parser = syntax_analysis(token);
-	//print_cmd(parser);
+	print_cmd(parser);
 	//execute_command();
+
 	//run_cmdlst(parser);
-	clear_dlst(parser, free);
+	//clear_dlst(parser, free);
+	
+	cat > ./outfiles/outfiles1 < missing
+	-> cat > out < in
 }
