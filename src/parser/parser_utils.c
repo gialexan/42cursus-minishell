@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:17 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/06 23:04:31 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:54:31 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,12 @@ t_cmd	*cmdnew()
 	return (cmd);
 }
 
-t_cmd *syntax_error(t_token *token)
+t_token *advanced(t_token **token)
 {
-	dprintf(STDERR_FILENO, "minihell: ");
-	if (is_error(token))
-		dprintf(STDERR_FILENO, "error unclosed quotes %s\n", token->lexema);
-	else
-	{
-		dprintf(STDERR_FILENO, "syntax error near unexpected token ");
-		if (is_eof(token))
-			dprintf(STDERR_FILENO, "'newline'\n");
-		else
-			dprintf(STDERR_FILENO, "'%s'\n", token->lexema);
-	}
-	return (NULL);
+	t_token *current;
+
+	current = *token;
+	*token = (*token)->next;
+	current->next = NULL;
+	return (current);
 }

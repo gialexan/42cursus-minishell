@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 01:25:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/03 09:29:42 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:58:32 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_bool is_word(t_token *token);
 t_tk_type type(t_token *token);
 t_bool is_error(t_token *token);
 t_bool is_redirect(t_token *token);
-t_cmd *syntax_error(t_token *token);
+t_token *advanced(t_token **token);
 t_cmd *syntax_analysis(t_token *token);
 t_bool match(t_tk_type tk_type, t_tk_type expected);
 

@@ -6,27 +6,19 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/03 09:35:43 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 20:20:39 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <scanner.h>
-#include <helper.h>
 
-static	void	skip_space (t_scanner *scanner);
-static	t_token *scan_token(t_scanner *scanner);
-static	t_bool	match(t_scanner *scanner, char expected);
+static char		advance(t_scanner *scanner);
+static t_token *word(t_scanner *scanner, char c);
+static t_token *string(t_scanner *scanner, char c);
+static t_token *word_quote(t_scanner *scanner, char c);
+static t_bool	match(t_scanner *scanner, char expected);
 
-t_token	*lexical_analysis(t_scanner *scanner, t_token *token)
-{
-	if (scanner->curr > ft_strlen(scanner->cmd))
-		return (token);
-	scanner->start = scanner->curr;
-	lstadd_back(&token, scan_token(scanner));
-	return (lexical_analysis(scanner, token));
-}
-
-static t_token *scan_token(t_scanner *scanner)
+t_token *scan_token(t_scanner *scanner)
 {
 	char	c;
 
@@ -48,7 +40,18 @@ static t_token *scan_token(t_scanner *scanner)
 			return (make_token(scanner, TK_DGREAT));
 		return (make_token(scanner, TK_GREAT));
 	}
-	return (string(scanner, c));
+	else
+	{
+		if (ft_isquote(c))
+			return (word_quote(scanner, c));
+		return (word(scanner, c));
+	}
+}
+
+static char	advance(t_scanner *scanner)
+{
+	scanner->curr++;
+	return (scanner->cmd[scanner->curr - 1]);
 }
 
 static t_bool match(t_scanner *scanner, char expected)
@@ -59,9 +62,23 @@ static t_bool match(t_scanner *scanner, char expected)
 	return (TRUE);
 }
 
-static	void	skip_space (t_scanner *scanner)
+static	t_token *word(t_scanner *scanner, char c)
 {
-	while (ft_isspace(scanner->cmd[scanner->curr]))
-		advance (scanner);
-	scanner->start = scanner->curr;
+	c = scanner->cmd[--scanner->curr];
+	while (!ft_strchr(METACHARS, c))
+	c = scanner->cmd[++scanner->curr];
+	return (make_token(scanner, TK_WORD));
+}
+
+static	t_token *word_quote(t_scanner *scanner, char c)
+{
+	char close;
+
+	close = c;
+	c = advance(scanner);
+	while (c != 0 && c != close)
+	c = advance(scanner);
+	if (c == 0 && c != close)
+		return (make_token(scanner, TK_ERROR));
+	return (make_token(scanner, TK_WORD));
 }

@@ -6,13 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/07 18:45:28 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 20:00:13 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.h>
 
-static t_token *advanced(t_token **token);
+static t_cmd *syntax_error(t_token *token);
 static t_cmd *words(t_token *token, t_cmd *cmd, t_cmd *head);
 static t_cmd *pipes(t_token *token, t_cmd *cmd, t_cmd *head);
 static t_cmd *parser(t_token *token, t_cmd *cmd, t_cmd *head);
@@ -52,16 +52,6 @@ static t_cmd *parser(t_token *token, t_cmd *cmd, t_cmd *head)
 	return (syntax_error(c));
 }
 
-static	t_token *advanced(t_token **token)
-{
-	t_token *current;
-
-	current = *token;
-	*token = (*token)->next;
-	current->next = NULL;
-	return (current);
-}
-
 static	t_cmd *words(t_token *token, t_cmd *cmd, t_cmd *head)
 {
 	t_token *c;
@@ -86,4 +76,20 @@ static	t_cmd *pipes(t_token *token, t_cmd *cmd, t_cmd *head)
 	if (is_redirect(c))
 		return (words(token, node, head));
 	return (parser(token, node, head));
+}
+
+static t_cmd *syntax_error(t_token *token)
+{
+	dprintf(STDERR_FILENO, "minihell: ");
+	if (is_error(token))
+		dprintf(STDERR_FILENO, "error unclosed quotes %s\n", token->lexema);
+	else
+	{
+		dprintf(STDERR_FILENO, "syntax error near unexpected token ");
+		if (is_eof(token))
+			dprintf(STDERR_FILENO, "'newline'\n");
+		else
+			dprintf(STDERR_FILENO, "'%s'\n", token->lexema);
+	}
+	return (NULL);
 }

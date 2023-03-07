@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/07 18:08:50 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:57:52 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,19 +123,9 @@ void	clear_dlst(t_cmd *lst, t_token *token, void (*del)(void *))
  * [<<] [EOF] [test1] [ls] [<] [test] [cat] [<<] [EOF] [-l] [<<] [EOF1] [>>] [test] [>] [test]
 */
 
-static t_token *advanced(t_token **token)
-{
-	t_token *current;
-
-	current = *token;
-	*token = (*token)->next;
-	current->next = NULL;
-	return (current);
-}
-
 t_token *exec_redirect(t_token *token, t_token *head);
 
-t_token *exec_input(t_token *token, t_token *c, t_token *head)
+t_token *exec_input(t_token *token, t_token *head, t_token *c)
 {
 	t_token *filename = advanced(&token);
 	lstdelone(c, free);
@@ -143,7 +133,7 @@ t_token *exec_input(t_token *token, t_token *c, t_token *head)
 	return (exec_redirect(token, head));
 }
 
-t_token *exec_heredoc(t_token *token, t_token *c, t_token *head)
+t_token *exec_heredoc(t_token *token, t_token *head, t_token *c)
 {
 	t_token *filename = advanced(&token);
 	lstdelone(c, free);
@@ -151,7 +141,7 @@ t_token *exec_heredoc(t_token *token, t_token *c, t_token *head)
 	return (exec_redirect(token, head));
 }
 
-t_token *exec_output(t_token *token, t_token *c, t_token *head)
+t_token *exec_output(t_token *token, t_token *head, t_token *c)
 {
 	t_token *filename = advanced(&token);
 	lstdelone(c, free);
@@ -159,7 +149,7 @@ t_token *exec_output(t_token *token, t_token *c, t_token *head)
 	return (exec_redirect(token, head));
 }
 
-t_token *exec_append(t_token *token, t_token *c, t_token *head)
+t_token *exec_append(t_token *token, t_token *head, t_token *c)
 {
 	t_token *filename = advanced(&token);
 	lstdelone(c, free);
@@ -175,25 +165,27 @@ t_token *exec_redirect(t_token *token, t_token *head)
         return head;
 	c = advanced(&token);
     if (match(type(c), TK_DLESS))
-		return (exec_heredoc(token, c, head));
+		return (exec_heredoc(token, head, c));
     else if (match(type(c), TK_LESS))
-		return (exec_input(token, c, head));
+		return (exec_input(token, head, c));
     else if (match(type(c), TK_GREAT))
-		return (exec_output(token, c, head));
+		return (exec_output(token, head, c));
     else if (match(type(c), TK_DGREAT))
-		return (exec_append(token, c, head));
+		return (exec_append(token, head, c));
 	lstadd_back(&head, c);
 	return (exec_redirect(token, head));
 }
 
-void	run_cmdlst(t_cmd *cmd)
+void	execute_command(t_cmd *cmd)
 {
+	t_token *tmp;
+
 	if (!cmd)
 		return ;
-	t_token *tmp = exec_redirect(cmd->list, NULL);
+	tmp = exec_redirect(cmd->list, NULL);
 	print_stack(tmp, 1);
 	lstclear(tmp, free);
-	run_cmdlst(cmd->next);
+	execute_command(cmd->next);
 	free(cmd);
 }
 
@@ -215,9 +207,7 @@ int main(void)
 
 	//printf("\n\n");
 
-	//execute_command();
-
-	run_cmdlst(parser);
+	execute_command(parser);
 	
 	// cat > ./outfiles/outfiles1 < missing
 	// -> cat > out < in

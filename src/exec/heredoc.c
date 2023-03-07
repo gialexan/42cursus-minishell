@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:00:51 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/02 18:59:38 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:06:55 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 *
 */
 
-void	here_doc(char *delimiter)
+void	exec_heredoc(char *delimiter)
 {
 	int fd;
 	char *input;
