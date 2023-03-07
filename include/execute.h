@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/06 19:39:29 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/06 23:33:41 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_execute
 	t_redir	*input;
 	t_redir *error;
 	t_redir *output;
-	t_bool	error;
 }	t_execute;
 
 #endif

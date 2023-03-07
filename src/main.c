@@ -6,23 +6,39 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/06 22:31:05 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 18:08:50 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_stack(t_token *token)
+void print(t_token *token)
+{
+	printf("%8s | %3s | %3s\n", "HEREDOC", token->lexema, token->next->lexema);
+}
+
+void	print_stack(t_token *token, int type)
 {
 	t_token *tmp;
-
 	tmp = token;
-	while(tmp != NULL)
+	if (type == 1)
 	{
-		printf("TK_TYPE -> %d   |   TK_LEXEMA -> %s\n", tmp->tk_type, tmp->lexema);
-		tmp = tmp->next;
+		printf("Command:\n\t");
+		while(tmp != NULL)
+		{
+			printf("%s ", tmp->lexema);
+			tmp = tmp->next;
+		}
+		printf("\n");
 	}
-	printf("\n");
+	else
+	{
+		while(tmp != NULL)
+		{
+			printf("TK_TYPE -> %d   |   TK_LEXEMA -> %s\n", tmp->tk_type, tmp->lexema);
+			tmp = tmp->next;
+		}
+	}
 }
 
 void	print_cmd(t_cmd *cmd)
@@ -41,11 +57,6 @@ void	print_cmd(t_cmd *cmd)
 		printf("\n");
         cmd = cmd->next;
     }
-}
-
-void print(t_token *token)
-{
-	printf("%8s | %3s | %3s\n", "HEREDOC", token->lexema, token->next->lexema);
 }
 
 void	lstclear(t_token *lst, void (*del)(void *))
@@ -122,52 +133,70 @@ static t_token *advanced(t_token **token)
 	return (current);
 }
 
+t_token *exec_redirect(t_token *token, t_token *head);
 
-void exec_input(t_token **token)
+t_token *exec_input(t_token *token, t_token *c, t_token *head)
 {
-	t_token *filename = advanced(token);
+	t_token *filename = advanced(&token);
+	lstdelone(c, free);
 	lstdelone(filename, free);
+	return (exec_redirect(token, head));
 }
 
-t_token *exec_cmd(t_token *token, t_token *head)
+t_token *exec_heredoc(t_token *token, t_token *c, t_token *head)
+{
+	t_token *filename = advanced(&token);
+	lstdelone(c, free);
+	lstdelone(filename, free);
+	return (exec_redirect(token, head));
+}
+
+t_token *exec_output(t_token *token, t_token *c, t_token *head)
+{
+	t_token *filename = advanced(&token);
+	lstdelone(c, free);
+	lstdelone(filename, free);
+	return (exec_redirect(token, head));
+}
+
+t_token *exec_append(t_token *token, t_token *c, t_token *head)
+{
+	t_token *filename = advanced(&token);
+	lstdelone(c, free);
+	lstdelone(filename, free);
+	return (exec_redirect(token, head));
+}
+
+t_token *exec_redirect(t_token *token, t_token *head)
 {
 	t_token *c;
 
     if (!token)
         return head;
 	c = advanced(&token);
-    if (match(type(c), TK_DLESS)) {
-		return lstdelone(c, free), exec_input(&token), exec_cmd(token, head);
-    }
-    if (match(type(c), TK_LESS)) {
-        //return exec_cmd(token, head);
-		return lstdelone(c, free), exec_input(&token), exec_cmd(token, head);
-    }
-    if (match(type(c), TK_GREAT)) {
-        //return exec_cmd(token, head);
-		return lstdelone(c, free), exec_input(&token), exec_cmd(token, head);
-    }
-    if (match(type(c), TK_DGREAT)) {
-        //return exec_cmd(token, head);
-		return lstdelone(c, free), exec_input(&token), exec_cmd(token, head);
-    }
+    if (match(type(c), TK_DLESS))
+		return (exec_heredoc(token, c, head));
+    else if (match(type(c), TK_LESS))
+		return (exec_input(token, c, head));
+    else if (match(type(c), TK_GREAT))
+		return (exec_output(token, c, head));
+    else if (match(type(c), TK_DGREAT))
+		return (exec_append(token, c, head));
 	lstadd_back(&head, c);
-	return exec_cmd(token, head);
+	return (exec_redirect(token, head));
 }
 
 void	run_cmdlst(t_cmd *cmd)
 {
 	if (!cmd)
 		return ;
-	//exec_cmd(cmd->list, NULL); //sempre enviar tudo como se fosse ter <
-	t_token *tmp = exec_cmd(cmd->list, NULL);
-	print_stack(tmp);
+	t_token *tmp = exec_redirect(cmd->list, NULL);
+	print_stack(tmp, 1);
+	lstclear(tmp, free);
 	run_cmdlst(cmd->next);
-	//clear_dlst(cmd, tmp, free);
-	/* Pode ou não limpar aqui. */
+	free(cmd);
 }
 
-#include <fcntl.h>
 //"<< EOF test1  ls < test  cat <<EOF -l << EOF1 >> test > test"
 int main(void)
 {
@@ -175,23 +204,21 @@ int main(void)
     t_token		*token = NULL;
 	t_cmd		*parser = NULL;
 
-    char command[] = "<< EOF test1 | ls < test | cat <<EOF -l << EOF1 >> test > test"; 
+    char command[] = "<< EOF test1 | ls < test  | cat <<EOF -l << EOF1 >> test > test"; 
     scanner = init_scanner(command);
 
     token = lexical_analysis(&scanner, token);
-	//print_stack(token);
+	//print_stack(token, 0);
 
 	parser = syntax_analysis(token);
+	print_cmd(parser);
 
-	//t_token test;
+	//printf("\n\n");
 
-	// int fd = open("../outfile", O_RDONLY);
-	// perror("../outfile");
-
-	//print_cmd(parser);
 	//execute_command();
 
 	run_cmdlst(parser);
+	
 	// cat > ./outfiles/outfiles1 < missing
 	// -> cat > out < in
 	//clear_dlst(parser, free);
