@@ -6,11 +6,12 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/07 20:00:13 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/08 10:57:36 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.h>
+#include <helper.h>
 
 static t_cmd *syntax_error(t_token *token);
 static t_cmd *words(t_token *token, t_cmd *cmd, t_cmd *head);

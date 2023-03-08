@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.h                                          :+:      :+:    :+:   */
+/*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/08 14:45:47 by gialexan         ###   ########.fr       */
+/*   Created: 2023/03/08 10:49:18 by gialexan          #+#    #+#             */
+/*   Updated: 2023/03/08 10:54:58 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_H
-# define EXECUTE_H
+#include <helper.h>
 
-# include <helper.h>
-
-typedef struct s_redirect
+void	lstclear(t_token *lst, void (*del)(void *))
 {
-	int		fd;
-	t_bool	boolean;
-}	t_redirect;
+	t_token	*tmp;
+	t_token *next;
 
-typedef struct s_execute
+	if (!lst)
+		return ;
+	tmp = lst;
+	next = tmp->next;
+	del((void *)tmp->lexema);
+	del(tmp);
+	lstclear(next, del);
+}
+
+void	clear_dlst(t_cmd *lst, t_token *token, void (*del)(void *))
 {
-	int			fd[2];
-	t_redirect	*input;
-	t_redirect *error;
-	t_redirect *output;
-}	t_execute;
-
-t_token *exec_redirect(t_token *token, t_token *head);
-
-#endif
+	if (!lst)
+		return ;
+	lstclear(lst->list, del);
+	clear_dlst(lst->next, token, del);
+	del(lst);
+}

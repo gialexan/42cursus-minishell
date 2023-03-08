@@ -6,16 +6,29 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:17:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/07 20:11:51 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/08 15:09:30 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <exec.h>
+#include <execute.h>
 
-t_token *exec_input(t_token *token, t_token *head, t_token *c);
-t_token *exec_output(t_token *token, t_token *head, t_token *c);
-t_token *exec_append(t_token *token, t_token *head, t_token *c);
-t_token *exec_heredoc(t_token *token, t_token *head, t_token *c);
+static t_token *exec_input(t_token *token, t_token *head, t_token *c);
+static t_token *exec_output(t_token *token, t_token *head, t_token *c);
+static t_token *exec_append(t_token *token, t_token *head, t_token *c);
+static t_token *exec_heredoc(t_token *token, t_token *head, t_token *c);
+
+/*
+* Prototipagem inicial da função heredoc.
+*
+* To do:
+* Salvar o fd em algum lugar para usar no na hr de executar
+* Os textos esritos no here_doc devem expandir se forem variáveis de expansão.
+*
+* Includes:
+* #include <fcntl.h>
+* #include <readline/readline.h>
+* #include <readline/history.h>
+*/
 
 t_token *exec_redirect(t_token *token, t_token *head)
 {
@@ -36,34 +49,68 @@ t_token *exec_redirect(t_token *token, t_token *head)
 	return (exec_redirect(token, head));
 }
 
-t_token *exec_input(t_token *token, t_token *head, t_token *c)
+static t_token *exec_input(t_token *token, t_token *head, t_token *c)
 {
-	t_token *filename = advanced(&token);
+	t_token *file;
+	
+	file = advanced(&token);
+	/*
+	fd = open(file->lexema, O_RDONLY);
+	*/
 	lstdelone(c, free);
-	lstdelone(filename, free);
+	lstdelone(file, free);
 	return (exec_redirect(token, head));
 }
 
-t_token *exec_heredoc(t_token *token, t_token *head, t_token *c)
+static t_token *exec_heredoc(t_token *token, t_token *head, t_token *c)
 {
-	t_token *filename = advanced(&token);
+	int			fd;
+	char		*input;
+	t_token		*delimiter;
+
+	delimiter = advanced(&token);
+	/*
+	fd = open("/tmp/heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	while (TRUE)
+	{
+		input = readline("> ");
+		if (!ft_strcmp(input, delimiter->lexema))
+			break ;
+		ft_putendl_fd(input, fd);
+		free(input);
+	}
+	close(fd);
+	free(input);
+	*/
 	lstdelone(c, free);
-	lstdelone(filename, free);
+	lstdelone(delimiter, free);
 	return (exec_redirect(token, head));
 }
 
-t_token *exec_output(t_token *token, t_token *head, t_token *c)
+static t_token *exec_output(t_token *token, t_token *head, t_token *c)
 {
-	t_token *filename = advanced(&token);
+	int		fd;
+	t_token *file;
+
+	file = advanced(&token);
+	/*
+	fd = open(file->lexema, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	*/
 	lstdelone(c, free);
-	lstdelone(filename, free);
+	lstdelone(file, free);
 	return (exec_redirect(token, head));
 }
 
-t_token *exec_append(t_token *token, t_token *head, t_token *c)
+static t_token *exec_append(t_token *token, t_token *head, t_token *c)
 {
-	t_token *filename = advanced(&token);
+	int		fd;
+	t_token *file;
+	
+	file = advanced(&token);
+	/*
+	fd = open(file->lexema, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	*/
 	lstdelone(c, free);
-	lstdelone(filename, free);
+	lstdelone(file, free);
 	return (exec_redirect(token, head));
 }

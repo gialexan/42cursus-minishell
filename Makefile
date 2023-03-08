@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/03/02 14:12:11 by gialexan         ###   ########.fr        #
+#    Updated: 2023/03/08 11:02:47 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,16 @@ SOURCES_FILES = main.c			\
 				parser.c		\
 				parser_utils.c	\
 				parser_type.c   \
-				linkedlist.c
+				redirect.c		\
+				cleaner.c 		\
+				print.c 		\
+				linkedlist.c	
 
 SOURCES_BASE = src
 VPATH = $(SOURCES_BASE)			\
 		$(SOURCES_BASE)/scanner	\
 		$(SOURCES_BASE)/parser	\
+		$(SOURCES_BASE)/exec	\
 		$(SOURCES_BASE)/helper
 
 OBJ_DIR = obj
@@ -38,13 +42,14 @@ INC_BASE = include
 HEADERS =	$(INC_BASE)/minishell.h \
 			$(INC_BASE)/scanner.h	\
 			$(INC_BASE)/parser.h	\
+			$(INC_BASE)/execute.h	\
 			$(INC_BASE)/helper.h
 
 OBJECTS = $(SOURCES_FILES:%.c=$(OBJ_DIR)/%.o)
 
 CC = gcc
 CFLAGS = -g $(INCLUDES)
-
+READLINE = -lreadline
 RM = rm -rf
 
 # Regras do Makefile
@@ -52,7 +57,7 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ_DIR) $(OBJECTS) $(HEADERS)
-	$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) $(READLINE) -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_PATH)

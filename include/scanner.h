@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:58:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/07 19:45:37 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/08 10:14:28 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef enum s_tk_type
 typedef struct s_token //desalocar a linkedlist
 {
 	t_tk_type		tk_type;
-	const char		*lexema; //campo lexema foi malocado.
+	char			*lexema; //campo lexema foi malocado.
 	struct s_token	*next;
 }	t_token;
 

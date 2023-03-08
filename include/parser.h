@@ -6,15 +6,14 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 01:25:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/07 19:58:32 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/08 10:58:00 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include <scanner.h>
-# include <helper.h>
+#include <scanner.h>
 
 typedef struct s_cmd
 {
