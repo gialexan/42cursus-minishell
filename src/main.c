@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/08 11:01:22 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/09 10:36:04 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,37 +43,49 @@
  * [<<] [EOF] [test1] [ls] [<] [test] [cat] [<<] [EOF] [-l] [<<] [EOF1] [>>] [test] [>] [test]
 */
 
-void	execute_command(t_cmd *cmd)
+void	init_exec(t_execute *exc)
 {
-	t_token *tmp;
+	exc->fd[STDIN_FILENO] = STDIN_FILENO;
+	exc->fd[STDOUT_FILENO] = STDOUT_FILENO;
+	exc->error = FALSE;
+}
+
+void	execute(t_cmd *cmd)
+{
+	t_token		*tmp;
+	t_execute	exc;
 
 	if (!cmd)
 		return ;
-	tmp = exec_redirect(cmd->list, NULL);
+	init_exec(&exc);
+	tmp = exec_redirect(cmd->list, &exc, NULL);
 	//print_stack(tmp, 1);
 	lstclear(tmp, free);
-	execute_command(cmd->next);
+	execute(cmd->next);
 	free(cmd);
 }
 
 /*
  *"<< EOF test1  ls < test  cat <<EOF -l << EOF1 >> test > test"
+ *
+ * echo "Olá, 42 São Paulo!" > /tmp/heredoc.txt
 */
-
 int main(void)
 {
     t_scanner	scanner;
     t_token		*token = NULL;
 	t_cmd		*parser = NULL;
 
-    char command[] = "<< EOF";
+    char command[] = "<< EOF ls ";
     scanner = init_scanner(command);
 
     token = lexical_analysis(&scanner, token);
 	//print_stack(token, 0);
 
 	parser = syntax_analysis(token);
-	print_cmd(parser);
+	//print_cmd(parser);
 	//printf("\n");
-	execute_command(parser);
+	execute(parser);
+
+	//printf("stdin = %d    | stdout = %d     | stderr = %d\n", STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO);
 }

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/08 10:57:36 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/09 08:59:40 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,17 @@ static t_cmd *parser(t_token *token, t_cmd *cmd, t_cmd *head)
 	if (!head)
 		head = cmd;
 	c = advanced(&token);
-	if (is_redirect(c) || is_word(c))
+	if (is_redirect(c) || is_word(c) || is_pipe(c))
 	{
 		lstadd_back(&cmd->list, c);
-		if (is_word(c))
+		if (is_pipe(c))
+			return (pipes(token, cmd, head));
+		else if (is_word(c))
 			return (parser(token, cmd, head));
 		return (words(token, cmd, head));
 	}
-	else if (is_pipe(c) || is_eof(c))
-	{
-		if (is_eof(c))
-			return (lstdelone(c, free), head);
-		lstdelone(c, free);
-		return (pipes(token, cmd, head));
-	}
+	else if (is_eof(c))
+		return (lstdelone(c, free), head);
 	return (syntax_error(c));
 }
 

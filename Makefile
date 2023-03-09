@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/03/08 11:02:47 by gialexan         ###   ########.fr        #
+#    Updated: 2023/03/09 09:40:23 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SOURCES_FILES = main.c			\
 				parser_utils.c	\
 				parser_type.c   \
 				redirect.c		\
+				redirect_type.c \
 				cleaner.c 		\
 				print.c 		\
 				linkedlist.c	
