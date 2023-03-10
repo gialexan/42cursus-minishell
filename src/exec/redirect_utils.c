@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:06:49 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/10 20:58:35 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:17:49 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	set_pipe(t_data *data, t_bool readpipe, int stdfd, int fdclose)
 
 void	set_redir(t_data *data, int fd, int stdfd, char *filename)
 {
-
 	if (fd < 0)
 	{
 		data->retcode = 1;

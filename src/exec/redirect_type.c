@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/10 21:03:03 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/11 00:21:40 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_token *exec_append(t_token *token, t_token *head, t_data *data, t_token *c)
 {
 	int		fd;
 	t_token *file;
-	
+
 	file = advanced(&token);
 	fd = open(file->lexema, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	set_redir(data, fd, STDOUT_FILENO, file->lexema);
@@ -79,8 +79,10 @@ t_token *exec_heredoc(t_token *token, t_token *head, t_data *data, t_token *c)
 
 t_token	*exec_pipe(t_token *token, t_token *head, t_data *data, t_token *c)
 {
-	if (data->fd[STDIN_FILENO] == STDIN_FILENO && data->readpipe)
+	if (data->fd[STDIN_FILENO] == STDIN_FILENO && data->readpipe) {
 		set_pipe(data, FALSE, STDIN_FILENO, STDOUT_FILENO);
+		return NULL;
+	}
 	else
 	{
 		if (data->fd[STDOUT_FILENO] == STDOUT_FILENO)
