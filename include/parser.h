@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 01:25:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/08 10:58:00 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 20:10:12 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
-t_cmd	*cmdnew();
+t_cmd *cmdnew();
 t_cmd *addnode(t_cmd *cmd);
 t_bool is_eof(t_token *token);
 t_bool is_pipe(t_token *token);

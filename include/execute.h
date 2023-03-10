@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/09 09:53:37 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 18:52:33 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,22 @@ typedef struct s_redirect
 	t_bool	boolean;
 }	t_redirect;
 
-typedef struct s_excute
+typedef struct s_data
 {
 	int			fd[2];
 	int			retcode;
+	int			count;
 	t_bool		error;
-}	t_execute;
+	t_bool		readpipe;
+}	t_data;
 
-t_token *exec_redirect(t_token *token, t_execute *exc, t_token *head);
-void	set_redirect(t_execute *exc, int fd, int stdfd, char *filename);
-t_token *exec_input(t_token *tk, t_token *head, t_execute *exc, t_token *c);
-t_token *exec_append(t_token *tk, t_token *head, t_execute *exc, t_token *c);
-t_token *exec_output(t_token *tk, t_token *head, t_execute *exc, t_token *c);
-t_token *exec_heredoc(t_token *tk, t_token *head, t_execute *exc, t_token *c);
+void	set_redir(t_data *data, int fd, int stdfd, char *filename);
+t_token *exec_redirect(t_token *token, t_data *data, t_token *head);
+void	set_pipe(t_data *data, t_bool readpipe, int stdfd, int fdclose);
+t_token *exec_pipe(t_token *tk, t_token *head, t_data *data, t_token *c);
+t_token *exec_input(t_token *tk, t_token *head, t_data *data, t_token *c);
+t_token *exec_append(t_token *tk, t_token *head, t_data *data, t_token *c);
+t_token *exec_output(t_token *tk, t_token *head, t_data *data, t_token *c);
+t_token *exec_heredoc(t_token *tk, t_token *head, t_data *data, t_token *c);
 
 #endif
