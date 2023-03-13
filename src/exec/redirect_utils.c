@@ -6,13 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:06:49 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/10 22:17:49 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 13:02:14 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <execute.h>
-#define FILE 0
-#define PIPE 1
 
 void	set_pipe(t_data *data, t_bool readpipe, int stdfd, int fdclose)
 {

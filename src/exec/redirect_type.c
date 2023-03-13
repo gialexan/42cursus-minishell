@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/11 00:21:40 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 12:58:42 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,8 @@ t_token *exec_heredoc(t_token *token, t_token *head, t_data *data, t_token *c)
 
 t_token	*exec_pipe(t_token *token, t_token *head, t_data *data, t_token *c)
 {
-	if (data->fd[STDIN_FILENO] == STDIN_FILENO && data->readpipe) {
+	if (data->fd[STDIN_FILENO] == STDIN_FILENO && data->readpipe)
 		set_pipe(data, FALSE, STDIN_FILENO, STDOUT_FILENO);
-		return NULL;
-	}
 	else
 	{
 		if (data->fd[STDOUT_FILENO] == STDOUT_FILENO)

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/11 00:14:07 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 13:55:43 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,6 @@
 
 # include <helper.h>
 # include <fcntl.h>
-
-typedef struct s_redirect
-{
-	int		fd;
-	t_bool	boolean;
-}	t_redirect;
 
 typedef struct s_data
 {

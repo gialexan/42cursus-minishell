@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/11 00:20:48 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 13:35:22 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@
  * Error:
  *	1 = ls ||| wc -l, 2 = ls |, 3 = ls >, 4 = <, 5 = |, 6 = <<infile>>>, 7 = <<<infile, 8 = ls | >, 9 = ls > |
  *
+ * [<<] [EOF] [test1] [ls] [<] [test] [cat] [<<] [EOF] [-l] [<<] [EOF1] [>>] [test] [>] [test]
 */
 
 /* TO DO
  *
- * Verificar questão de redirecionadores, como vou salvar o fd? Exceptions heredoc?.
+ * Exceptions heredoc?.
  *
  * run_cmdlst vai estar dentro da execute_command:
  * ls <<EOF -l > outfile < infile
@@ -39,20 +40,52 @@
  *
 */
 
-/*
- * [<<] [EOF] [test1] [ls] [<] [test] [cat] [<<] [EOF] [-l] [<<] [EOF1] [>>] [test] [>] [test]
-*/
-
 void	init_exec(t_data *data)
 {
 	data->fd[STDIN_FILENO] = STDIN_FILENO;
 	data->fd[STDOUT_FILENO] = STDOUT_FILENO;
+	data->retcode = 0;
 	data->error = FALSE;
 }
 
+void	execute_command(t_cmd *cmd, t_data *data)
+{
+	t_token	*tmp;
+
+	if (!cmd)
+		return ;
+	init_exec(data);
+	tmp = exec_redirect(cmd->list, data, NULL);
+	lstclear(tmp, free);
+	execute_command(cmd->next, data);
+	free(cmd);
+}
+
+/*
+ *"<< EOF test1  ls < test  cat <<EOF -l << EOF1 >> test > test"
+ *
+ * echo "Olá, 42 São Paulo!" > /tmp/heredoc.txt
+*/
+
+int main(void)
+{
+	t_data		data;
+    t_scanner	scanner;
+    t_token		*token = NULL;
+	t_cmd		*parser = NULL;
+	
+    // char command[] = "< infile ls > outfile | ls > outfile -a";
+
+    // scanner = init_scanner(command);
+    // token = lexical_analysis(&scanner, token);
+	// parser = syntax_analysis(token);
+	// execute_command(parser, &data);
+}
+
+
+/*
 void	execute(t_cmd *cmd, t_data *data)
 {
-	//t_data	data;
 	t_token	*tmp;
 	if (!cmd)
 		return ;
@@ -72,30 +105,22 @@ void	execute(t_cmd *cmd, t_data *data)
 	free(cmd);
 }
 
-/*
- *"<< EOF test1  ls < test  cat <<EOF -l << EOF1 >> test > test"
- *
- * echo "Olá, 42 São Paulo!" > /tmp/heredoc.txt
-*/
-
 int main(void)
 {
+	t_data		data;
     t_scanner	scanner;
     t_token		*token = NULL;
 	t_cmd		*parser = NULL;
 
-    char command[] = "< infile ls | ls > outfile -a";
+    char command[] = "< infile ls > outfile | ls > outfile -a";
 
     scanner = init_scanner(command);
-
     token = lexical_analysis(&scanner, token);
 	//print_stack(token, 0);
-
 	parser = syntax_analysis(token);
 	//print_cmd(parser);
 	//printf("\n");
-	t_data data;
 	data.count = 1;
 	execute(parser, &data);
-	//printf("stdin = %d    | stdout = %d     | stderr = %d\n", STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO);
 }
+*/
