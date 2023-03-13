@@ -6,19 +6,19 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/07 20:20:39 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 19:07:52 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <scanner.h>
 
 static char		advance(t_scanner *scanner);
-static t_token *word(t_scanner *scanner, char c);
-static t_token *string(t_scanner *scanner, char c);
-static t_token *word_quote(t_scanner *scanner, char c);
+static t_list *word(t_scanner *scanner, char c);
+static t_list *string(t_scanner *scanner, char c);
+static t_list *word_quote(t_scanner *scanner, char c);
 static t_bool	match(t_scanner *scanner, char expected);
 
-t_token *scan_token(t_scanner *scanner)
+t_list *scan_token(t_scanner *scanner)
 {
 	char	c;
 
@@ -62,22 +62,22 @@ static t_bool match(t_scanner *scanner, char expected)
 	return (TRUE);
 }
 
-static	t_token *word(t_scanner *scanner, char c)
+static	t_list *word(t_scanner *scanner, char c)
 {
 	c = scanner->cmd[--scanner->curr];
 	while (!ft_strchr(METACHARS, c))
-	c = scanner->cmd[++scanner->curr];
+		c = scanner->cmd[++scanner->curr];
 	return (make_token(scanner, TK_WORD));
 }
 
-static	t_token *word_quote(t_scanner *scanner, char c)
+static	t_list *word_quote(t_scanner *scanner, char c)
 {
 	char close;
 
 	close = c;
 	c = advance(scanner);
 	while (c != 0 && c != close)
-	c = advance(scanner);
+		c = advance(scanner);
 	if (c == 0 && c != close)
 		return (make_token(scanner, TK_ERROR));
 	return (make_token(scanner, TK_WORD));

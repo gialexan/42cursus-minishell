@@ -6,28 +6,30 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:01:09 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/08 11:01:50 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 19:32:01 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <helper.h>
 
-void print(t_token *token)
+void print_redir(t_list *token)
 {
-	printf("%8s | %3s | %3s\n", "HEREDOC", token->lexema, token->next->lexema);
+	printf("%8s | %3s | %3s\n", "HEREDOC", (char *)token->content, (char *)token->next->content);
 }
 
-void	print_stack(t_token *token, int type)
+void	print_stack(t_list *lst, int type)
 {
-	t_token *tmp;
+	t_list		*tmp;
+	const char	*content;
 
-	tmp = token;
+	tmp = lst;
 	if (type == 1)
 	{
 		printf("Command:\n\t");
 		while(tmp != NULL)
 		{
-			printf("%s ", tmp->lexema);
+			content = tmp->content;
+			printf("%s ", content);
 			tmp = tmp->next;
 		}
 		printf("\n");
@@ -36,7 +38,8 @@ void	print_stack(t_token *token, int type)
 	{
 		while(tmp != NULL)
 		{
-			printf("TK_TYPE -> %d   |   TK_LEXEMA -> %s\n", tmp->tk_type, tmp->lexema);
+			content = tmp->content;
+			printf("TK_TYPE -> %d   |   TK_LEXEMA -> %s\n", tmp->tk_type, content);
 			tmp = tmp->next;
 		}
 	}
@@ -44,15 +47,15 @@ void	print_stack(t_token *token, int type)
 
 void	print_cmd(t_cmd *cmd)
 {
-    t_token *curr_token;
+    t_list *curr_token;
 	int count;
 
 	count = 0;
     while (cmd != NULL) {
         printf("Command %d :\n\t", ++count);
-        curr_token = cmd->list;
+        curr_token = cmd->token;
         while (curr_token != NULL) {
-            printf("%s ", curr_token->lexema);
+            printf("%s ", (char *) curr_token->content);
             curr_token = curr_token->next;
         }
 		printf("\n");

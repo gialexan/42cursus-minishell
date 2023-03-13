@@ -6,13 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:17 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/07 19:54:31 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 15:27:00 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.h>
 
-t_tk_type type(t_token *token)
+t_tk_type type(t_list *token)
 {
 	return (token->tk_type);
 }
@@ -38,14 +38,14 @@ t_cmd	*cmdnew()
 	cmd =  malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	cmd->list = NULL;
+	cmd->token = NULL;
 	cmd->next = NULL;
 	return (cmd);
 }
 
-t_token *advanced(t_token **token)
+t_list *advanced(t_list **token)
 {
-	t_token *current;
+	t_list *current;
 
 	current = *token;
 	*token = (*token)->next;

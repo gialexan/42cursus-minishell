@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/13 13:55:43 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:34:09 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ typedef struct s_data
 }	t_data;
 
 void	set_redir(t_data *data, int fd, int stdfd, char *filename);
-t_token *exec_redirect(t_token *token, t_data *data, t_token *head);
+t_list *exec_redirect(t_list *token, t_data *data, t_list *head);
 void	set_pipe(t_data *data, t_bool readpipe, int stdfd, int fdclose);
-t_token *exec_pipe(t_token *tk, t_token *head, t_data *data, t_token *c);
-t_token *exec_input(t_token *tk, t_token *head, t_data *data, t_token *c);
-t_token *exec_append(t_token *tk, t_token *head, t_data *data, t_token *c);
-t_token *exec_output(t_token *tk, t_token *head, t_data *data, t_token *c);
-t_token *exec_heredoc(t_token *tk, t_token *head, t_data *data, t_token *c);
+t_list *exec_pipe(t_list *tk, t_list *head, t_data *data, t_list *c);
+t_list *exec_input(t_list *tk, t_list *head, t_data *data, t_list *c);
+t_list *exec_append(t_list *tk, t_list *head, t_data *data, t_list *c);
+t_list *exec_output(t_list *tk, t_list *head, t_data *data, t_list *c);
+t_list *exec_heredoc(t_list *tk, t_list *head, t_data *data, t_list *c);
 
 #endif

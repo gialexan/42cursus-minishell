@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:17:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/11 00:13:42 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:35:52 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 * #include <readline/history.h>
 */
 
-t_token *exec_redirect(t_token *token, t_data *data, t_token *head)
+t_list *exec_redirect(t_list *token, t_data *data, t_list *head)
 {
-	t_token *c;
+	t_list *c;
 
     if (!token)
         return head;     
@@ -43,6 +43,6 @@ t_token *exec_redirect(t_token *token, t_data *data, t_token *head)
 		return (exec_heredoc(token, head, data, c));
 	else if (match(type(c), TK_PIPE))
 		return (exec_pipe(token, head, data, c));
-	lstadd_back(&head, c);
+	ft_lstadd_back(&head, c);
 	return (exec_redirect(token, data, head));
 }

@@ -6,19 +6,19 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/09 22:45:27 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:11:11 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <scanner.h>
 #include <helper.h>
 
-t_token	*lexical_analysis(t_scanner *scanner, t_token *token)
+t_list	*lexical_analysis(t_scanner *scanner, t_list *token)
 {
 	if (scanner->curr > ft_strlen(scanner->cmd))
 		return (token);
 	scanner->start = scanner->curr;
-	lstadd_back(&token, scan_token(scanner));
+	ft_lstadd_back(&token, scan_token(scanner));
 	return (lexical_analysis(scanner, token));
 }
 
@@ -38,14 +38,14 @@ void	skip_space (t_scanner *scanner)
 	scanner->start = scanner->curr;
 }
 
-t_token *make_token(t_scanner *scanner, t_tk_type type)
+t_list *make_token(t_scanner *scanner, t_tk_type type)
 {
-	t_token *token;
+	t_list *token;
 
-	token = malloc(sizeof(t_token));
+	token = malloc(sizeof(t_list));
 	if (!token)
 		return (NULL);
-	token->lexema = ft_substr(scanner->cmd, scanner->start,
+	token->content = ft_substr(scanner->cmd, scanner->start,
 			scanner->curr - scanner->start);
 	token->tk_type = type;
 	token->next = NULL;

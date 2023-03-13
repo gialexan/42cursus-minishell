@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstcopy.c                                       :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/13 17:41:26 by gialexan          #+#    #+#             */
-/*   Updated: 2022/12/20 19:53:12 by gialexan         ###   ########.fr       */
+/*   Created: 2023/03/13 15:27:43 by gialexan          #+#    #+#             */
+/*   Updated: 2023/03/13 19:01:30 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "helper.h"
 
-t_stack	*ft_lstcopy(t_list *lst)
+void	show_error(char *msg, char *error)
 {
-	t_stack	*node;
-
-	if (lst == NULL)
-		return (NULL);
-	else
-	{
-		node = malloc(sizeof(t_stack));
-		node->number = lst->number;
-		node->index = lst->index;
-		node->next = lstcopy(lst->next);
-	}
-	return (node);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	if(!error)
+		return ;
+	ft_putendl_fd(error, STDERR_FILENO);
 }

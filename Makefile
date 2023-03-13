@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/03/09 15:09:27 by gialexan         ###   ########.fr        #
+#    Updated: 2023/03/13 16:35:37 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SOURCES_FILES = main.c			\
 				redirect_utils.c\
 				cleaner.c 		\
 				print.c 		\
-				linkedlist.c	
+				error.c				
 
 SOURCES_BASE = src
 VPATH = $(SOURCES_BASE)			\
@@ -62,7 +62,7 @@ $(NAME): $(LIBFT) $(OBJ_DIR) $(OBJECTS) $(HEADERS)
 	$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) $(READLINE) -o $(NAME)
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_PATH)
+	$(MAKE) bonus -C $(LIBFT_PATH)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)

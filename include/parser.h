@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 01:25:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/10 20:10:12 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 15:31:25 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@
 
 typedef struct s_cmd
 {
-	t_token			*list;
+	t_list			*token;
 	struct s_cmd	*next;
 }	t_cmd;
 
 t_cmd *cmdnew();
 t_cmd *addnode(t_cmd *cmd);
-t_bool is_eof(t_token *token);
-t_bool is_pipe(t_token *token);
-t_bool is_word(t_token *token);
-t_tk_type type(t_token *token);
-t_bool is_error(t_token *token);
-t_bool is_redirect(t_token *token);
-t_token *advanced(t_token **token);
-t_cmd *syntax_analysis(t_token *token);
+t_bool is_eof(t_list *token);
+t_bool is_pipe(t_list *token);
+t_bool is_word(t_list *token);
+t_tk_type type(t_list *token);
+t_bool is_error(t_list *token);
+t_bool is_redirect(t_list *token);
+t_list *advanced(t_list **token);
+t_cmd *syntax_analysis(t_list *token);
 t_bool match(t_tk_type tk_type, t_tk_type expected);
 
 #endif

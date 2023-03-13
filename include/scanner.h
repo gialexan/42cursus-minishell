@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:58:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/09 09:04:54 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:49:50 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,6 @@
 
 # define METACHARS "|()<> \t\n"
 
-typedef enum s_tk_type
-{
-	TK_EOF,
-	TK_WORD,
-	TK_PIPE,
-	TK_LESS,
-	TK_GREAT,
-	TK_DLESS,
-	TK_ERROR,
-	TK_DGREAT,
-}	t_tk_type;
-
-typedef struct s_token //desalocar a linkedlist
-{
-	t_tk_type		tk_type;
-	char			*lexema; //campo lexema foi malocado.
-	struct s_token	*next;
-}	t_token;
-
 typedef struct	s_scanner
 {
 	size_t			curr;
@@ -45,9 +26,9 @@ typedef struct	s_scanner
 }	t_scanner;
 
 void		skip_space (t_scanner *scanner);
-t_token		*scan_token(t_scanner *scanner);
+t_list		*scan_token(t_scanner *scanner);
 t_scanner	init_scanner(const char *command);
-t_token		*make_token(t_scanner *scanner, t_tk_type type);
-t_token		*lexical_analysis(t_scanner *scanner, t_token *token);
+t_list		*make_token(t_scanner *scanner, t_tk_type type);
+t_list		*lexical_analysis(t_scanner *scanner, t_list *token);
 
 #endif
