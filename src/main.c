@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/13 19:30:46 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 21:18:29 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,47 @@ void	execute_command(t_cmd *cmd, t_data *data)
 	free(cmd);
 }
 
-int main(void)
+t_list **get_envp(void)
+{
+	static t_list *envp;
+
+	return (&envp);
+}
+
+void	init_envment(char **envpment, t_list **envp)
+{
+	t_list *new_node;
+
+	if (!*envpment)
+		return ;
+	new_node = ft_lstnew(ft_strdup(*envpment));
+	ft_lstadd_back(envp, new_node);
+	return (init_envment(++envpment, envp));
+}
+
+int main(int argc, char **argv, char **envp)
 {
 	t_data		data;
     t_list		*token = NULL;
 	t_cmd		*parser = NULL;
     t_scanner	scanner;
-	
-    char command[] = "< infile ls | ls > outfile -a";
 
-    scanner = init_scanner(command);
-    token = lexical_analysis(&scanner, token);
-	parser = syntax_analysis(token);
-	data.readpipe = FALSE; //Arrumar lugar melhor para isso.
-	execute_command(parser, &data);
+	(void)argv;
+	(void)envp;
+	init_envment(envp, get_envp());
+
+	t_list *tmp = *get_envp();
+
+	while (tmp != NULL)
+	{
+		printf("%s\n", (char *)tmp->content);
+		tmp = tmp->next;
+	}
+    //char command[] = "< infile ls | ls > outfile -a";
+
+    //scanner = init_scanner(command);
+    //token = lexical_analysis(&scanner, token);
+	//parser = syntax_analysis(token);
+	//data.readpipe = FALSE; //Arrumar lugar melhor para isso.
+	//execute_command(parser, &data);
 }

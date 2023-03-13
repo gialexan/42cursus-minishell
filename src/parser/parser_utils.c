@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:17 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/13 15:27:00 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/13 19:48:04 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_bool match(t_tk_type tk_type, t_tk_type expected)
 	return (tk_type == expected);
 }
 
-t_cmd *addnode(t_cmd *cmd)
+t_cmd *addcmd(t_cmd *cmd)
 {
 	t_cmd	*next_cmd;
 
@@ -31,7 +31,7 @@ t_cmd *addnode(t_cmd *cmd)
 	return (next_cmd);
 }
 
-t_cmd	*cmdnew()
+t_cmd	*cmdnew(void)
 {
 	t_cmd *cmd;
 
