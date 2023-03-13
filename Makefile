@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/03/13 16:35:37 by gialexan         ###   ########.fr        #
+#    Updated: 2023/03/13 21:30:20 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SOURCES_FILES = main.c			\
 				redirect.c		\
 				redirect_type.c \
 				redirect_utils.c\
+				environment.c   \
 				cleaner.c 		\
 				print.c 		\
 				error.c				
