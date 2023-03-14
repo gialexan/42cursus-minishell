@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/13 23:26:21 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:03:25 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,14 @@
 
 /* TO DO
  *
- * Criar a função que pega a envp para minihell;
  * Criar o executor de comando;
  * Pegar o exception dos file abertos;
  * Criar expansor de arquivos;
  * Criar expansor geral $pwd, $user
  *
- * Criar search_envp
- * Criar delete_envp
- * Criar insert_envp
+ * Criar search_envp = ok;
+ * Criar delete_envp = to do;
+ * Criar insert_envp =
 */
 
 void	init_exec(t_data *data)
@@ -71,6 +70,46 @@ void	execute_command(t_cmd *cmd, t_data *data)
 	free(cmd);
 }
 
+char *search_envp(char *search, t_list *envp)
+{
+	int lenght;
+
+	if (!envp)
+		return (NULL);
+	else if (!ft_strncmp(search, envp->content, 1))
+	{
+		lenght = ft_strlen(search);
+		if (!ft_strncmp(search, envp->content, lenght))
+			return (envp->content);
+	}
+	return (search_envp(search, envp->next));
+}
+
+int	delete_envp(char *delete, t_list **envp, t_list *prev)
+{
+	t_list	*tmp;
+	int		lenght;
+
+	if (!*envp)
+		return (0);
+	tmp = *envp;
+	if (!ft_strncmp(delete, tmp->content, 1))
+	{		
+		lenght = ft_strlen(delete);
+		if (!ft_strncmp(delete, tmp->content, lenght))
+		{
+			if (!prev)
+				*envp = (*envp)->next;
+			else if (prev && *envp)
+				prev->next = (*envp)->next;
+			free(tmp);
+			return (1);
+		}
+	}
+	return (delete_envp(delete, &(*envp)->next, *envp));	
+}
+
+
 int main(int argc, char **argv, char **envp)
 {
 	t_data		data;
@@ -80,13 +119,22 @@ int main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	(void)envp;
-	//init_envment(envp, get_envp());
 
-    //char command[] = "< infile ls | ls > outfile -a";
+	init_envment(envp, get_envp());
+	char *test = search_envp("mdias", *get_envp());
+	printf("%s\n", test);
+	
+	int test1 = delete_envp("mdias", get_envp(), NULL);
+	printf("%d\n", test1);
 
-    //scanner = init_scanner(command);
-    //token = lexical_analysis(&scanner, token);
-	//parser = syntax_analysis(token);
-	//data.readpipe = FALSE; //Arrumar lugar melhor para isso.
-	//execute_command(parser, &data);
+	char *test2 = search_envp("mdias", *get_envp());
+	printf("%s\n", test2);
+
+    // char command[] = "< infile ls | ls > outfile -a";
+
+    // scanner = init_scanner(command);
+    // token = lexical_analysis(&scanner, token);
+	// parser = syntax_analysis(token);
+	// data.readpipe = FALSE; //Arrumar lugar melhor para isso.
+	// execute_command(parser, &data);
 }
