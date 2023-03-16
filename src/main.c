@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/14 18:03:25 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/15 13:36:01 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
  * Criar expansor geral $pwd, $user
  *
  * Criar search_envp = ok;
- * Criar delete_envp = to do;
+ * Criar delete_envp = ok -> precisa testar o primeiro node.
  * Criar insert_envp =
 */
 
@@ -70,7 +70,7 @@ void	execute_command(t_cmd *cmd, t_data *data)
 	free(cmd);
 }
 
-char *search_envp(char *search, t_list *envp)
+t_list *search_envp(char *search, t_list *envp)
 {
 	int lenght;
 
@@ -80,21 +80,21 @@ char *search_envp(char *search, t_list *envp)
 	{
 		lenght = ft_strlen(search);
 		if (!ft_strncmp(search, envp->content, lenght))
-			return (envp->content);
+			return (envp);
 	}
 	return (search_envp(search, envp->next));
 }
 
-int	delete_envp(char *delete, t_list **envp, t_list *prev)
+t_bool	delete_envp(char *delete, t_list **envp, t_list *prev)
 {
 	t_list	*tmp;
 	int		lenght;
 
 	if (!*envp)
-		return (0);
+		return (FALSE);
 	tmp = *envp;
 	if (!ft_strncmp(delete, tmp->content, 1))
-	{		
+	{
 		lenght = ft_strlen(delete);
 		if (!ft_strncmp(delete, tmp->content, lenght))
 		{
@@ -103,12 +103,32 @@ int	delete_envp(char *delete, t_list **envp, t_list *prev)
 			else if (prev && *envp)
 				prev->next = (*envp)->next;
 			free(tmp);
-			return (1);
+			tmp = NULL;
+			return (TRUE);
 		}
 	}
 	return (delete_envp(delete, &(*envp)->next, *envp));	
 }
 
+t_bool	insert_envp(char *insert, t_list **envp)
+{
+	if (!insert)
+		return (FALSE);
+	ft_lstadd_back(envp, ft_lstnew(insert));
+	return (TRUE);
+}
+
+t_bool	update_envp(char *key, char *new, t_list **envp)
+{
+	t_list *update;
+
+	update = search_envp(key, *envp);
+	if (!update)
+		return FALSE;
+	free(update->content);
+	update->content = new;
+	return (TRUE);
+}
 
 int main(int argc, char **argv, char **envp)
 {
@@ -121,14 +141,23 @@ int main(int argc, char **argv, char **envp)
 	(void)envp;
 
 	init_envment(envp, get_envp());
-	char *test = search_envp("mdias", *get_envp());
-	printf("%s\n", test);
-	
-	int test1 = delete_envp("mdias", get_envp(), NULL);
-	printf("%d\n", test1);
 
-	char *test2 = search_envp("mdias", *get_envp());
-	printf("%s\n", test2);
+	t_list *tmp = *get_envp();
+
+	while(tmp != NULL)
+	{
+		printf("%s\n", (char *)tmp->content);
+		tmp = tmp->next;
+	}
+
+	// char *test = search_envp("ls", *get_envp());
+	// printf("%s\n", test);
+	
+	// int test1 = delete_envp("ls", get_envp(), NULL);
+	// printf("%d\n", test1);
+
+	// char *test2 = search_envp("ls", *get_envp());
+	// printf("%s\n", test2);
 
     // char command[] = "< infile ls | ls > outfile -a";
 
