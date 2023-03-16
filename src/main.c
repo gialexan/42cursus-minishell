@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/16 16:06:42 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:39:00 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,65 +70,65 @@ void	execute_command(t_cmd *cmd, t_data *data)
 	free(cmd);
 }
 
-t_list *search_envp(char *search, t_list *envp)
-{
-	int lenght;
+// t_list *search_envp(char *search, t_list *envp)
+// {
+// 	int lenght;
 
-	if (!envp)
-		return (NULL);
-	else if (!ft_strncmp(search, envp->content, 1))
-	{
-		lenght = ft_strlen(search);
-		if (!ft_strncmp(search, envp->content, lenght))
-			return (envp);
-	}
-	return (search_envp(search, envp->next));
-}
+// 	if (!envp)
+// 		return (NULL);
+// 	else if (!ft_strncmp(search, envp->content, 1))
+// 	{
+// 		lenght = ft_strlen(search);
+// 		if (!ft_strncmp(search, envp->content, lenght))
+// 			return (envp);
+// 	}
+// 	return (search_envp(search, envp->next));
+// }
 
-t_bool	delete_envp(char *delete, t_list **envp, t_list *prev)
-{
-	t_list	*tmp;
-	int		lenght;
+// t_bool	delete_envp(char *delete, t_list **envp, t_list *prev)
+// {
+// 	t_list	*tmp;
+// 	int		lenght;
 
-	if (!*envp)
-		return (FALSE);
-	tmp = *envp;
-	if (!ft_strncmp(delete, tmp->content, 1))
-	{
-		lenght = ft_strlen(delete);
-		if (!ft_strncmp(delete, tmp->content, lenght))
-		{
-			if (!prev)
-				*envp = (*envp)->next;
-			else if (prev && *envp)
-				prev->next = (*envp)->next;
-			free(tmp);
-			tmp = NULL;
-			return (TRUE);
-		}
-	}
-	return (delete_envp(delete, &(*envp)->next, *envp));	
-}
+// 	if (!*envp)
+// 		return (FALSE);
+// 	tmp = *envp;
+// 	if (!ft_strncmp(delete, tmp->content, 1))
+// 	{
+// 		lenght = ft_strlen(delete);
+// 		if (!ft_strncmp(delete, tmp->content, lenght))
+// 		{
+// 			if (!prev)
+// 				*envp = (*envp)->next;
+// 			else if (prev && *envp)
+// 				prev->next = (*envp)->next;
+// 			free(tmp);
+// 			tmp = NULL;
+// 			return (TRUE);
+// 		}
+// 	}
+// 	return (delete_envp(delete, &(*envp)->next, *envp));	
+// }
 
-t_bool	insert_envp(char *insert, t_list **envp)
-{
-	if (!insert)
-		return (FALSE);
-	ft_lstadd_back(envp, ft_lstnew(insert));
-	return (TRUE);
-}
+// t_bool	insert_envp(char *insert, t_list **envp)
+// {
+// 	if (!insert)
+// 		return (FALSE);
+// 	ft_lstadd_back(envp, ft_lstnew(insert));
+// 	return (TRUE);
+// }
 
-t_bool	update_envp(char *key, char *new, t_list **envp)
-{
-	t_list *update;
+// t_bool	update_envp(char *key, char *new, t_list **envp)
+// {
+// 	t_list *update;
 
-	update = search_envp(key, *envp);
-	if (!update)
-		return FALSE;
-	free(update->content);
-	update->content = new;
-	return (TRUE);
-}
+// 	update = search_envp(key, *envp);
+// 	if (!update)
+// 		return FALSE;
+// 	free(update->content);
+// 	update->content = new;
+// 	return (TRUE);
+// }
 
 int main(int argc, char **argv, char **envp)
 {
