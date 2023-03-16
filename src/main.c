@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/09 14:21:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/15 13:36:01 by gialexan         ###   ########.fr       */
+/*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
+/*   Updated: 2023/03/16 16:06:42 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
  *
  * [<<] [EOF] [test1] [ls] [<] [test] [cat] [<<] [EOF] [-l] [<<] [EOF1] [>>] [test] [>] [test]
  *
- *              <---------------------Coisas Aleaótiras----------------------->
+ *              <---------------------Coisas Aleatórios----------------------->
  * run_cmdlst vai estar dentro da execute_command:
  * ls <<EOF -l > outfile < infile
  * cat > ./outfiles/outfiles1 < missing
