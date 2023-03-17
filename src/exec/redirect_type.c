@@ -6,11 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/13 16:36:14 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:11:36 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <execute.h>
+#include "execute.h"
 
 t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
 {

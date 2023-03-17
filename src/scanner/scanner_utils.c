@@ -6,12 +6,12 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/13 14:11:11 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:10:51 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <scanner.h>
-#include <helper.h>
+#include "scanner.h"
+#include "helper.h"
 
 t_list	*lexical_analysis(t_scanner *scanner, t_list *token)
 {

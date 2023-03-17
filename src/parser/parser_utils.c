@@ -6,11 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:17 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/13 19:48:04 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:11:09 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.h>
+#include "parser.h"
 
 t_tk_type type(t_list *token)
 {

@@ -6,11 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:17:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/14 01:13:05 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:12:02 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <execute.h>
+#include "execute.h"
 
 /*
 * Prototipagem inicial da função heredoc.

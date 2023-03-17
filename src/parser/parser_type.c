@@ -6,11 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 23:28:24 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/13 15:27:05 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:11:16 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.h>
+#include "parser.h"
 
 t_bool	is_redirect(t_list *token)
 {

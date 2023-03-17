@@ -6,11 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/13 19:07:52 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:10:38 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <scanner.h>
+#include "scanner.h"
 
 static char		advance(t_scanner *scanner);
 static t_list *word(t_scanner *scanner, char c);

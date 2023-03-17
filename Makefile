@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/03/13 21:30:20 by gialexan         ###   ########.fr        #
+#    Updated: 2023/03/17 10:13:53 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,26 +17,28 @@ NAME = minishell
 LIBFT_PATH = ./libft
 LIBFT = $(LIBFT_PATH)/libft.a
 
-SOURCES_FILES = main.c			\
-				scanner.c		\
-				scanner_utils.c	\
-				parser.c		\
-				parser_utils.c	\
-				parser_type.c   \
-				redirect.c		\
-				redirect_type.c \
-				redirect_utils.c\
-				environment.c   \
-				cleaner.c 		\
-				print.c 		\
+SOURCES_FILES = main.c				\
+				scanner.c			\
+				scanner_utils.c		\
+				parser.c			\
+				parser_utils.c		\
+				parser_type.c   	\
+				redirect.c			\
+				redirect_type.c 	\
+				redirect_utils.c	\
+				environment.c   	\
+				environment_crud.c	\
+				cleaner.c 			\
+				print.c 			\
 				error.c				
 
 SOURCES_BASE = src
-VPATH = $(SOURCES_BASE)			\
-		$(SOURCES_BASE)/scanner	\
-		$(SOURCES_BASE)/parser	\
-		$(SOURCES_BASE)/exec	\
-		$(SOURCES_BASE)/helper
+VPATH = $(SOURCES_BASE)				\
+		$(SOURCES_BASE)/scanner		\
+		$(SOURCES_BASE)/parser		\
+		$(SOURCES_BASE)/exec		\
+		$(SOURCES_BASE)/helper		\
+		$(SOURCES_BASE)/env 		\
 
 OBJ_DIR = obj
 INCLUDES = -I./include
