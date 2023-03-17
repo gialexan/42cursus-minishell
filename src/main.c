@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/17 10:33:01 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:44:51 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	execute_command(t_cmd *cmd, t_data *data)
 }
 */
 
-
+//"< infile ls | ls > outfile -a"
 int main(int argc, char **argv, char **envp)
 {
 	t_data		data;
@@ -81,19 +81,12 @@ int main(int argc, char **argv, char **envp)
 	(void)envp;
 
 	init_envment(envp, get_envp());
-
-	// t_list *tmp = *get_envp();
-
-	// while(tmp != NULL)
-	// {
-	// 	printf("%s\n", (char *)tmp->content);
-	// 	tmp = tmp->next;
-	// }
 	
-    // char command[] = "< infile ls | ls > outfile -a";
+    char command[] = "export test=moto";
 
-    // scanner = init_scanner(command);
-    // token = lexical_analysis(&scanner, token);
+    scanner = init_scanner(command);
+    token = lexical_analysis(&scanner, token);
+	print_stack(token, 0);
 	// parser = syntax_analysis(token);
 	// data.readpipe = FALSE; //Arrumar lugar melhor para isso.
 	// execute_command(parser, &data);

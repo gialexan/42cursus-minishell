@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/17 10:29:15 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:38:46 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@ t_list *search_envp(char *search, t_list *envp);
 t_bool	insert_envp(char *insert, t_list **envp);
 t_bool	update_envp(char *key, char *new, t_list *envp);
 t_bool	delete_envp(char *delete, t_list **envp, t_list *prev);
+
 #endif
