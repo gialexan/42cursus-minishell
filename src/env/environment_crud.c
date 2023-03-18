@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:08:36 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/17 10:38:21 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/17 12:01:02 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_bool	delete_envp(char *delete, t_list **envp, t_list *prev)
 			return (TRUE);
 		}
 	}
-	return (delete_envp(delete, &(*envp)->next, *envp));	
+	return (delete_envp(delete, &(*envp)->next, *envp));
 }
 
 t_bool	insert_envp(char *insert, t_list **envp)
