@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:08:36 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/17 12:01:02 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/18 14:07:33 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,14 @@ t_bool	update_envp(char *key, char *new, t_list *envp)
 {
 	t_list *update;
 
-	update = search_envp(key, envp);
-	if (!update)
-		return FALSE;
-	free(update->content);
-	update->content = new;
+	if (!key)
+		envp->content = ft_strdup(new);
+	else
+	{
+		update = search_envp(key, envp);
+		if (!update)
+			return FALSE;
+		update->content = ft_strdup(new);
+	}
 	return (TRUE);
 }

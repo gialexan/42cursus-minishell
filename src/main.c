@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/18 08:11:15 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/18 14:23:21 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,67 +73,6 @@ void	execute_command(t_cmd *cmd, t_data *data)
 }
 */
 
-/* t_list *search_envp(char *search, t_list *envp)
-{
-	int lenght;
-
-	if (!envp)
-		return (NULL);
-	else if (!ft_strncmp(search, envp->content, 1))
-	{
-		lenght = ft_strlen(search);
-		if (!ft_strncmp(search, envp->content, lenght))
-			return (envp);
-	}
-	return (search_envp(search, envp->next));
-}
-
-t_bool	delete_envp(char *delete, t_list **envp, t_list *prev)
-{
-	t_list	*tmp;
-	int		lenght;
-
-	if (!*envp)
-		return (FALSE);
-	tmp = *envp;
-	if (!ft_strncmp(delete, tmp->content, 1))
-	{
-		lenght = ft_strlen(delete);
-		if (!ft_strncmp(delete, tmp->content, lenght))
-		{
-			if (!prev)
-				*envp = (*envp)->next;
-			else if (prev && *envp)
-				prev->next = (*envp)->next;
-			free(tmp);
-			tmp = NULL;
-			return (TRUE);
-		}
-	}
-	return (delete_envp(delete, &(*envp)->next, *envp));	
-}
-
-t_bool	insert_envp(char *insert, t_list **envp)
-{
-	if (!insert)
-		return (FALSE);
-	ft_lstadd_back(envp, ft_lstnew(insert));
-	return (TRUE);
-}
-
-t_bool	update_envp(char *key, char *new, t_list **envp)
-{
-	t_list *update;
-
-	update = search_envp(key, *envp);
-	if (!update)
-		return FALSE;
-	free(update->content);
-	update->content = new;
-	return (TRUE);
-}
- */
-
 char *get_key(char *envp)
 {
     char *sign;
@@ -145,7 +84,25 @@ char *get_key(char *envp)
     key_length = sign - envp;
     if (key_length == 0)
         return NULL;
-    return ft_substr(envp, 0, key_length);
+    return (ft_substr(envp, 0, key_length));
+}
+
+void	export(char *str)
+{
+	char *key;
+	char *tmp;
+	t_list *node;
+
+	key = str;
+	tmp = get_key(str);
+	if (tmp)
+		key = tmp;
+	node = search_envp(key, *get_envp());
+	if (node)
+		update_envp(NULL, str, node);
+	else
+		insert_envp(str, get_envp());
+	free(tmp);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -158,20 +115,20 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 
-	///init_envment(envp, get_envp());
+	init_envment(envp, get_envp());
+	char *str = "test";
+	export(str);
 
-	char *str = "cavalinho_test1_test2=cavalomanço=test2_test1";
-	char *test = get_key(str);
-	if (test)
-		printf("%s\n", test);
-	else
-		printf("%p\n", test);
-	// if (result)
-	// 	len = ft_strlen(result);
-	//int len = strlen(result);
-	//printf("%s", ft_substr(str, 0, len));
+	t_list *tmp = search_envp("test", *get_envp());
+	printf("%s\n", (char *)tmp->content);
+
+	str = "test=carro";
+	export(str);
+
+	tmp = search_envp("test", *get_envp());
+	printf("%s\n", (char *)tmp->content);
+
     // char command[] = "< infile ls | ls > outfile -a";
-
     // scanner = init_scanner(command);
     // token = lexical_analysis(&scanner, token);
 	// parser = syntax_analysis(token);
