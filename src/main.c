@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/20 17:43:25 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:08:00 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,36 @@ char *get_key(char *envp)
     return (ft_substr(envp, 0, key_length));
 }
 
+t_bool check_string(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] != '_' && !ft_isalpha(str[i]))
+		return (FALSE);
+	while (str[++i])
+	{
+		if (str[i] != '_' && !ft_isalnum(str[i]))
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
 void	export(char *str)
 {
 	char	*key;
 	char	*tmp;
-	int		lenght;
 	t_list	*node;
-	// começa _ ou letras
-	// letras, digitos ou _
-
+	int		lenght;
+	t_bool	string;
+	
 	key = str;
 	tmp = get_key(str);
 	if (tmp)
 		key = tmp;
+	string = check_string(key);
 	node = search_envp(key, *get_envp());
-	if (node)
+	if (node && string)
 	{
 		lenght = ft_strlen(str);
 		if (ft_strncmp(str, node->content, lenght))
@@ -110,7 +125,7 @@ void	export(char *str)
 			free(key);
 		}
 	}
-	else
+	else if (string)
 		insert_envp(str, get_envp());
 }
 
@@ -124,27 +139,27 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 
-	init_envment(envp, get_envp());
+	// init_envment(envp, get_envp());
 
-	char *str = "test";
-	export(str);
+	// char *str = "test";
+	// export(str);
 
-	t_list *tmp = search_envp("test", *get_envp());
-	printf("%s\n", (char *)tmp->content);
+	// t_list *tmp = search_envp("test", *get_envp());
+	// printf("%s\n", (char *)tmp->content);
 
-	str = "test=viao";
-	export(str);
+	// str = "test=viao";
+	// export(str);
 
-	tmp = search_envp("test", *get_envp());
-	printf("%s\n", (char *)tmp->content);
+	// tmp = search_envp("test", *get_envp());
+	// printf("%s\n", (char *)tmp->content);
 
-	str = "test=carro";
-	export(str);
+	// str = "test=carro";
+	// export(str);
 
-	tmp = search_envp("test", *get_envp());
-	printf("%s\n", (char *)tmp->content);
+	// tmp = search_envp("test", *get_envp());
+	// printf("%s\n", (char *)tmp->content);
 
-	ft_lstclear(get_envp(), free);
+	// ft_lstclear(get_envp(), free);
 
     // char command[] = "< infile ls | ls > outfile -a";
     // scanner = init_scanner(command);
