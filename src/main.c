@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/20 19:08:00 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:16:22 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@
  * Criar expansor de arquivos;
  * Criar expansor geral $pwd, $user
  *
- * Criar search_envp = ok;
- * Criar delete_envp = ok;
- * Criar insert_envp = ok;
+ * Criar msg de erro export
+ * criar o unset
  * 
 */
 
@@ -75,8 +74,8 @@ void	execute_command(t_cmd *cmd, t_data *data)
 
 char *get_key(char *envp)
 {
-    char *sign;
-	size_t key_length;
+    char	*sign;
+	size_t	key_length;
 
 	sign = ft_strchr(envp, '=');
     if (!sign)
@@ -87,39 +86,39 @@ char *get_key(char *envp)
     return (ft_substr(envp, 0, key_length));
 }
 
-t_bool check_string(char *str)
+t_bool valid_string(char *str)
 {
 	int	i;
 
 	i = 0;
 	if (str[i] != '_' && !ft_isalpha(str[i]))
-		return (FALSE);
+		return (FALSE); //msg erro
 	while (str[++i])
 	{
 		if (str[i] != '_' && !ft_isalnum(str[i]))
-			return (FALSE);
+			return (FALSE); //msg
 	}
 	return (TRUE);
 }
 
 void	export(char *str)
 {
+	int		len;
 	char	*key;
 	char	*tmp;
 	t_list	*node;
-	int		lenght;
 	t_bool	string;
 	
 	key = str;
 	tmp = get_key(str);
 	if (tmp)
 		key = tmp;
-	string = check_string(key);
+	string = valid_string(key);
 	node = search_envp(key, *get_envp());
 	if (node && string)
 	{
-		lenght = ft_strlen(str);
-		if (ft_strncmp(str, node->content, lenght))
+		len = ft_strlen(str);
+		if (ft_strncmp(str, node->content, len))
 		{
 			update_envp(str, node);
 			free(key);
