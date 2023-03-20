@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/18 14:23:21 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:38:59 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,22 +87,31 @@ char *get_key(char *envp)
     return (ft_substr(envp, 0, key_length));
 }
 
-void	export(char *str)
+void	export(char *str) //test
 {
-	char *key;
-	char *tmp;
-	t_list *node;
+	char	*key;
+	char	*tmp;
+	int		lenght;
+	t_list	**node;
+	// começa _ ou letras
+	// letras, digitos ou _
 
 	key = str;
 	tmp = get_key(str);
 	if (tmp)
 		key = tmp;
-	node = search_envp(key, *get_envp());
-	if (node)
-		update_envp(NULL, str, node);
+	node = search_envp(key, get_envp());
+	if (node != NULL)
+	{
+		lenght = ft_strlen(str);
+		if (ft_strncmp(str, (*node)->content, lenght))
+		{
+			update_envp(NULL, str, node);
+			free(key);
+		}
+	}
 	else
 		insert_envp(str, get_envp());
-	free(tmp);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -116,17 +125,26 @@ int main(int argc, char **argv, char **envp)
 	(void)envp;
 
 	init_envment(envp, get_envp());
+
 	char *str = "test";
 	export(str);
 
-	t_list *tmp = search_envp("test", *get_envp());
-	printf("%s\n", (char *)tmp->content);
+	t_list **tmp = search_envp("test", get_envp());
+	printf("%s\n", (char *)(*tmp)->content);
 
 	str = "test=carro";
 	export(str);
 
-	tmp = search_envp("test", *get_envp());
-	printf("%s\n", (char *)tmp->content);
+	tmp = search_envp("test", get_envp());
+	printf("%s\n", (char *)(*tmp)->content);
+
+	str = "test=aviao";
+	export(str);
+
+	tmp = search_envp("test", get_envp());
+	printf("%s\n", (char *)(*tmp)->content);
+
+	ft_lstclear(get_envp(), free);
 
     // char command[] = "< infile ls | ls > outfile -a";
     // scanner = init_scanner(command);

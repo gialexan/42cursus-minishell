@@ -6,25 +6,25 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:08:36 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/18 14:07:33 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:33:56 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
 
-t_list *search_envp(char *search, t_list *envp)
+t_list **search_envp(char *search, t_list **envp)
 {
 	int lenght;
 
-	if (!envp)
+	if (!*envp)
 		return (NULL);
-	else if (!ft_strncmp(search, envp->content, 1))
+	else if (!ft_strncmp(search, (*envp)->content, 1))
 	{
 		lenght = ft_strlen(search);
-		if (!ft_strncmp(search, envp->content, lenght))
-			return (envp);
+		if (!ft_strncmp(search, (*envp)->content, lenght))
+			return (&*envp);
 	}
-	return (search_envp(search, envp->next));
+	return (search_envp(search, &(*envp)->next));
 }
 
 t_bool	delete_envp(char *delete, t_list **envp, t_list *prev)
@@ -56,22 +56,34 @@ t_bool	insert_envp(char *insert, t_list **envp)
 {
 	if (!insert)
 		return (FALSE);
-	ft_lstadd_back(envp, ft_lstnew(insert));
+	ft_lstadd_back(envp, ft_lstnew(ft_strdup(insert)));
 	return (TRUE);
 }
 
-t_bool	update_envp(char *key, char *new, t_list *envp)
+t_bool	update_envp(char *key, char *new, t_list **envp)
 {
-	t_list *update;
 
-	if (!key)
-		envp->content = ft_strdup(new);
-	else
-	{
-		update = search_envp(key, envp);
-		if (!update)
-			return FALSE;
-		update->content = ft_strdup(new);
-	}
+	free((*envp)->content);
+	(*envp)->content = ft_substr(new, 0, ft_strlen(new));
 	return (TRUE);
 }
+
+
+// t_bool	update_envp(char *key, char *new, t_list **envp)
+// {
+// 	t_list *update;
+// 	char *tmp;
+
+// 	//free((*envp)->content);
+// 	(*envp)->content = ft_strdup(new);
+// 	// else
+// 	// {
+// 	// 	printf("aki\n");
+// 	// 	update = search_envp(key, envp);
+// 	// 	if (!update)
+// 	// 		return FALSE;
+// 	// 	free(envp->content);
+// 	// 	update->content = ft_strdup(new);
+// 	// }
+// 	return (TRUE);
+// }
