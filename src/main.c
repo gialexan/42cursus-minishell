@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/20 14:38:59 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:43:25 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ char *get_key(char *envp)
     return (ft_substr(envp, 0, key_length));
 }
 
-void	export(char *str) //test
+void	export(char *str)
 {
 	char	*key;
 	char	*tmp;
 	int		lenght;
-	t_list	**node;
+	t_list	*node;
 	// começa _ ou letras
 	// letras, digitos ou _
 
@@ -100,13 +100,13 @@ void	export(char *str) //test
 	tmp = get_key(str);
 	if (tmp)
 		key = tmp;
-	node = search_envp(key, get_envp());
-	if (node != NULL)
+	node = search_envp(key, *get_envp());
+	if (node)
 	{
 		lenght = ft_strlen(str);
-		if (ft_strncmp(str, (*node)->content, lenght))
+		if (ft_strncmp(str, node->content, lenght))
 		{
-			update_envp(NULL, str, node);
+			update_envp(str, node);
 			free(key);
 		}
 	}
@@ -129,20 +129,20 @@ int main(int argc, char **argv, char **envp)
 	char *str = "test";
 	export(str);
 
-	t_list **tmp = search_envp("test", get_envp());
-	printf("%s\n", (char *)(*tmp)->content);
+	t_list *tmp = search_envp("test", *get_envp());
+	printf("%s\n", (char *)tmp->content);
+
+	str = "test=viao";
+	export(str);
+
+	tmp = search_envp("test", *get_envp());
+	printf("%s\n", (char *)tmp->content);
 
 	str = "test=carro";
 	export(str);
 
-	tmp = search_envp("test", get_envp());
-	printf("%s\n", (char *)(*tmp)->content);
-
-	str = "test=aviao";
-	export(str);
-
-	tmp = search_envp("test", get_envp());
-	printf("%s\n", (char *)(*tmp)->content);
+	tmp = search_envp("test", *get_envp());
+	printf("%s\n", (char *)tmp->content);
 
 	ft_lstclear(get_envp(), free);
 
