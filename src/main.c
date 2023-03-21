@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/20 19:16:22 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/21 11:37:51 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,17 @@ t_bool valid_string(char *str)
 	return (TRUE);
 }
 
-void	export(char *str)
+void	exec_ubset(char *str)
 {
-	int		len;
+	
+}
+
+void	exec_export(char *str)
+{
 	char	*key;
 	char	*tmp;
 	t_list	*node;
+	int		lenght;
 	t_bool	string;
 	
 	key = str;
@@ -117,8 +122,8 @@ void	export(char *str)
 	node = search_envp(key, *get_envp());
 	if (node && string)
 	{
-		len = ft_strlen(str);
-		if (ft_strncmp(str, node->content, len))
+		lenght = ft_strlen(str);
+		if (ft_strncmp(str, node->content, lenght))
 		{
 			update_envp(str, node);
 			free(key);
@@ -141,19 +146,19 @@ int main(int argc, char **argv, char **envp)
 	// init_envment(envp, get_envp());
 
 	// char *str = "test";
-	// export(str);
+	// exec_export(str);
 
 	// t_list *tmp = search_envp("test", *get_envp());
 	// printf("%s\n", (char *)tmp->content);
 
 	// str = "test=viao";
-	// export(str);
+	// exec_export(str);
 
 	// tmp = search_envp("test", *get_envp());
 	// printf("%s\n", (char *)tmp->content);
 
 	// str = "test=carro";
-	// export(str);
+	// exec_export(str);
 
 	// tmp = search_envp("test", *get_envp());
 	// printf("%s\n", (char *)tmp->content);
