@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/21 11:37:51 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:52:36 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ t_bool valid_string(char *str)
 	return (TRUE);
 }
 
-void	exec_ubset(char *str)
+void	exec_unset(char *str)
 {
-	
+	delete_envp(str, get_envp(), NULL);
 }
 
 void	exec_export(char *str)
@@ -143,7 +143,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 
-	// init_envment(envp, get_envp());
+	init_envment(envp, get_envp());
 
 	// char *str = "test";
 	// exec_export(str);
@@ -157,11 +157,11 @@ int main(int argc, char **argv, char **envp)
 	// tmp = search_envp("test", *get_envp());
 	// printf("%s\n", (char *)tmp->content);
 
-	// str = "test=carro";
-	// exec_export(str);
+	// str = "test";
+	// exec_unset(str);
 
 	// tmp = search_envp("test", *get_envp());
-	// printf("%s\n", (char *)tmp->content);
+	// printf("%p\n", tmp);
 
 	// ft_lstclear(get_envp(), free);
 
