@@ -6,14 +6,15 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/22 09:22:02 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/22 11:32:28 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
-# include <helper.h>
+# include "helper.h"
+# include "builtins.h"
 # include <fcntl.h>
 
 typedef struct s_data
@@ -23,7 +24,6 @@ typedef struct s_data
 	int			count;
 	t_bool		error;
 	t_bool		readpipe;
-	t_bool		exptcode;
 }	t_data;
 
 

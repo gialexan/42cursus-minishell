@@ -6,11 +6,22 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:08:36 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/20 17:30:20 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/22 10:24:52 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
+
+void	init_envment(char **environment, t_list **envp)
+{
+	t_list *new_node;
+
+	if (!*environment)
+		return ;
+	new_node = ft_lstnew(ft_strdup(*environment));
+	ft_lstadd_back(envp, new_node);
+	return (init_envment(++environment, envp));
+}
 
 t_list *search_envp(char *search, t_list *envp)
 {
