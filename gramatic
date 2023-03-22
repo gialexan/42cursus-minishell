@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 15:34:02 by gialexan          #+#    #+#              #
-#    Updated: 2023/03/01 14:20:34 by gialexan         ###   ########.fr        #
+#    Updated: 2023/03/22 16:10:24 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,3 +20,16 @@
 <COMMAND> ::= 		<WORD>
                 |	<REDIRECTION>
 				|	<PIPELINE>
+
+
+
+
+
+//export test:
+
+char *str = "test=carro";
+	exec_export(str);
+
+	t_list *tmp = search_envp("test", *get_envp());
+	if (tmp)
+		printf("%s\n", (char *)tmp->content);

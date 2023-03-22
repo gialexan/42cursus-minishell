@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect_type.c                                    :+:      :+:    :+:   */
+/*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/17 10:11:36 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:30:04 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
 {
 	int		fd;
 	t_list *file;
-	
+
 	file = advanced(&token);
 	fd = open(file->content, O_RDONLY);
 	set_redir(data, fd, STDIN_FILENO, file->content);
