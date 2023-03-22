@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/22 11:29:27 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:06:06 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,42 +20,42 @@ static t_bool   export_error(char *str);
 void    exec_export(char *str)
 {
 	char	*key;
-	char	*tmp;
 	t_list	*node;
     int     lenght;
 	t_bool	string;
 
-	key = str;
-	tmp = get_key(str);
-	if (tmp)
-		key = tmp;
-	string = valid_string(str);
+	key = get_key(str);
+	string = valid_string(key);
 	node = search_envp(key, *get_envp());
 	if (node && string)
 	{
         lenght = ft_strlen(str);
 		if (ft_strncmp(str, node->content, lenght))
-		{
 			update_envp(str, node);
-			free(key);
-		}
 	}
 	else if (string)
 		insert_envp(str, get_envp());
+	free(key);
 }
 
 static char    *get_key(char *str)
 {
+	char	*key;
+	char	*tmp;
     char	*sign;
 	size_t	key_length;
 
+	key = ft_strdup(str);
 	sign = ft_strchr(str, '=');
     if (!sign)
-        return NULL;
+        return key;
     key_length = sign - str;
     if (key_length == 0)
-        return NULL;
-    return (ft_substr(str, 0, key_length));
+        return key;
+	tmp = key;
+	key = ft_substr(str, 0, key_length);
+	free(tmp);
+	return (key);
 }
 
 static t_bool   valid_string(char *str)
@@ -67,10 +67,8 @@ static t_bool   valid_string(char *str)
 		return (export_error(str));
 	while (str[++i])
 	{
-		if (str[i] != '_' && !ft_isalnum(str[i]) && str[i] != '=')
+		if (str[i] != '_' && !ft_isalnum(str[i]))
 			return (export_error(str));
-		else if (str[i] == '=')
-			return (TRUE);
 	}
 	return (TRUE);
 }

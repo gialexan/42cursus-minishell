@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/03/22 11:03:40 by gialexan         ###   ########.fr        #
+#    Updated: 2023/03/22 15:21:39 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,11 @@ SOURCES_FILES = main.c				\
 				parser_utils.c		\
 				parser_type.c   	\
 				redirect.c			\
-				redirect_type.c 	\
 				redirect_utils.c	\
 				environment.c   	\
 				interface.c 		\
+				export.c 			\
+				unset.c 			\
 				cleaner.c 			\
 				print.c 			\
 				error.c				

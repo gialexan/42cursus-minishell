@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/22 12:25:01 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:04:55 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,37 @@ void	execute_command(t_cmd *cmd, t_data *data)
 }
 */
 
+void	declare_x(t_list *envp)
+{
+	if (envp == NULL)
+		return ;
+	ft_putstr_fd("declare -x ", STDOUT_FILENO);
+	ft_putendl_fd(envp->content, STDOUT_FILENO);
+	return (declare_x(envp->next));
+}
+
+static t_bool	error(char *str)
+{
+	msh_error("export", str, 0);
+    ft_putendl_fd(": not a valid identifier", STDERR_FILENO);
+	return (FALSE);
+}
+
+static t_bool   valid(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] != '_' && !ft_isalpha(str[i]))
+		return (error(str));
+	while (str[++i])
+	{
+		if (str[i] != '_' && !ft_isalnum(str[i]))
+			return (error(str));
+	}
+	return (TRUE);
+}
+
 int main(int argc, char **argv, char **envp)  // '"'  $PWD
 {
 	t_data		data;
@@ -81,22 +112,33 @@ int main(int argc, char **argv, char **envp)  // '"'  $PWD
 
 	init_envment(envp, get_envp());
 
+	//declare_x(*get_envp());
+
 	// t_list *tmp = search_envp("test", *get_envp());
 	// printf("%s\n", (char *)tmp->content);
 
-	// str = "test=viao";
-	// exec_export(str);
+	char *str = "test=carro";
+	exec_export(str);
 
-	// tmp = search_envp("test", *get_envp());
-	// printf("%s\n", (char *)tmp->content);
+	t_list *tmp = search_envp("test", *get_envp());
+	if (tmp)
+		printf("%s\n", (char *)tmp->content);
+	
+	str = "test=aviao";
+	exec_export(str);
+	
+	tmp = search_envp("test", *get_envp());
+	if (tmp)
+		printf("%s\n", (char *)tmp->content);
 
-	// str = "test";
-	// exec_unset(str);
+	str = "test=carreta";
+	exec_export(str);
+	
+	tmp = search_envp("test", *get_envp());
+	if (tmp)
+		printf("%s\n", (char *)tmp->content);
 
-	// tmp = search_envp("test", *get_envp());
-	// printf("%p\n", tmp);
-
-	// ft_lstclear(get_envp(), free);
+	ft_lstclear(get_envp(), free);
 
     // char command[] = "\'test";
     // scanner = init_scanner(command);
