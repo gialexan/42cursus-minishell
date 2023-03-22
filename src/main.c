@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/21 16:52:36 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/22 09:43:55 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@
  * Criar expansor de arquivos;
  * Criar expansor geral $pwd, $user
  *
- * Criar msg de erro export
- * criar o unset
  * 
 */
 
@@ -72,18 +70,24 @@ void	execute_command(t_cmd *cmd, t_data *data)
 }
 */
 
-char *get_key(char *envp)
+char *get_key(char *str)
 {
     char	*sign;
 	size_t	key_length;
 
-	sign = ft_strchr(envp, '=');
+	sign = ft_strchr(str, '=');
     if (!sign)
         return NULL;
-    key_length = sign - envp;
+    key_length = sign - str;
     if (key_length == 0)
         return NULL;
-    return (ft_substr(envp, 0, key_length));
+    return (ft_substr(str, 0, key_length));
+}
+
+t_bool	export_error(char *str)
+{
+	msh_error("export", str, 0);
+	return (FALSE);
 }
 
 t_bool valid_string(char *str)
@@ -91,12 +95,16 @@ t_bool valid_string(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] != '_' && !ft_isalpha(str[i]))
-		return (FALSE); //msg erro
+	if (str[i] == '_' && !ft_isalnum(str[i + 1]))
+		return (FALSE);
+	else if (str[i] != '_' && !ft_isalpha(str[i]))
+		return (export_error(str));
 	while (str[++i])
 	{
-		if (str[i] != '_' && !ft_isalnum(str[i]))
-			return (FALSE); //msg
+		if (str[i] != '_' && !ft_isalnum(str[i]) && str[i] != '=')
+			return (export_error(str));
+		if (str[i] == '=')
+			return (TRUE);
 	}
 	return (TRUE);
 }
@@ -118,7 +126,7 @@ void	exec_export(char *str)
 	tmp = get_key(str);
 	if (tmp)
 		key = tmp;
-	string = valid_string(key);
+	string = valid_string(str);
 	node = search_envp(key, *get_envp());
 	if (node && string)
 	{
@@ -133,7 +141,7 @@ void	exec_export(char *str)
 		insert_envp(str, get_envp());
 }
 
-int main(int argc, char **argv, char **envp)
+int main(int argc, char **argv, char **envp)  // '"'  $PWD
 {
 	t_data		data;
     t_list		*token = NULL;
@@ -145,8 +153,8 @@ int main(int argc, char **argv, char **envp)
 
 	init_envment(envp, get_envp());
 
-	// char *str = "test";
-	// exec_export(str);
+	char *str = "te@st";
+	printf("%d\n", valid_string(str));
 
 	// t_list *tmp = search_envp("test", *get_envp());
 	// printf("%s\n", (char *)tmp->content);
@@ -165,7 +173,7 @@ int main(int argc, char **argv, char **envp)
 
 	// ft_lstclear(get_envp(), free);
 
-    // char command[] = "< infile ls | ls > outfile -a";
+    // char command[] = "\'test";
     // scanner = init_scanner(command);
     // token = lexical_analysis(&scanner, token);
 	// parser = syntax_analysis(token);
