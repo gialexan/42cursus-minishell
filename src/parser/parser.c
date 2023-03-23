@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/22 09:37:33 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:34:33 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ static t_cmd *syntax_error(t_list *token)
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (is_error(token))
 	{
-		ft_putstr_fd("syntax error unclosed quotes ", STDERR_FILENO);
-		ft_putendl_fd(token->content, STDERR_FILENO);
+		ft_putstr_fd("syntax error unclosed quotes `( ", STDERR_FILENO);
+		ft_putstr_fd(token->content, STDERR_FILENO);
+		ft_putstr_fd(" )", STDERR_FILENO);
 	}
 	else
 	{
@@ -92,7 +93,7 @@ static t_cmd *syntax_error(t_list *token)
 			ft_putstr_fd("newline", STDERR_FILENO);
 		else
 			ft_putstr_fd(token->content, STDERR_FILENO);
-		ft_putendl_fd("\'", STDERR_FILENO);
 	}
+	ft_putendl_fd("\'", STDERR_FILENO);
 	return (NULL);
 }

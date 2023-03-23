@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/22 16:29:30 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:19:38 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
  * 1 = "<<<>>>	|>|<<    |>>'ola42'\"ola42\"    ola42     "
  * 2 = "< infile ls -l -a -b -cd > outfile | < outfile"
  * 3 = "< ls -l -a -b -cd > 'test'"
+ * 4 = "<'infile''''ls'''''>outfile | echo \"'''\"''\"'\"gilmar\"'\"''\"'''\""
  *
  *              <---------------------Syntax Analysis Testes----------------------->
  * No error:
@@ -69,16 +70,25 @@ void	execute_command(t_cmd *cmd, t_data *data)
 }
 */
 
-void	declare_x(t_list *envp)
-{
-	if (envp == NULL)
-		return ;
-	ft_putstr_fd("declare -x ", STDOUT_FILENO);
-	ft_putendl_fd(envp->content, STDOUT_FILENO);
-	return (declare_x(envp->next));
-}
+// void	declare_x(t_list *envp)
+// {
+// 	if (envp == NULL)
+// 		return ;
+// 	ft_putstr_fd("declare -x ", STDOUT_FILENO); // echo "''" '''''" $PWD "''''' "''"
+// 	ft_putendl_fd(envp->content, STDOUT_FILENO);//
+// 	return (declare_x(envp->next));
+// }
 
-int main(int argc, char **argv, char **envp)  // '"'  $PWD
+
+/**
+ * Se for só as " é só expandir e fim de papo.
+ * Se for só as ' precisa fazer parser de 2 em 2.
+ * Se for misturado " e ' é só chorar.
+ * Saber se todas estão abertas e fechadas? Contar " e ' depois separadas depois resto da divisão por 2
+*/
+
+
+int main(int argc, char **argv, char **envp)  // echo "''" ''" $PWD "'' "''"
 {
 	t_data		data;
     t_list		*token = NULL;
@@ -88,15 +98,22 @@ int main(int argc, char **argv, char **envp)  // '"'  $PWD
 	(void)argv;
 	(void)envp;
 
-	init_envment(envp, get_envp());
+	//char *test = \"''\"gilmar\"''\";
+
+	// char *tmp = ft_strjoin(test, c);
+	// printf("%s\n", tmp);
+
+	//init_envment(envp, get_envp());
 
 	//ft_lstclear(get_envp(), free);
 
-    // char command[] = "\'test";
-    // scanner = init_scanner(command);
-    // token = lexical_analysis(&scanner, token);
-	// parser = syntax_analysis(token);
-	// data.readpipe = FALSE; //Arrumar lugar melhor para isso.
-	// execute_command(parser, &data);
+	//"<'infile''''ls'''''>outfile | echo \"'''\"''\"'\"gilmar\"'\"''\"'''\""
+    char command[] = "infile ''";
 
+    scanner = init_scanner(command);
+    token = lexical_analysis(&scanner, token);
+	print_stack(token, 0);
+	parser = syntax_analysis(token);
+	// data.readpipe = FALSE; //Arrumar lugar melhor para isso. 85% 100%
+	// execute_command(parser, &data);
 }

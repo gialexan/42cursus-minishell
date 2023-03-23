@@ -6,16 +6,15 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/22 11:05:39 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:31:16 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scanner.h"
 
 static char		advance(t_scanner *scanner);
-static t_list	*word(t_scanner *scanner, char c);
-static t_list	*string(t_scanner *scanner, char c);
-static t_list	*word_quote(t_scanner *scanner, char c);
+static int		string(t_scanner *self, char c);
+static t_list	*token_word(t_scanner *self, char c);
 static t_bool	match(t_scanner *scanner, char expected);
 
 t_list *scan_token(t_scanner *scanner)
@@ -40,12 +39,7 @@ t_list *scan_token(t_scanner *scanner)
 			return (make_token(scanner, TK_DGREAT));
 		return (make_token(scanner, TK_GREAT));
 	}
-	else
-	{
-		if (ft_isquote(c))
-			return (word_quote(scanner, c));
-		return (word(scanner, c));
-	}
+	return (token_word(scanner, c));
 }
 
 static char	advance(t_scanner *scanner)
@@ -62,23 +56,31 @@ static t_bool match(t_scanner *scanner, char expected)
 	return (TRUE);
 }
 
-static	t_list *word(t_scanner *scanner, char c)
+t_list	*token_word(t_scanner *scanner, char c)
 {
-	c = scanner->cmd[--scanner->curr];
-	while (!ft_strchr(METACHARS, c))
-		c = scanner->cmd[++scanner->curr];
+	scanner->curr--;
+	while (!ft_strchr(METACHARS, scanner->cmd[scanner->curr]))
+	{
+		c = advance(scanner);
+		if (c == '\'' || c == '"')
+		{
+			if (string(scanner, c) == UNCLOSED)
+				return (make_token(scanner, TK_ERROR));
+			c = scanner->cmd[scanner->curr];
+		}
+	}
 	return (make_token(scanner, TK_WORD));
 }
 
-static	t_list *word_quote(t_scanner *scanner, char c)
+static int	string(t_scanner *self, char c)
 {
-	char close;
+	char	close;
 
 	close = c;
-	c = advance(scanner);
-	while (c != 0 && c != close)
-		c = advance(scanner);
+	c = advance(self);
+	while (c != close && c != 0)
+		c = advance(self);
 	if (c == 0 && c != close)
-		return (make_token(scanner, TK_ERROR));
-	return (make_token(scanner, TK_WORD));
+		return (UNCLOSED);
+	return (CLOSED);
 }
