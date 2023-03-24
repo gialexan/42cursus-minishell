@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:58:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/23 15:18:17 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:53:47 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 
 typedef struct	s_scanner
 {
-	size_t			curr;
 	size_t			start;
+	size_t			current;
 	const char		*cmd;
 }	t_scanner;
 

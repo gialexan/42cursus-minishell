@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/23 18:31:16 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:54:22 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ t_list *scan_token(t_scanner *scanner)
 
 static char	advance(t_scanner *scanner)
 {
-	scanner->curr++;
-	return (scanner->cmd[scanner->curr - 1]);
+	scanner->current++;
+	return (scanner->cmd[scanner->current - 1]);
 }
 
 static t_bool match(t_scanner *scanner, char expected)
 {
-	if (scanner->cmd[scanner->curr] != expected)
+	if (scanner->cmd[scanner->current] != expected)
 		return (FALSE);
 	advance(scanner);
 	return (TRUE);
@@ -58,15 +58,15 @@ static t_bool match(t_scanner *scanner, char expected)
 
 t_list	*token_word(t_scanner *scanner, char c)
 {
-	scanner->curr--;
-	while (!ft_strchr(METACHARS, scanner->cmd[scanner->curr]))
+	scanner->current--;
+	while (!ft_strchr(METACHARS, scanner->cmd[scanner->current]))
 	{
 		c = advance(scanner);
 		if (c == '\'' || c == '"')
 		{
 			if (string(scanner, c) == UNCLOSED)
 				return (make_token(scanner, TK_ERROR));
-			c = scanner->cmd[scanner->curr];
+			c = scanner->cmd[scanner->current];
 		}
 	}
 	return (make_token(scanner, TK_WORD));

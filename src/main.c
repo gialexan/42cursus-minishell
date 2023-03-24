@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/23 18:19:38 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/24 19:31:42 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	execute_command(t_cmd *cmd, t_data *data)
 // 	return (declare_x(envp->next));
 // }
 
-
 /**
  * Se for só as " é só expandir e fim de papo.
  * Se for só as ' precisa fazer parser de 2 em 2.
@@ -108,7 +107,7 @@ int main(int argc, char **argv, char **envp)  // echo "''" ''" $PWD "'' "''"
 	//ft_lstclear(get_envp(), free);
 
 	//"<'infile''''ls'''''>outfile | echo \"'''\"''\"'\"gilmar\"'\"''\"'''\""
-    char command[] = "infile ''";
+    char command[] = "infile'";
 
     scanner = init_scanner(command);
     token = lexical_analysis(&scanner, token);

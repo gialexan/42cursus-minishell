@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/17 10:10:51 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:54:54 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 t_list	*lexical_analysis(t_scanner *scanner, t_list *token)
 {
-	if (scanner->curr > ft_strlen(scanner->cmd))
+	if (scanner->current > ft_strlen(scanner->cmd))
 		return (token);
-	scanner->start = scanner->curr;
+	scanner->start = scanner->current;
 	ft_lstadd_back(&token, scan_token(scanner));
 	return (lexical_analysis(scanner, token));
 }
@@ -26,16 +26,16 @@ t_scanner	init_scanner(const char *command)
 {
 	t_scanner scanner;
 
-	scanner.curr = 0;
+	scanner.current = 0;
 	scanner.cmd = command;
 	return (scanner);
 }
 
 void	skip_space (t_scanner *scanner)
 {
-	while (ft_isspace(scanner->cmd[scanner->curr]))
-		scanner->curr++;
-	scanner->start = scanner->curr;
+	while (ft_isspace(scanner->cmd[scanner->current]))
+		scanner->current++;
+	scanner->start = scanner->current;
 }
 
 t_list *make_token(t_scanner *scanner, t_tk_type type)
@@ -46,7 +46,7 @@ t_list *make_token(t_scanner *scanner, t_tk_type type)
 	if (!token)
 		return (NULL);
 	token->content = ft_substr(scanner->cmd, scanner->start,
-			scanner->curr - scanner->start);
+			scanner->current - scanner->start);
 	token->tk_type = type;
 	token->next = NULL;
 	return (token);
