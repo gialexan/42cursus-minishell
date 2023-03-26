@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/24 19:31:42 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/25 22:19:02 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ void	execute_command(t_cmd *cmd, t_data *data)
 }
 */
 
-// void	declare_x(t_list *envp)
-// {
-// 	if (envp == NULL)
-// 		return ;
-// 	ft_putstr_fd("declare -x ", STDOUT_FILENO); // echo "''" '''''" $PWD "''''' "''"
-// 	ft_putendl_fd(envp->content, STDOUT_FILENO);//
-// 	return (declare_x(envp->next));
-// }
+void	declare_x(t_list *envp)
+{
+	if (envp == NULL)
+		return ;
+	ft_putstr_fd("declare -x ", STDOUT_FILENO); // echo "''" '''''" $PWD "''''' "''"
+	ft_putendl_fd(envp->content, STDOUT_FILENO);//
+	return (declare_x(envp->next));
+}
 
 /**
  * Se for só as " é só expandir e fim de papo.
