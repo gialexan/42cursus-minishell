@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:01:09 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/17 10:11:28 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:10:06 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_stack(t_list *lst, int type)
 		while(tmp != NULL)
 		{
 			content = tmp->content;
-			printf("%s ", content);
+			printf("%s ", content);   
 			tmp = tmp->next;
 		}
 		printf("\n");
