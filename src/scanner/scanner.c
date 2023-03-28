@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/23 18:54:22 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/27 18:35:22 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char		advance(t_scanner *scanner);
 static int		string(t_scanner *self, char c);
-static t_list	*token_word(t_scanner *self, char c);
+static t_list	*token_word(t_scanner *scanner, char c);
 static t_bool	match(t_scanner *scanner, char expected);
 
 t_list *scan_token(t_scanner *scanner)
@@ -56,7 +56,7 @@ static t_bool match(t_scanner *scanner, char expected)
 	return (TRUE);
 }
 
-t_list	*token_word(t_scanner *scanner, char c)
+static t_list	*token_word(t_scanner *scanner, char c)
 {
 	scanner->current--;
 	while (!ft_strchr(METACHARS, scanner->cmd[scanner->current]))

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/25 22:19:02 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/27 22:04:36 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,10 @@
 */
 
 /* TO DO
- *
  * Criar o executor de comando;
  * Pegar o exception dos file abertos;
  * Criar expansor de arquivos;
  * Criar expansor geral $pwd, $user
- *
 */
 
 /* 
@@ -70,15 +68,6 @@ void	execute_command(t_cmd *cmd, t_data *data)
 }
 */
 
-void	declare_x(t_list *envp)
-{
-	if (envp == NULL)
-		return ;
-	ft_putstr_fd("declare -x ", STDOUT_FILENO); // echo "''" '''''" $PWD "''''' "''"
-	ft_putendl_fd(envp->content, STDOUT_FILENO);//
-	return (declare_x(envp->next));
-}
-
 /**
  * Se for só as " é só expandir e fim de papo.
  * Se for só as ' precisa fazer parser de 2 em 2.
@@ -86,7 +75,78 @@ void	declare_x(t_list *envp)
  * Saber se todas estão abertas e fechadas? Contar " e ' depois separadas depois resto da divisão por 2
 */
 
+static char	advance(t_scanner *scanner)
+{
+	scanner->current++;
+	return (scanner->cmd[scanner->current - 1]);
+}
 
+char *slice_word(t_scanner *scanner)
+{
+	char c;
+
+	c = advance(scanner);
+	while (c != 0 && c != '\'' && c != '"')
+		c = advance(scanner);
+	scanner->current--;
+	return (ft_substr(scanner->cmd, scanner->start,
+		scanner->current - scanner->start));
+}
+
+char *slice_quotes(t_scanner *scanner)
+{
+	char c;
+	char end;
+	char *sliced;
+	
+	end = advance(scanner);
+	c = advance(scanner);
+	while (c != end && c != 0)
+		c = advance(scanner);
+	return (ft_substr(scanner->cmd, scanner->start,
+		scanner->current - scanner->start));
+}
+
+t_list	*quotes_splitting(t_scanner *scanner, t_list *quotes)
+{
+	char *sliced;
+
+	if (scanner->current >= ft_strlen(scanner->cmd))
+		return (quotes);
+	scanner->start = scanner->current;
+	if (scanner->cmd[scanner->current] == '\'' || scanner->cmd[scanner->current] == '"')
+		sliced = slice_quotes(scanner);
+	else
+		sliced = slice_word(scanner);
+	
+	ft_lstadd_back(&quotes, ft_lstnew(sliced));
+	return (quotes_splitting(scanner, quotes));
+}
+
+void	word_splitting(void)
+{
+	t_scanner	scanner;
+	t_list		*quotes = NULL;
+
+	//"'ls''''''ola'oi''''bom dia   ''"
+	char command[] = "\"''ls''\"";
+
+	scanner = init_scanner(command);
+	quotes = quotes_splitting(&scanner, quotes);
+	print_stack(quotes, 0);
+
+	// char *tmp = slice(&scanner);
+	// printf("%s\n", tmp);
+	// scanner.start = scanner.current;
+	// tmp = slice(&scanner);
+	// printf("%s\n", tmp);
+	// scanner.start = scanner.current;
+	// tmp = slice(&scanner);
+	// printf("%s\n", tmp);
+	
+}
+
+// echo "''" '''''" $PWD "''''' "''"
 int main(int argc, char **argv, char **envp)  // echo "''" ''" $PWD "'' "''"
 {
 	t_data		data;
@@ -107,12 +167,14 @@ int main(int argc, char **argv, char **envp)  // echo "''" ''" $PWD "'' "''"
 	//ft_lstclear(get_envp(), free);
 
 	//"<'infile''''ls'''''>outfile | echo \"'''\"''\"'\"gilmar\"'\"''\"'''\""
-    char command[] = "infile'";
+    //char command[] = "echo 'ls'oi''";
 
-    scanner = init_scanner(command);
-    token = lexical_analysis(&scanner, token);
-	print_stack(token, 0);
-	parser = syntax_analysis(token);
-	// data.readpipe = FALSE; //Arrumar lugar melhor para isso. 85% 100%
+    //scanner = init_scanner(command);
+    //token = lexical_analysis(&scanner, token);
+	//print_stack(token, 0);
+	word_splitting();
+	
+	//parser = syntax_analysis(token);
+	// data.readpipe = FALSE; //Arrumar lugar melhor para isso.
 	// execute_command(parser, &data);
 }

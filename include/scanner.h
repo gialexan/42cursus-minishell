@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:58:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/23 18:53:47 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/27 07:58:34 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 
-# define QUOTES "\"'"
 # define METACHARS "|()<> \t\n"
 # define CLOSED 0
 # define UNCLOSED 1

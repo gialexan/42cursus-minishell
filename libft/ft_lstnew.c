@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 19:31:13 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/20 11:26:36 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:42:05 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_list	*ft_lstnew(void *content)
 	list = malloc(sizeof(t_list));
 	if (!list)
 		return (NULL);
+	list->tk_type = 0;
 	list->content = content;
 	list->next = NULL;
 	return (list);
