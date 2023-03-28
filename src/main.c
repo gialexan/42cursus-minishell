@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/28 19:50:05 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/28 19:51:49 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,11 +150,11 @@ char	*str_replace(char *str, char *key) //aloca = 6 + 10 = 16
 	int quotes;
 	t_list *envp;
 
+	quotes = count_quotes(str);
 	envp = search_envp(key + 1, *get_envp());
 	printf("%s\n", ft_strchr(envp->content, '=') + 1);
 
 	
-	quotes = count_quotes(str);
 	return NULL;
 }
 
