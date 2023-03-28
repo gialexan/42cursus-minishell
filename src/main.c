@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/27 22:05:15 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/28 10:54:36 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char *slice_quotes(t_scanner *scanner)
 	char c;
 	char end;
 	char *sliced;
-	
+
 	end = advance(scanner);
 	c = advance(scanner);
 	while (c != end && c != 0)
@@ -107,9 +107,15 @@ char *slice_quotes(t_scanner *scanner)
 		scanner->current - scanner->start));
 }
 
+char *unquote(char *str)
+{
+	
+}
+
 t_list	*quotes_splitting(t_scanner *scanner, t_list *quotes)
 {
 	char *sliced;
+	char *tmp;
 
 	if (scanner->current >= ft_strlen(scanner->cmd))
 		return (quotes);
@@ -118,19 +124,15 @@ t_list	*quotes_splitting(t_scanner *scanner, t_list *quotes)
 		sliced = slice_quotes(scanner);
 	else
 		sliced = slice_word(scanner);
-	
+	unquote(sliced);				
 	ft_lstadd_back(&quotes, ft_lstnew(sliced));
-	return (quotes_splitting(scanner, quotes));
+	return(quotes_splitting(scanner, quotes));
 }
+
 
 char *variable_expansion(char *str)
 {
 
-
-
-
-
-	
 	return (NULL);
 }
 
@@ -145,17 +147,8 @@ void	word_splitting(void)
 	scanner = init_scanner(command);
 	quotes = quotes_splitting(&scanner, quotes);
 	print_stack(quotes, 0);
-
-	// char *tmp = slice(&scanner);
-	// printf("%s\n", tmp);
-	// scanner.start = scanner.current;
-	// tmp = slice(&scanner);
-	// printf("%s\n", tmp);
-	// scanner.start = scanner.current;
-	// tmp = slice(&scanner);
-	// printf("%s\n", tmp);
-	
 }
+
 
 // echo "''" '''''" $PWD "''''' "''"
 int main(int argc, char **argv, char **envp)  // echo "''" ''" $PWD "'' "''"
@@ -184,7 +177,6 @@ int main(int argc, char **argv, char **envp)  // echo "''" ''" $PWD "'' "''"
     //token = lexical_analysis(&scanner, token);
 	//print_stack(token, 0);
 	word_splitting();
-	
 	//parser = syntax_analysis(token);
 	// data.readpipe = FALSE; //Arrumar lugar melhor para isso.
 	// execute_command(parser, &data);
