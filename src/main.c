@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/27 22:04:36 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/27 22:05:15 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,17 @@ t_list	*quotes_splitting(t_scanner *scanner, t_list *quotes)
 	
 	ft_lstadd_back(&quotes, ft_lstnew(sliced));
 	return (quotes_splitting(scanner, quotes));
+}
+
+char *variable_expansion(char *str)
+{
+
+
+
+
+
+	
+	return (NULL);
 }
 
 void	word_splitting(void)
