@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/28 19:51:49 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:56:07 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,15 @@ char	*slice_quotes(t_scanner *scanner)
 
 t_bool	empty_quotes(char *str)
 {
-	return (ft_strlen(str) == 2);
+	char	init;
+
+	if (str[0] == '\'' || str[0] == '"')
+		init = str[0];
+	else
+		return (FALSE);
+	if (str[1] == init && str[2] == '\0')
+		return (TRUE);
+	return (FALSE);
 }
 
 int	count_quotes(char *str)
@@ -136,26 +144,77 @@ int	count_quotes(char *str)
 
 char	*unquote(char *str)
 {
+	char *tmp;
+
 	if (empty_quotes(str))
 		return (ft_strdup(""));
 	else if (ft_chrcmp(str[0], '\''))
 		return (ft_strtrim(str, "'"));
 	else if (ft_chrcmp(str[0], '"'))
-		return (ft_strtrim(str, "\""));
-	return (NULL);
+		return (ft_strtrim(str, "'"));
+	return (ft_strdup(str));
 }
 
-char	*str_replace(char *str, char *key) //aloca = 6 + 10 = 16
+int	wordcount(char *str, char *word)
 {
-	int quotes;
-	t_list *envp;
+	int i;
+	int count;
+	int wordlen;
 
-	quotes = count_quotes(str);
+	i = 0;
+	count = 0;
+	wordlen = ft_strlen(word);
+	while (str[i])
+	{
+		if (ft_strnstr(&str[i], word, ft_strlen(&str[i])) == &str[i])
+		{
+			count++;
+			i += wordlen - 1;
+		}
+		i++;
+	}
+	return (count);
+}
+
+
+char *ft_strreplace(char *str, char *oldw, char *neww)
+{
+	int i;
+	char *result;
+    int newwlen = ft_strlen(neww);
+    int oldwlen = ft_strlen(oldw);
+
+	result = malloc(ft_strlen(str) + wordcount(str, oldw)
+			* (newwlen - oldwlen) + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (*str)
+	{
+    	if (ft_strnstr(str, oldw, ft_strlen(str)) == str)
+		{
+			ft_strlcpy(&result[i], neww, newwlen + 1);
+        	i += newwlen;
+       		str += oldwlen;
+    	}
+    	else
+        	result[i++] = *str++;
+    }
+    result[i] = '\0';
+    return (result);
+}
+
+char	*expand(char *str, char *key) //dar free no str e key no final.
+{
+	char	*tmp;
+	int		quotes;
+	t_list	*envp;
+
 	envp = search_envp(key + 1, *get_envp());
-	printf("%s\n", ft_strchr(envp->content, '=') + 1);
-
-	
-	return NULL;
+	if (!envp)
+		return (ft_strdup(""));
+	tmp = ft_strreplace(str, key, envp->content);
+	return (tmp);
 }
 
 char	*variable_expansion(char *str)
@@ -166,6 +225,8 @@ char	*variable_expansion(char *str)
 
 	i = 0;
 	tmp = ft_strdup(str);
+	if (ft_chrcmp(str[i], '\''))
+		return (tmp);
 	while (str[i])
 	{
 		if (ft_chrcmp(str[i], '$'))
@@ -177,7 +238,7 @@ char	*variable_expansion(char *str)
 			{
 				while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 					i++;
-				return (str_replace(tmp, ft_substr(tmp, init, i - init)));
+				return (expand(tmp, ft_substr(tmp, init, i - init)));
 			}
 		}
 		i++;
@@ -187,9 +248,9 @@ char	*variable_expansion(char *str)
 
 t_list	*quotes_splitting(t_scanner *scanner, t_list *quotes)
 {
-	char *tmp;
+	char *clear;
 	char *sliced;
-	char *result;
+	char *expand;
 
 	if (scanner->current >= ft_strlen(scanner->cmd))
 		return (quotes);
@@ -199,10 +260,11 @@ t_list	*quotes_splitting(t_scanner *scanner, t_list *quotes)
 		sliced = slice_quotes(scanner);
 	else
 		sliced = slice_word(scanner);
-	tmp = unquote(sliced);
-	result = variable_expansion(tmp);
-	free(tmp);
-	ft_lstadd_back(&quotes, ft_lstnew(tmp));
+	expand = variable_expansion(sliced);
+	//clear = unquote(sliced);
+	free(sliced);
+	//free(tmp);
+	ft_lstadd_back(&quotes, ft_lstnew(expand));
 	return (quotes_splitting(scanner, quotes));
 }
 
@@ -211,9 +273,9 @@ void	word_splitting(void)
 	t_scanner	scanner;
 	t_list		*quotes = NULL;
 
-	//"'ls''''''ola'oi''''bom dia   ''"
-	char command[] = "\"'''$USER'''\"";
-
+	//"'ls''''''ola'oi''''bom dia   ''" -> "'ls'''''\"'ola'\"oi''''bomdia"
+	char command[] = "$USER";
+	//\"'''$USER'''\"
 	scanner = init_scanner(command);
 	quotes = quotes_splitting(&scanner, quotes);
 	print_stack(quotes, 0);
@@ -238,6 +300,22 @@ int main(int argc, char **argv, char **envp)  // echo "''" ''" $PWD "'' "''"
 
 	init_envment(envp, get_envp());
 
+	char str[] = "\"'''$USER'''\"";
+    char c[] = "$USER";
+    char d[] = "Geeks";
+ 
+    char *result = NULL;
+
+    // oldW string
+    printf("Old string: %s\n", str);
+ 
+    printf("New String: %s\n", result);
+ 
+    free(result);
+    return 0;
+
+	
+
 	//ft_lstclear(get_envp(), free);
 
 	//"<'infile''''ls'''''>outfile | echo \"'''\"''\"'\"gilmar\"'\"''\"'''\""
@@ -246,7 +324,7 @@ int main(int argc, char **argv, char **envp)  // echo "''" ''" $PWD "'' "''"
     //scanner = init_scanner(command);
     //token = lexical_analysis(&scanner, token);
 	//print_stack(token, 0);
-	word_splitting();
+	//word_splitting();
 	// parser = syntax_analysis(token);
 	// data.readpipe = FALSE; //Arrumar lugar melhor para isso.
 	// execute_command(parser, &data);
