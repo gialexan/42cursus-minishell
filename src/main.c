@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/29 12:39:54 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:36:21 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,6 @@ static	char	advance(t_scanner *scanner)
 	return (scanner->cmd[scanner->current - 1]);
 }
 
-static	t_bool ft_chrcmp(char c1, char c2)
-{
-	return (c1 == c2);
-}
-
 char	*slice_word(t_scanner *scanner)
 {
 	char c;
@@ -126,22 +121,6 @@ t_bool	empty_quotes(char *str)
 	return (FALSE);
 }
 
-int	count_quotes(char *str)
-{
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if (ft_chrcmp(str[i],'"') || ft_chrcmp(str[i],'\''))
-			count++;
-		i++;
-	}
-	return (count);
-}
-
 char	*unquote(char *str)
 {
 	char *tmp;
@@ -155,55 +134,6 @@ char	*unquote(char *str)
 	return (ft_strdup(str));
 }
 
-int	word_count(char *str, char *word)
-{
-	int i;
-	int count;
-	int wordlen;
-
-	i = 0;
-	count = 0;
-	wordlen = ft_strlen(word);
-	while (str[i])
-	{
-		if (ft_strnstr(&str[i], word, ft_strlen(&str[i])) == &str[i])
-		{
-			count++;
-			i += wordlen - 1;
-		}
-		i++;
-	}
-	return (count);
-}
-
-
-char *ft_strreplace(char *str, char *oldw, char *neww)
-{
-	int i;
-	char *result;
-    int newwlen = ft_strlen(neww);
-    int oldwlen = ft_strlen(oldw);
-
-	result = malloc(ft_strlen(str) + word_count(str, oldw)
-			* (newwlen - oldwlen) + 1);
-	if (!result)
-		return (NULL);
-	i = 0;
-	while (*str)
-	{
-    	if (ft_strnstr(str, oldw, ft_strlen(str)) == str)
-		{
-			ft_strlcpy(&result[i], neww, newwlen + 1);
-        	i += newwlen;
-       		str += oldwlen;
-    	}
-    	else
-        	result[i++] = *str++;
-    }
-    result[i] = '\0';
-    return (result);
-}
-
 char	*variable_expansion(char *str, char *key) //dar free no str e key no final.
 {
 	char	*tmp;
@@ -212,7 +142,11 @@ char	*variable_expansion(char *str, char *key) //dar free no str e key no final.
 
 	envp = search_envp(key + 1, *get_envp());
 	if (!envp)
+	{
+		free(str);
+		free(key);
 		return (ft_strdup(""));
+	}
 	tmp = ft_strchr(envp->content, '=') + 1;
 	result = ft_strreplace(str, key, tmp);
 	free(key);
@@ -220,33 +154,25 @@ char	*variable_expansion(char *str, char *key) //dar free no str e key no final.
 	return (result);
 }
 
-char	*pathname_expansion(char *str)
+char	*pathname_expansion(char *str, int i, int init)
 {
-	int i;
-	int ini;
-	char *tmp;
-
-	i = 0;
-	tmp = ft_strdup(str);
 	if (ft_chrcmp(str[i], '\''))
-		return (tmp);
-	while (str[i])
+		return (str);
+	else if (ft_chrcmp(str[i], '\0'))
+		return (str);
+	else if (ft_chrcmp(str[i], '$'))
 	{
-		if (ft_chrcmp(str[i], '$'))
+		init = i++;
+		if (ft_chrcmp(str[i], '?'))
+			return (ft_strdup("1"));
+		else if (ft_isalpha(str[i]) || ft_chrcmp(str[i], '_'))
 		{
-			ini = i++;
-			if (ft_chrcmp(str[i], '?'))
-				return (ft_strdup("1"));
-			else if (ft_isalpha(str[i]) || ft_chrcmp(str[i], '_'))
-			{
-				while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-					i++;
-				return (variable_expansion(tmp, ft_substr(tmp, ini, i - ini)));
-			}
+			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+				i++;
+			return (variable_expansion(str, ft_substr(str, init, i - init)));
 		}
-		i++;
 	}
-	return (tmp);
+	return (pathname_expansion(str, i + 1, 0));
 }
 
 t_list	*word_splitting(t_scanner *scanner, t_list *quotes)
@@ -263,9 +189,8 @@ t_list	*word_splitting(t_scanner *scanner, t_list *quotes)
 		sliced = slice_quotes(scanner);
 	else
 		sliced = slice_word(scanner);
-	expand = pathname_expansion(sliced);
+	expand = pathname_expansion(sliced, 0, 0);
 	clear = unquote(expand);
-	free(sliced);
 	free(expand);
 	ft_lstadd_back(&quotes, ft_lstnew(clear));
 	return (word_splitting(scanner, quotes));
@@ -276,9 +201,9 @@ void	expand(void)
 	t_scanner	scanner;
 	t_list		*quotes = NULL;
 
-	char command[] = "''''$USER''''\"'''$USER'''\"''\"'oi'\"";
+	char command[] = "\"$user\"";
 	scanner = init_scanner(command);
-	quotes = quotes_splitting(&scanner, quotes);
+	quotes = word_splitting(&scanner, quotes);
 	print_stack(quotes, 0);
 	ft_lstclear(&quotes, free);
 }
@@ -322,3 +247,56 @@ int main(int argc, char **argv, char **envp)
 	// data.readpipe = FALSE; //Arrumar lugar melhor para isso.
 	// execute_command(parser, &data);
 }
+
+
+
+// char	*pathname_expansion(char *str)
+// {
+// 	int i;
+// 	int ini;
+// 	char *tmp;
+
+// 	i = 0;
+// 	tmp = ft_strdup(str);
+// 	if (ft_chrcmp(str[i], '\''))
+// 		return (tmp);
+// 	while (str[i])
+// 	{
+// 		if (ft_chrcmp(str[i], '$'))
+// 		{
+// 			ini = i++;
+// 			if (ft_chrcmp(str[i], '?'))
+// 				return (ft_strdup("1"));
+// 			else if (ft_isalpha(str[i]) || ft_chrcmp(str[i], '_'))
+// 			{
+// 				while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+// 					i++;
+// 				return (variable_expansion(tmp, ft_substr(tmp, ini, i - ini)));
+// 			}
+// 		}
+// 		i++;
+// 	}
+// 	return (tmp);
+// }
+
+// t_list	*word_splitting(t_scanner *scanner, t_list *quotes)
+// {
+// 	char *clear;
+// 	char *sliced;
+// 	char *expand;
+
+// 	if (scanner->current >= ft_strlen(scanner->cmd))
+// 		return (quotes);
+// 	scanner->start = scanner->current;
+// 	if (ft_chrcmp(scanner->cmd[scanner->current], '\'') ||
+// 		ft_chrcmp(scanner->cmd[scanner->current], '"'))
+// 		sliced = slice_quotes(scanner);
+// 	else
+// 		sliced = slice_word(scanner);
+// 	expand = pathname_expansion(sliced, 0, 0);
+// 	clear = unquote(expand);
+// 	//free(sliced);
+// 	free(expand);
+// 	ft_lstadd_back(&quotes, ft_lstnew(clear));
+// 	return (word_splitting(scanner, quotes));
+// }

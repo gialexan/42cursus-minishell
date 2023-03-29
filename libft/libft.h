@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:39:28 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/20 11:11:02 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:34:29 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,7 @@ int		ft_isquote(int c);
 int		ft_isspace(int c);
 void	ft_free(void **ptr);
 void	ft_free_split(void **str);
+int 	ft_chrcmp(char c1, char c2);
 char	**ft_array_dup(char **array);
+char    *ft_strreplace(char *str, char *oldw, char *neww);
 #endif
