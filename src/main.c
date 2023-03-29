@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/29 11:56:07 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/29 12:39:54 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ char	*unquote(char *str)
 	return (ft_strdup(str));
 }
 
-int	wordcount(char *str, char *word)
+int	word_count(char *str, char *word)
 {
 	int i;
 	int count;
@@ -184,7 +184,7 @@ char *ft_strreplace(char *str, char *oldw, char *neww)
     int newwlen = ft_strlen(neww);
     int oldwlen = ft_strlen(oldw);
 
-	result = malloc(ft_strlen(str) + wordcount(str, oldw)
+	result = malloc(ft_strlen(str) + word_count(str, oldw)
 			* (newwlen - oldwlen) + 1);
 	if (!result)
 		return (NULL);
@@ -204,23 +204,26 @@ char *ft_strreplace(char *str, char *oldw, char *neww)
     return (result);
 }
 
-char	*expand(char *str, char *key) //dar free no str e key no final.
+char	*variable_expansion(char *str, char *key) //dar free no str e key no final.
 {
 	char	*tmp;
-	int		quotes;
 	t_list	*envp;
+	char	*result;
 
 	envp = search_envp(key + 1, *get_envp());
 	if (!envp)
 		return (ft_strdup(""));
-	tmp = ft_strreplace(str, key, envp->content);
-	return (tmp);
+	tmp = ft_strchr(envp->content, '=') + 1;
+	result = ft_strreplace(str, key, tmp);
+	free(key);
+	free(str);
+	return (result);
 }
 
-char	*variable_expansion(char *str)
+char	*pathname_expansion(char *str)
 {
 	int i;
-	int init;
+	int ini;
 	char *tmp;
 
 	i = 0;
@@ -231,14 +234,14 @@ char	*variable_expansion(char *str)
 	{
 		if (ft_chrcmp(str[i], '$'))
 		{
-			init = i++;
+			ini = i++;
 			if (ft_chrcmp(str[i], '?'))
 				return (ft_strdup("1"));
 			else if (ft_isalpha(str[i]) || ft_chrcmp(str[i], '_'))
 			{
 				while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 					i++;
-				return (expand(tmp, ft_substr(tmp, init, i - init)));
+				return (variable_expansion(tmp, ft_substr(tmp, ini, i - ini)));
 			}
 		}
 		i++;
@@ -246,7 +249,7 @@ char	*variable_expansion(char *str)
 	return (tmp);
 }
 
-t_list	*quotes_splitting(t_scanner *scanner, t_list *quotes)
+t_list	*word_splitting(t_scanner *scanner, t_list *quotes)
 {
 	char *clear;
 	char *sliced;
@@ -260,30 +263,31 @@ t_list	*quotes_splitting(t_scanner *scanner, t_list *quotes)
 		sliced = slice_quotes(scanner);
 	else
 		sliced = slice_word(scanner);
-	expand = variable_expansion(sliced);
-	//clear = unquote(sliced);
+	expand = pathname_expansion(sliced);
+	clear = unquote(expand);
 	free(sliced);
-	//free(tmp);
-	ft_lstadd_back(&quotes, ft_lstnew(expand));
-	return (quotes_splitting(scanner, quotes));
+	free(expand);
+	ft_lstadd_back(&quotes, ft_lstnew(clear));
+	return (word_splitting(scanner, quotes));
 }
 
-void	word_splitting(void)
+void	expand(void)
 {
 	t_scanner	scanner;
 	t_list		*quotes = NULL;
 
-	//"'ls''''''ola'oi''''bom dia   ''" -> "'ls'''''\"'ola'\"oi''''bomdia"
-	char command[] = "$USER";
-	//\"'''$USER'''\"
+	char command[] = "''''$USER''''\"'''$USER'''\"''\"'oi'\"";
 	scanner = init_scanner(command);
 	quotes = quotes_splitting(&scanner, quotes);
 	print_stack(quotes, 0);
+	ft_lstclear(&quotes, free);
 }
 
-
+//\"'''$USER'''\"
 // echo "''" '''''" $PWD "''''' "''"
-int main(int argc, char **argv, char **envp)  // echo "''" ''" $PWD "'' "''"
+// echo "''" ''" $PWD "'' "''"
+//"'ls''''''ola'oi''''bom dia   ''" -> "'ls'''''\"'ola'\"oi''''bomdia"
+int main(int argc, char **argv, char **envp)
 {
 	t_data		data;
     t_list		*token = NULL;
@@ -300,23 +304,12 @@ int main(int argc, char **argv, char **envp)  // echo "''" ''" $PWD "'' "''"
 
 	init_envment(envp, get_envp());
 
-	char str[] = "\"'''$USER'''\"";
-    char c[] = "$USER";
-    char d[] = "Geeks";
+	expand();
  
-    char *result = NULL;
 
-    // oldW string
-    printf("Old string: %s\n", str);
- 
-    printf("New String: %s\n", result);
- 
-    free(result);
-    return 0;
-
+	ft_lstclear(get_envp(), free);
 	
-
-	//ft_lstclear(get_envp(), free);
+    return 0;
 
 	//"<'infile''''ls'''''>outfile | echo \"'''\"''\"'\"gilmar\"'\"''\"'''\""
     //char command[] = "echo 'ls'oi''";
