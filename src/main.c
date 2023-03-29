@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/29 14:36:21 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/29 20:05:45 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@
 /*
 void	init_exec(t_data *data)
 {
+	if (data->read - true)
+		return ;
 	data->fd[STDIN_FILENO] = STDIN_FILENO;
 	data->fd[STDOUT_FILENO] = STDOUT_FILENO;
 	data->retcode = 0;
@@ -63,17 +65,11 @@ void	execute_command(t_cmd *cmd, t_data *data)
 	init_exec(data);
 	tmp = exec_redirect(cmd->token, data, NULL);
 	exec_bultins(cmd->token, data);
+	execve_cmd()
 	ft_lstclear(&tmp, free);
 	execute_command(cmd->next, data);
 	free(cmd);
 }
-*/
-
-/*
- * Se for só as " é só expandir e fim de papo.
- * Se for só as ' precisa fazer parser de 2 em 2.
- * Se for misturado " e ' é só chorar.
- * Saber se todas estão abertas e fechadas? Contar " e ' depois separadas depois resto da divisão por 2
 */
 
 static	char	advance(t_scanner *scanner)
@@ -96,9 +92,9 @@ char	*slice_word(t_scanner *scanner)
 
 char	*slice_quotes(t_scanner *scanner)
 {
-	char c;
-	char end;
-	char *sliced;
+	char	c;
+	char	end;
+	char	*sliced;
 
 	end = advance(scanner);
 	c = advance(scanner);
@@ -110,102 +106,110 @@ char	*slice_quotes(t_scanner *scanner)
 
 t_bool	empty_quotes(char *str)
 {
-	char	init;
-
-	if (str[0] == '\'' || str[0] == '"')
-		init = str[0];
-	else
-		return (FALSE);
-	if (str[1] == init && str[2] == '\0')
+	if (ft_chrcmp(str[0], '\'') && ft_chrcmp(str[1], '\''))
+		return (TRUE);
+	else if (ft_chrcmp(str[0], '"') && ft_chrcmp(str[1], '"'))
 		return (TRUE);
 	return (FALSE);
 }
 
 char	*unquote(char *str)
 {
-	char *tmp;
-
 	if (empty_quotes(str))
 		return (ft_strdup(""));
 	else if (ft_chrcmp(str[0], '\''))
 		return (ft_strtrim(str, "'"));
 	else if (ft_chrcmp(str[0], '"'))
-		return (ft_strtrim(str, "'"));
+		return (ft_strtrim(str, "\""));
 	return (ft_strdup(str));
 }
 
-char	*variable_expansion(char *str, char *key) //dar free no str e key no final.
+char	*variable_expansion(char *str, char *key)
 {
 	char	*tmp;
 	t_list	*envp;
-	char	*result;
 
 	envp = search_envp(key + 1, *get_envp());
 	if (!envp)
 	{
-		free(str);
-		free(key);
-		return (ft_strdup(""));
+		if (ft_chrcmp(str[0], '"'))
+			tmp = ft_strdup(str);
+		else
+			tmp = ft_strdup("");
 	}
-	tmp = ft_strchr(envp->content, '=') + 1;
-	result = ft_strreplace(str, key, tmp);
+	else
+	{
+		tmp = ft_strchr(envp->content, '=') + 1;
+		tmp = ft_strreplace(str, key, tmp);
+	}
 	free(key);
 	free(str);
-	return (result);
+	return (tmp);
 }
 
-char	*pathname_expansion(char *str, int i, int init)
+char	*pathname_expansion(char *path, int i, int init)
 {
-	if (ft_chrcmp(str[i], '\''))
-		return (str);
-	else if (ft_chrcmp(str[i], '\0'))
-		return (str);
-	else if (ft_chrcmp(str[i], '$'))
+	if (ft_chrcmp(path[0], '\''))
+		return (path);
+	else if (ft_chrcmp(path[i], '\0'))
+		return (path);
+	else if (ft_chrcmp(path[i], '$'))
 	{
 		init = i++;
-		if (ft_chrcmp(str[i], '?'))
+		if (ft_chrcmp(path[i], '?'))
 			return (ft_strdup("1"));
-		else if (ft_isalpha(str[i]) || ft_chrcmp(str[i], '_'))
+		else if (ft_isalpha(path[i]) || ft_chrcmp(path[i], '_'))
 		{
-			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+			while (path[i] && (ft_isalnum(path[i]) || ft_chrcmp(path[i],'_')))
 				i++;
-			return (variable_expansion(str, ft_substr(str, init, i - init)));
+			path = variable_expansion(path, ft_substr(path, init, i - init));
 		}
 	}
-	return (pathname_expansion(str, i + 1, 0));
+	return (pathname_expansion(path, i + 1, init));
 }
 
-t_list	*word_splitting(t_scanner *scanner, t_list *quotes)
+char *concatenate(char *str, char *append)
 {
-	char *clear;
-	char *sliced;
-	char *expand;
+	char	*tmp;
+
+	tmp = str;
+	str = ft_strjoin(tmp, append);
+	free(tmp);
+	return (str);
+}
+
+char	*word_splitting(t_scanner *scanner, char *result)
+{
+	char	*sliced;
+	char	*expanded;
+	char	*unquoted;
 
 	if (scanner->current >= ft_strlen(scanner->cmd))
-		return (quotes);
+		return (result);
 	scanner->start = scanner->current;
 	if (ft_chrcmp(scanner->cmd[scanner->current], '\'') ||
 		ft_chrcmp(scanner->cmd[scanner->current], '"'))
 		sliced = slice_quotes(scanner);
 	else
 		sliced = slice_word(scanner);
-	expand = pathname_expansion(sliced, 0, 0);
-	clear = unquote(expand);
-	free(expand);
-	ft_lstadd_back(&quotes, ft_lstnew(clear));
-	return (word_splitting(scanner, quotes));
+	expanded = pathname_expansion(sliced, 0, 0);
+	unquoted = unquote(expanded);
+	result = concatenate(result, unquoted);
+	free(expanded);
+	free(unquoted);
+	return (word_splitting(scanner, result));
 }
 
 void	expand(void)
 {
+	char		*quotes = NULL;
 	t_scanner	scanner;
-	t_list		*quotes = NULL;
 
-	char command[] = "\"$user\"";
+	char command[] = "\"'$HOME'''$USER'''$PWD'\"";
 	scanner = init_scanner(command);
 	quotes = word_splitting(&scanner, quotes);
-	print_stack(quotes, 0);
-	ft_lstclear(&quotes, free);
+	printf("Saída: %s\n", quotes);
+	free(quotes);
 }
 
 //\"'''$USER'''\"
@@ -222,18 +226,12 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 
-	//char *test = \"''\"gilmar\"''\";
-
-	// char *tmp = ft_strjoin(test, c);
-	// printf("%s\n", tmp);
-
 	init_envment(envp, get_envp());
 
 	expand();
- 
 
 	ft_lstclear(get_envp(), free);
-	
+
     return 0;
 
 	//"<'infile''''ls'''''>outfile | echo \"'''\"''\"'\"gilmar\"'\"''\"'''\""
