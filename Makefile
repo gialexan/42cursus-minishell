@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/03/22 15:21:39 by gialexan         ###   ########.fr        #
+#    Updated: 2023/03/30 20:28:23 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ SOURCES_FILES = main.c				\
 				parser_type.c   	\
 				redirect.c			\
 				redirect_utils.c	\
+				expansion.c 		\
+				expansion_utils.c 	\
 				environment.c   	\
 				interface.c 		\
 				export.c 			\
@@ -40,6 +42,7 @@ VPATH = $(SOURCES_BASE)				\
 		$(SOURCES_BASE)/exec		\
 		$(SOURCES_BASE)/helper		\
 		$(SOURCES_BASE)/builtins 	\
+		$(SOURCES_BASE)/expansion 	\
 		$(SOURCES_BASE)/env 		
 
 OBJ_DIR = obj

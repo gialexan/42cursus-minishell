@@ -6,9 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:04:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/29 20:48:12 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/30 20:51:30 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "helper.h"
+
+static	char	advance(t_scanner *scanner);
 
 char	*slice_word(t_scanner *scanner)
 {

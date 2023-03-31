@@ -6,10 +6,16 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/29 20:47:15 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/30 20:25:17 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "helper.h"
+
+static char *concatenate(char *str, char *append);
+static char	*variable_expansion(char *str, char *key);
+static char	*pathname_expansion(char *path, int i, int init);
+static char	*word_splitting(t_scanner *scanner, char *result);
 
 void	expand(void)
 {
@@ -23,7 +29,7 @@ void	expand(void)
 	free(quotes);
 }
 
-char	*word_splitting(t_scanner *scanner, char *result)
+static char	*word_splitting(t_scanner *scanner, char *result)
 {
 	char	*sliced;
 	char	*expanded;
@@ -45,7 +51,7 @@ char	*word_splitting(t_scanner *scanner, char *result)
 	return (word_splitting(scanner, result));
 }
 
-char	*pathname_expansion(char *path, int i, int init)
+static char	*pathname_expansion(char *path, int i, int init)
 {
 	if (ft_chrcmp(path[0], '\''))
 		return (path);
@@ -66,7 +72,7 @@ char	*pathname_expansion(char *path, int i, int init)
 	return (pathname_expansion(path, i + 1, init));
 }
 
-char	*variable_expansion(char *str, char *key)
+static char	*variable_expansion(char *str, char *key)
 {
 	char	*tmp;
 	t_list	*envp;
@@ -89,7 +95,7 @@ char	*variable_expansion(char *str, char *key)
 	return (tmp);
 }
 
-char *concatenate(char *str, char *append)
+static char *concatenate(char *str, char *append)
 {
 	char	*tmp;
 
