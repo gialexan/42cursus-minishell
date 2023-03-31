@@ -6,12 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/23 18:54:54 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:38:46 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scanner.h"
-#include "helper.h"
 
 t_list	*lexical_analysis(t_scanner *scanner, t_list *token)
 {
@@ -20,6 +19,12 @@ t_list	*lexical_analysis(t_scanner *scanner, t_list *token)
 	scanner->start = scanner->current;
 	ft_lstadd_back(&token, scan_token(scanner));
 	return (lexical_analysis(scanner, token));
+}
+
+char	advance(t_scanner *scanner)
+{
+	scanner->current++;
+	return (scanner->cmd[scanner->current - 1]);
 }
 
 t_scanner	init_scanner(const char *command)
@@ -31,7 +36,7 @@ t_scanner	init_scanner(const char *command)
 	return (scanner);
 }
 
-void	skip_space (t_scanner *scanner)
+void	skip_space(t_scanner *scanner)
 {
 	while (ft_isspace(scanner->cmd[scanner->current]))
 		scanner->current++;

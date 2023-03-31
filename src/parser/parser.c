@@ -6,19 +6,18 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/23 18:57:35 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:05:42 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "helper.h"
 
-static t_cmd *syntax_error(t_list *token);
-static t_cmd *words(t_list *token, t_cmd *cmd, t_cmd *head);
-static t_cmd *pipes(t_list *token, t_cmd *cmd, t_cmd *head);
-static t_cmd *parser(t_list *token, t_cmd *cmd, t_cmd *head);
+static t_cmd	*syntax_error(t_list *token);
+static t_cmd	*words(t_list *token, t_cmd *cmd, t_cmd *head);
+static t_cmd	*pipes(t_list *token, t_cmd *cmd, t_cmd *head);
+static t_cmd	*parser(t_list *token, t_cmd *cmd, t_cmd *head);
 
-t_cmd *syntax_analysis(t_list *token)
+t_cmd	*syntax_analysis(t_list *token)
 {
 	if (token == NULL)
 		return (NULL);
@@ -76,7 +75,7 @@ static	t_cmd *pipes(t_list *token, t_cmd *cmd, t_cmd *head)
 	return (parser(token, node, head));
 }
 
-static t_cmd *syntax_error(t_list *token)
+static t_cmd	*syntax_error(t_list *token)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (is_error(token))

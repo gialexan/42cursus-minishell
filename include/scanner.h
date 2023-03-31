@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:58:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/27 07:58:34 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:39:12 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define SCANNER_H
 
 # include "../libft/libft.h"
-# include <stdio.h>
-
 # define METACHARS "|()<> \t\n"
 # define CLOSED 0
 # define UNCLOSED 1
@@ -27,6 +25,7 @@ typedef struct	s_scanner
 	const char		*cmd;
 }	t_scanner;
 
+char		advance(t_scanner *scanner);
 void		skip_space (t_scanner *scanner);
 t_list		*scan_token(t_scanner *scanner);
 t_scanner	init_scanner(const char *command);

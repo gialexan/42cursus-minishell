@@ -6,23 +6,18 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:17 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/17 10:11:09 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:04:57 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_tk_type type(t_list *token)
+t_bool	match(t_list *token, t_tk_type expected)
 {
-	return (token->tk_type);
+	return (token->tk_type == expected);
 }
 
-t_bool match(t_tk_type tk_type, t_tk_type expected)
-{
-	return (tk_type == expected);
-}
-
-t_cmd *addcmd(t_cmd *cmd)
+t_cmd	*addcmd(t_cmd *cmd)
 {
 	t_cmd	*next_cmd;
 

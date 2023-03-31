@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:01:09 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/28 16:10:06 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:42:53 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void print_redir(t_list *token)
 
 void	print_stack(t_list *lst, int type)
 {
-	t_list		*tmp;
-	const char	*content;
+	t_list	*tmp;
+	char	*content;
 
 	tmp = lst;
 	if (type == 1)

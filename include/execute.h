@@ -6,14 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/22 11:32:28 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:31:41 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
-# include "helper.h"
 # include "builtins.h"
 # include <fcntl.h>
 
@@ -25,7 +24,6 @@ typedef struct s_data
 	t_bool		error;
 	t_bool		readpipe;
 }	t_data;
-
 
 t_list *exec_redirect(t_list *token, t_data *data, t_list *head);
 void	set_redir(t_data *data, int fd, int stdfd, char *filename);

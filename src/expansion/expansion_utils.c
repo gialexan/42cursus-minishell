@@ -6,13 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:04:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/30 20:51:30 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:26:42 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
-
-static	char	advance(t_scanner *scanner);
 
 char	*slice_word(t_scanner *scanner)
 {
@@ -58,10 +56,4 @@ t_bool	empty_quotes(char *str)
 	else if (ft_chrcmp(str[0], '"') && ft_chrcmp(str[1], '"'))
 		return (TRUE);
 	return (FALSE);
-}
-
-static	char	advance(t_scanner *scanner)
-{
-	scanner->current++;
-	return (scanner->cmd[scanner->current - 1]);
 }

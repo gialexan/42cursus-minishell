@@ -6,18 +6,17 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/27 18:35:22 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:38:52 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scanner.h"
 
-static char		advance(t_scanner *scanner);
 static int		string(t_scanner *self, char c);
 static t_list	*token_word(t_scanner *scanner, char c);
 static t_bool	match(t_scanner *scanner, char expected);
 
-t_list *scan_token(t_scanner *scanner)
+t_list	*scan_token(t_scanner *scanner)
 {
 	char	c;
 
@@ -42,13 +41,7 @@ t_list *scan_token(t_scanner *scanner)
 	return (token_word(scanner, c));
 }
 
-static char	advance(t_scanner *scanner)
-{
-	scanner->current++;
-	return (scanner->cmd[scanner->current - 1]);
-}
-
-static t_bool match(t_scanner *scanner, char expected)
+static t_bool	match(t_scanner *scanner, char expected)
 {
 	if (scanner->cmd[scanner->current] != expected)
 		return (FALSE);

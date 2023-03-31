@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 23:28:24 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/17 10:11:16 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:39:35 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,38 @@
 
 t_bool	is_redirect(t_list *token)
 {
-	if (match(type(token), TK_GREAT) ||
-		match(type(token), TK_DLESS) ||
-		match(type(token), TK_DGREAT) ||
-		match(type(token), TK_LESS))
+	if (match(token, TK_GREAT) ||
+		match(token, TK_DLESS) ||
+		match(token, TK_DGREAT) ||
+		match(token, TK_LESS))
 		return (TRUE);
 	return (FALSE);
 }
 
-t_bool is_pipe(t_list *token)
+t_bool	is_pipe(t_list *token)
 {
-	if (match(type(token), TK_PIPE))
+	if (match(token, TK_PIPE))
 		return (TRUE);
 	return (FALSE);
 }
 
-t_bool is_word(t_list *token)
+t_bool	is_word(t_list *token)
 {
-	if (match(type(token), TK_WORD))
+	if (match(token, TK_WORD))
 		return (TRUE);
 	return (FALSE);
 }
 
-t_bool is_eof(t_list *token)
+t_bool	is_eof(t_list *token)
 {
-	if (match(type(token), TK_EOF))
+	if (match(token, TK_EOF))
 		return (TRUE);
 	return (FALSE);
 }
 
-t_bool is_error(t_list *token)
+t_bool	is_error(t_list *token)
 {
-	if (match(type(token), TK_ERROR))
+	if (match(token, TK_ERROR))
 		return (TRUE);
 	return (FALSE);
 }

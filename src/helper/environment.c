@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:08:36 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/29 12:13:39 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:51:11 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_list *search_envp(char *search, t_list *envp)
 	return (search_envp(search, envp->next));
 }
 
-t_bool	delete_envp(char *delete, t_list **envp, t_list *prev)
+t_bool	delete_envp(char *dell, t_list **envp, t_list *prev)
 {
 	t_list	*tmp;
 	int		lenght;
@@ -46,10 +46,10 @@ t_bool	delete_envp(char *delete, t_list **envp, t_list *prev)
 	if (!*envp)
 		return (FALSE);
 	tmp = *envp;
-	if (!ft_strncmp(delete, tmp->content, 1))
+	if (!ft_strncmp(dell, tmp->content, 1))
 	{
-		lenght = ft_strlen(delete);
-		if (!ft_strncmp(delete, tmp->content, lenght))
+		lenght = ft_strlen(dell);
+		if (!ft_strncmp(dell, tmp->content, lenght))
 		{
 			if (!prev)
 				*envp = (*envp)->next;
@@ -60,7 +60,7 @@ t_bool	delete_envp(char *delete, t_list **envp, t_list *prev)
 			return (TRUE);
 		}
 	}
-	return (delete_envp(delete, &(*envp)->next, *envp));
+	return (delete_envp(dell, &(*envp)->next, *envp));
 }
 
 t_bool	insert_envp(char *insert, t_list **envp)

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:06:49 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/29 17:05:23 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:11:44 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ t_list *exec_redirect(t_list *token, t_data *data, t_list *head)
 	else if (data->readpipe == TRUE)
 		exec_pipe(token, head, data, NULL);
 	c = advanced(&token);
-    if (match(type(c), TK_LESS))
+    if (match(c, TK_LESS))
 		return (exec_input(token, head, data, c));
-    else if (match(type(c), TK_GREAT))
+    else if (match(c, TK_GREAT))
 		return (exec_output(token, head, data, c));
-    else if (match(type(c), TK_DGREAT))
+    else if (match(c, TK_DGREAT))
 		return (exec_append(token, head, data, c));
-	else if (match(type(c), TK_DLESS))
+	else if (match(c, TK_DLESS))
 		return (exec_heredoc(token, head, data, c));
-	else if (match(type(c), TK_PIPE))
+	else if (match(c, TK_PIPE))
 		return (exec_pipe(token, head, data, c));
 	ft_lstadd_back(&head, c);
 	return (exec_redirect(token, data, head));
