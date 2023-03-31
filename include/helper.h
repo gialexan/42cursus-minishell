@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 13:47:19 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:10:37 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ char	*unquote(char *str);
 t_bool	empty_quotes(char *str);
 char	*slice_word(t_scanner *scanner);
 char	*slice_quotes(t_scanner *scanner);
+char	*pathname_expansion(char *path, int i, int init);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 15:25:52 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:30:00 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,15 @@ t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 	delimiter = advanced(&token);
 	fd = open("/tmp/heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	set_redir(data, fd, STDIN_FILENO, delimiter->content);
-	/*
-	while (TRUE)
-	{
-		input = readline("> ");
-		if (!ft_strcmp(input, delimiter->content))
-			break ;
-		
-		ft_putendl_fd(input, fd);
-		free(input);
-	}
+	// while (TRUE)
+	// {
+	// 	input = readline("> ");
+	// 	if (!ft_strcmp(input, delimiter->content))
+	// 		break ;
+	// 	ft_putendl_fd(input, fd);
+	// 	free(input);
+	// }
 	free(input);
-	*/
 	close(fd);
 	ft_lstdelone(c, free);
 	ft_lstdelone(delimiter, free);

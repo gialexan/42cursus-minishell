@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 11:26:38 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:21:15 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 static char *concatenate(char *str, char *append);
 static char	*variable_expansion(char *str, char *key);
-static char	*pathname_expansion(char *path, int i, int init);
 static char	*word_splitting(t_scanner *scanner, char *result);
+
+#define QUOTES 0
+#define HEREDOC 1
 
 void	expand(void)
 {
 	char		*quotes = NULL;
 	t_scanner	scanner;
 
-	char command[] = "\"'$HOME'''$USER'''$PWD'\"";
+	char command[] = "\"''''$HOME''''$USER''''$PWD''''\"";
 	scanner = init_scanner(command);
 	quotes = word_splitting(&scanner, quotes);
 	printf("Saída: %s\n", quotes);
@@ -51,11 +53,9 @@ static char	*word_splitting(t_scanner *scanner, char *result)
 	return (word_splitting(scanner, result));
 }
 
-static char	*pathname_expansion(char *path, int i, int init)
+char	*pathname_expansion(char *path, int i, int init)
 {
-	if (ft_chrcmp(path[0], '\''))
-		return (path);
-	else if (ft_chrcmp(path[i], '\0'))
+	if (ft_chrcmp(path[i], '\0'))
 		return (path);
 	else if (ft_chrcmp(path[i], '$'))
 	{
