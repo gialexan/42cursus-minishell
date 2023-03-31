@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 11:14:31 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 13:47:19 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	msh_error(char *name, char *msg, int error);
  * HELPER/CLEANER.C
 \***************************************************************************/
 
-void	clear_dlst(t_cmd *lst, t_list *token, void (*del)(void *));
+void	clear_dlst(t_cmd *lst, void (*del)(void *));
 
 /***************************************************************************\
  * HELPER/PRINT.C
