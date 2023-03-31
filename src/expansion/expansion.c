@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 17:21:15 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 18:18:59 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,30 @@ void	expand(void)
 	char		*quotes = NULL;
 	t_scanner	scanner;
 
-	char command[] = "\"''''$HOME''''$USER''''$PWD''''\"";
+	char command[] = "\"''''\"$HOME\"''''$USER'''\"'$PWD'\"'''\"";
 	scanner = init_scanner(command);
 	quotes = word_splitting(&scanner, quotes);
 	printf("Saída: %s\n", quotes);
 	free(quotes);
+}
+
+char	*pathname_expansion(char *path, int i, int init)
+{
+	if (ft_chrcmp(path[i], '\0'))
+		return (path);
+	else if (ft_chrcmp(path[i], '$'))
+	{
+		init = i++;
+		if (ft_chrcmp(path[i], '?'))
+			return (ft_strdup("1"));
+		else if (ft_isalpha(path[i]) || ft_chrcmp(path[i], '_'))
+		{
+			while (path[i] && (ft_isalnum(path[i]) || ft_chrcmp(path[i],'_')))
+				i++;
+			path = variable_expansion(path, ft_substr(path, init, i - init));
+		}
+	}
+	return (pathname_expansion(path, i + 1, init));
 }
 
 static char	*word_splitting(t_scanner *scanner, char *result)
@@ -53,25 +72,6 @@ static char	*word_splitting(t_scanner *scanner, char *result)
 	return (word_splitting(scanner, result));
 }
 
-char	*pathname_expansion(char *path, int i, int init)
-{
-	if (ft_chrcmp(path[i], '\0'))
-		return (path);
-	else if (ft_chrcmp(path[i], '$'))
-	{
-		init = i++;
-		if (ft_chrcmp(path[i], '?'))
-			return (ft_strdup("1"));
-		else if (ft_isalpha(path[i]) || ft_chrcmp(path[i], '_'))
-		{
-			while (path[i] && (ft_isalnum(path[i]) || ft_chrcmp(path[i],'_')))
-				i++;
-			path = variable_expansion(path, ft_substr(path, init, i - init));
-		}
-	}
-	return (pathname_expansion(path, i + 1, init));
-}
-
 static char	*variable_expansion(char *str, char *key)
 {
 	char	*tmp;
@@ -86,10 +86,7 @@ static char	*variable_expansion(char *str, char *key)
 			tmp = ft_strdup("");
 	}
 	else
-	{
-		tmp = ft_strchr(envp->content, '=') + 1;
-		tmp = ft_strreplace(str, key, tmp);
-	}
+		tmp = ft_strreplace(str, key, ft_strchr(envp->content, '=') + 1);
 	free(key);
 	free(str);
 	return (tmp);

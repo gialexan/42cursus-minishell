@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 17:10:37 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:53:23 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "parser.h"
 # include <stdio.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 /***************************************************************************\
  * HELPER/CONTROL.C
