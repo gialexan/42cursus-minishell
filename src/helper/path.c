@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   interface.c                                        :+:      :+:    :+:   */
+/*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 10:03:26 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/02 12:50:16 by gialexan         ###   ########.fr       */
+/*   Created: 2023/04/02 12:49:25 by gialexan          #+#    #+#             */
+/*   Updated: 2023/04/02 12:53:52 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
 
-t_list **get_envp(void)
-{
-	static t_list *envp;
+static void save_path_ref(char **path);
 
-	return (&envp);
+void	init_arraypath(void)
+{
+	t_list	*envp;
+	char	*path;
+	char	**splited_path;
+
+	envp = search_envp("PATH", *get_envp());
+	path = ft_strchr(envp->content, '=') + 1;
+	splited_path = ft_split(path, ':');
+	save_path_ref(splited_path);
 }
 
-char	***get_path(void)
+static void save_path_ref(char **path)
 {
-	static char	**path;
+	char ***path_ref;
 
-	return (&path);
+	path_ref = get_path();
+	*path_ref = path;
 }
-

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/02 10:02:10 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/02 13:26:10 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,14 @@ int main(int argc, char **argv, char **envp)
 	(void)envp;
 
 	init_envment(envp, get_envp());
+	init_arraypath();
 
-    char command[] = "< 'oi''eof'";
-    scanner = init_scanner(command);
-    token = lexical_analysis(&scanner, token);
-	parser = syntax_analysis(token);
-	data.readpipe = FALSE;
-	execute_command(parser, &data);
+	
+    // char command[] = "< 'oi''eof'";
+    // scanner = init_scanner(command);
+    // token = lexical_analysis(&scanner, token);
+	// parser = syntax_analysis(token);
+	// data.readpipe = FALSE;
+	// execute_command(parser, &data);
 	ft_lstclear(get_envp(), free);
 }
