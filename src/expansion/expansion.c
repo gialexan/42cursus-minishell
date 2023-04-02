@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 18:18:59 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/02 09:57:07 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,15 @@ static char *concatenate(char *str, char *append);
 static char	*variable_expansion(char *str, char *key);
 static char	*word_splitting(t_scanner *scanner, char *result);
 
-#define QUOTES 0
-#define HEREDOC 1
-
-void	expand(void)
+char	*expand(char *word)
 {
-	char		*quotes = NULL;
+	char		*result;
 	t_scanner	scanner;
 
-	char command[] = "\"''''\"$HOME\"''''$USER'''\"'$PWD'\"'''\"";
-	scanner = init_scanner(command);
-	quotes = word_splitting(&scanner, quotes);
-	printf("Saída: %s\n", quotes);
-	free(quotes);
+	result = NULL;
+	scanner = init_scanner(word);
+	result = word_splitting(&scanner, result);
+	return (result);
 }
 
 char	*pathname_expansion(char *path, int i, int init)

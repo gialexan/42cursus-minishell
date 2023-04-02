@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 18:27:57 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/02 10:02:10 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	init_exec(t_data *data)
 void	execute_command(t_cmd *cmd, t_data *data)   
 {
 	t_list	*tmp;
-
 	if (!cmd)
 		return ;
 	init_exec(data);
@@ -52,7 +51,7 @@ int main(int argc, char **argv, char **envp)
 
 	init_envment(envp, get_envp());
 
-    char command[] = "<< eof";
+    char command[] = "< 'oi''eof'";
     scanner = init_scanner(command);
     token = lexical_analysis(&scanner, token);
 	parser = syntax_analysis(token);
