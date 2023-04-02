@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/02 09:41:28 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/02 10:05:33 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_bool	delete_envp(char *dell, t_list **envp, t_list *prev);
  * EXPANSION/EXPANSION.C
 \***************************************************************************/
 
-char	*expand(char *word);
+char	*expander(char *word);
 char	*unquote(char *str);
 t_bool	empty_quotes(char *str);
 char	*slice_word(t_scanner *scanner);

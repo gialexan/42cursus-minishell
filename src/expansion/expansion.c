@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/02 09:57:07 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/02 10:04:39 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char *concatenate(char *str, char *append);
 static char	*variable_expansion(char *str, char *key);
 static char	*word_splitting(t_scanner *scanner, char *result);
 
-char	*expand(char *word)
+char	*expander(char *word)
 {
 	char		*result;
 	t_scanner	scanner;
