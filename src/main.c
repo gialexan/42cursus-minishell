@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 18:16:27 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:27:41 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	init_data(t_data *data)
 
 void	exec_builtins(t_list *token, t_data *data)
 {
+	char *tmp;
+
 	if (!token)
 		return ;
 	token->content = expandchr(token->content);
@@ -55,12 +57,11 @@ void	execute_cmdlst(t_cmd *cmd, t_data *data)
 
 void	msh_loop(void)
 {
+    t_scanner	scanner;
 	t_list		*token = NULL;
 	t_cmd		*parser = NULL;
-    t_scanner	scanner;
-	t_data 		*data;
 
-	char command[] = "< EOF";
+	char command[] = "unset test test1";
     scanner = init_scanner(command);
     token = lexical_analysis(&scanner, token);
 	parser = syntax_analysis(token);

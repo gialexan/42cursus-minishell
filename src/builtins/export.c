@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 18:05:40 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:17:06 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,14 @@ static int	exec_export(t_list *export, int exit);
 int	ft_export(t_list *token)
 {
 	t_list *aux;
-	
-	//ajustar por aq.
+
 	aux = expandlst(token, NULL);
 	if (!aux->next)
-		declare_x(*get_envp());
-	else
-		exec_export(aux->next, EXIT_SUCCESS);
+		return (declare_x(*get_envp()));
+	return (exec_export(aux->next, EXIT_SUCCESS));
 }
 
-static	int    exec_export(t_list *token, int exit)
+static int exec_export(t_list *token, int exit)
 {
 	char	*key;
 	t_list	*node;

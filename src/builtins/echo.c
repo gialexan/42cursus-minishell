@@ -6,12 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:24:58 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 18:17:15 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 19:25:38 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
+static void	next(t_list *token);
 static void	write_output(t_list *token);
 
 int	ft_echo(t_list *token)
@@ -21,13 +22,13 @@ int	ft_echo(t_list *token)
 		ft_putstr_fd("\n", 1);
 		return (EXIT_SUCCESS);
 	}
-    advanced(&token);
+    next(token);
 	if (token && !ft_strncmp(token->content, "-n", 2))
 	{
 		if (!token->next)
 			return (EXIT_SUCCESS);
         while(token && !ft_strncmp(token->content, "-n", 2))
-            advanced(&token);
+            next(token);
 		write_output(token);
 	}
 	else
@@ -41,7 +42,7 @@ int	ft_echo(t_list *token)
 static void	write_output(t_list *token)
 {
     char *tmp;
-
+	
     if (!token)
         return ;
     tmp = token->content;
@@ -49,4 +50,9 @@ static void	write_output(t_list *token)
 	ft_putstr_fd(token->content, 1);
     free(tmp);
 	return (write_output(token->next));
+}
+
+static	void	next(t_list *token)
+{
+	token = token->next;
 }

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 12:29:57 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 19:57:12 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "parser.h"
 # include "execute.h"
+
+# define EMPY ""
 
 /***************************************************************************\
  * HELPER/PATH.C
@@ -48,7 +50,7 @@ void	clear_dlst(t_cmd *lst, void (*del)(void *));
 \***************************************************************************/
 
 void	print_cmd(t_cmd *cmd);
-void	declare_x(t_list *envp);
+int     declare_x(t_list *envp);
 void	print_redir(t_list *token);
 void	print_stack(t_list *lst, int type);
 

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:06:49 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 15:37:06 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 19:03:22 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	set_redir(t_data *data, int fd, int stdfd, char *filename)
 {
 	if (fd < 0)
 	{
+		printf("%s\n", filename);
 		data->retcode = 1;
 		data->error = TRUE;
 	}
