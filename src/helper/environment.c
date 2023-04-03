@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:08:36 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 10:51:11 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 13:47:39 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_bool	delete_envp(char *dell, t_list **envp, t_list *prev)
 				*envp = (*envp)->next;
 			else if (prev && *envp)
 				prev->next = (*envp)->next;
+			free(tmp->content);
 			free(tmp);
 			tmp = NULL;
 			return (TRUE);

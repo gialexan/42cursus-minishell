@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 12:39:33 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 13:49:15 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,54 @@ int main(int argc, char **argv, char **envp)
 	init_envment(envp, get_envp());
 	init_arraypath();
 
-    char command[] = "export $test carro=moto";
+	t_list *tmp = *get_envp();
+	
+	while(tmp != NULL)
+	{
+		printf("%s\n", (char *)tmp->content);
+		tmp = tmp->next;
+	}
+
+	printf("=-=-=-=-=-=-=-==-=-=-=-=--=-==--=-=-=-=-=-=-=-=-=\n==--=-=-=--=-=--=-=-=-=-=-==-=-=-==-=\n");
+
+    char command[] = "unset $carro carro";
+    scanner = init_scanner(command);
+    token = lexical_analysis(&scanner, token);
+	parser = syntax_analysis(token);
+	execute_cmdlst(parser, get_data());
+
+	delete_envp("carro", get_envp(), NULL);
+
+	tmp = *get_envp();
+	while(tmp != NULL)
+	{
+		printf("%s\n", (char *)tmp->content);
+		tmp = tmp->next;
+	}
+
+	clear_arraypath();
+	ft_lstclear(get_envp(), free);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+EXPORT TEST BASIC:
+ char command[] = "export $test carro=moto";
     scanner = init_scanner(command);
     token = lexical_analysis(&scanner, token);
 	parser = syntax_analysis(token);
@@ -76,4 +123,26 @@ int main(int argc, char **argv, char **envp)
 	}
 	clear_arraypath();
 	ft_lstclear(get_envp(), free);
-}
+*/
+
+/*
+UNSET TEST BASIC
+char command[] = "unset $carro carro";
+    scanner = init_scanner(command);
+    token = lexical_analysis(&scanner, token);
+	parser = syntax_analysis(token);
+	execute_cmdlst(parser, get_data());
+
+	delete_envp("carro", get_envp(), NULL);
+
+	tmp = *get_envp();
+	while(tmp != NULL)
+	{
+		printf("%s\n", (char *)tmp->content);
+		tmp = tmp->next;
+	}
+
+	clear_arraypath();
+	ft_lstclear(get_envp(), free);
+
+*/
