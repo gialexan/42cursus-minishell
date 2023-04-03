@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/04/02 12:52:48 by gialexan         ###   ########.fr        #
+#    Updated: 2023/04/03 16:26:18 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SOURCES_FILES = main.c				\
 				interface.c 		\
 				export.c 			\
 				unset.c 			\
+				echo.c 				\
 				cleaner.c 			\
 				print.c 			\
 				error.c				\

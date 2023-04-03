@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 12:40:22 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:18:01 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static char	*variable_expansion(char *str, char *key);
 static char	*word_splitting(t_scanner *scanner, char *result);
-
 
 t_list	*expandlst(t_list *token, t_list *head)
 {
@@ -37,12 +36,12 @@ char	*expandchr(char *word)
 	char		*result;
 	t_scanner	scanner;
 
-	result = NULL;
 	scanner = init_scanner(word);
 	result = word_splitting(&scanner, result);
 	return (result);
 }
 
+//mudar para irativo talvez.
 char	*pathname_expansion(char *path, int i, int init)
 {
 	if (ft_chrcmp(path[i], '\0'))
@@ -103,4 +102,3 @@ static char	*variable_expansion(char *str, char *key)
 	free(str);
 	return (tmp);
 }
-

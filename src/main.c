@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 14:21:40 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:16:27 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,16 @@ void	init_data(t_data *data)
 
 void	exec_builtins(t_list *token, t_data *data)
 {
-	// if readippe = true & forked = FALSE
-	// 	return;
-	// else if readipipe = true & forked = TRUE
-	// 	executa processo filho 
-	// else if readpipe = false & forked = FALSE
-	
-	
+	if (!token)
+		return ;
+	token->content = expandchr(token->content);
 	if (!ft_strncmp(token->content, "export", 6))
 		ft_export(token);
 	else if (!ft_strncmp(token->content, "unset", 5))
 		ft_unset(token);
+	else if (!ft_strncmp(token->content, "echo", 5))
+		ft_echo(token);
 }
-
 
 void	execute_cmdlst(t_cmd *cmd, t_data *data)   
 {
@@ -51,47 +48,32 @@ void	execute_cmdlst(t_cmd *cmd, t_data *data)
 	init_data(data);
 	tmp = exec_redirect(cmd->token, data, NULL);
 	exec_builtins(tmp, data);
-	//exec_command(tmp, data);
 	ft_lstclear(&tmp, free);
 	execute_cmdlst(cmd->next, data);
 	free(cmd);
 }
 
-int main(int argc, char **argv, char **envp)
+void	msh_loop(void)
 {
-    t_list		*token = NULL;
+	t_list		*token = NULL;
 	t_cmd		*parser = NULL;
     t_scanner	scanner;
+	t_data 		*data;
 
-	(void)argv;
-	(void)envp;
-
-	init_envment(envp, get_envp());
-	init_arraypath();
-
-	t_list *tmp = *get_envp();
-	
-	while(tmp != NULL)
-	{
-		printf("%s\n", (char *)tmp->content);
-		tmp = tmp->next;
-	}
-
-	printf("=-=-=-=-=-=-=-==-=-=-=-=--=-==--=-=-=-=-=-=-=-=-=\n=-=-=-=-=-=-=-==-=-=-=-=--=-==--=-=-=-=-=-=-=-=-=\n");
-
-    char command[] = "unset $carro carro";
+	char command[] = "< EOF";
     scanner = init_scanner(command);
     token = lexical_analysis(&scanner, token);
 	parser = syntax_analysis(token);
 	execute_cmdlst(parser, get_data());
+}
 
-	tmp = *get_envp();
-	while(tmp != NULL)
-	{
-		printf("%s\n", (char *)tmp->content);
-		tmp = tmp->next;
-	}
-
+int main(int argc, char **argv, char **envp)
+{
+	(void)argv;
+	(void)envp;
+	init_envment(envp, get_envp());
+	init_arraypath();
+	msh_loop();
 	clear_arraypath();
 	ft_lstclear(get_envp(), free);
 }
