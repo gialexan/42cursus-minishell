@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:04:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 11:26:42 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:48:18 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,14 @@ t_bool	empty_quotes(char *str)
 	else if (ft_chrcmp(str[0], '"') && ft_chrcmp(str[1], '"'))
 		return (TRUE);
 	return (FALSE);
+}
+
+char *concatenate(char *str, char *append)
+{
+	char	*tmp;
+
+	tmp = str;
+	str = ft_strjoin(tmp, append);
+	free(tmp);
+	return (str);
 }

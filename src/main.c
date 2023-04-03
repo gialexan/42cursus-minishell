@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/02 13:26:10 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 12:39:33 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * Criar exit
 */
 
-void	init_exec(t_data *data)
+void	init_data(t_data *data)
 {
 	data->fd[STDIN_FILENO] = STDIN_FILENO;
 	data->fd[STDOUT_FILENO] = STDOUT_FILENO;
@@ -27,21 +27,30 @@ void	init_exec(t_data *data)
 	data->error = FALSE;
 }
 
-void	execute_command(t_cmd *cmd, t_data *data)   
+void	exec_builtins(t_list *token)
+{
+	if (!ft_strncmp(token->content, "export", 6))
+		ft_export(token);
+	else if (!ft_strncmp(token->content, "unset", 5))
+		ft_unset(token);
+}
+
+void	execute_cmdlst(t_cmd *cmd, t_data *data)   
 {
 	t_list	*tmp;
 	if (!cmd)
 		return ;
-	init_exec(data);
+	init_data(data);
 	tmp = exec_redirect(cmd->token, data, NULL);
+	exec_builtins(tmp);
+	//exec_command(tmp, data);
 	ft_lstclear(&tmp, free);
-	execute_command(cmd->next, data);
+	execute_cmdlst(cmd->next, data);
 	free(cmd);
 }
 
 int main(int argc, char **argv, char **envp)
 {
-	t_data		data;
     t_list		*token = NULL;
 	t_cmd		*parser = NULL;
     t_scanner	scanner;
@@ -52,12 +61,19 @@ int main(int argc, char **argv, char **envp)
 	init_envment(envp, get_envp());
 	init_arraypath();
 
+    char command[] = "export $test carro=moto";
+    scanner = init_scanner(command);
+    token = lexical_analysis(&scanner, token);
+	parser = syntax_analysis(token);
+	execute_cmdlst(parser, get_data());
+
+	t_list *tmp = *get_envp();
 	
-    // char command[] = "< 'oi''eof'";
-    // scanner = init_scanner(command);
-    // token = lexical_analysis(&scanner, token);
-	// parser = syntax_analysis(token);
-	// data.readpipe = FALSE;
-	// execute_command(parser, &data);
+	while(tmp != NULL)
+	{
+		printf("%s\n", (char *)tmp->content);
+		tmp = tmp->next;
+	}
+	clear_arraypath();
 	ft_lstclear(get_envp(), free);
 }

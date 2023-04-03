@@ -6,22 +6,15 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:06:49 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 11:11:44 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 09:47:27 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
 /*
-* Prototipagem inicial da função heredoc.
-*
-* To do:
-* Os textos escritos no here_doc devem expandir se forem variáveis de expansão.
-*
-* Includes:
-* #include <fcntl.h>
-* #include <readline/readline.h>
-* #include <readline/history.h>
+* TO DO:
+* Preciso executar o heredoc no processo filho.
 */
 
 t_list *exec_redirect(t_list *token, t_data *data, t_list *head)

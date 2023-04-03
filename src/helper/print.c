@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:01:09 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 10:42:53 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:43:30 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,13 @@ void	print_cmd(t_cmd *cmd)
 		printf("\n");
         cmd = cmd->next;
     }
+}
+
+void	declare_x(t_list *envp)
+{
+	if (!envp)
+		return ;
+	ft_putstr_fd("declare -x ", STDOUT_FILENO);
+	ft_putendl_fd(envp->content, STDOUT_FILENO);
+	return (declare_x(envp->next));
 }

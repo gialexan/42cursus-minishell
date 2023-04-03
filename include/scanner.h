@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:58:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 10:39:12 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 09:54:57 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SCANNER_H
 
 # include "../libft/libft.h"
+
 # define METACHARS "|()<> \t\n"
 # define CLOSED 0
 # define UNCLOSED 1

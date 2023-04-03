@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 19:05:07 by gialexan          #+#    #+#             */
-/*   Updated: 2022/11/10 15:45:29 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/02 19:24:41 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_free_split(void **str)
 
 	i = -1;
 	while (str[++i])
-		ft_free((void *)&str[i]);
-	ft_free((void *)&str);
+		free(str[i]);
+	free(str);
 	str = NULL;
 }

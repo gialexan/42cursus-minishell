@@ -6,15 +6,19 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/02 10:28:59 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:24:30 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
-# include "builtins.h"
+# include "parser.h"
 # include <fcntl.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 typedef struct s_data
 {

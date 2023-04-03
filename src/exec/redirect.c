@@ -6,11 +6,12 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/02 10:06:00 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:49:52 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+#include "helper.h"
 
 t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
 {
@@ -20,7 +21,7 @@ t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
 
 	file = advanced(&token);
 	tmp = file->content;
-	file->content = expander(tmp);
+	file->content = expandchr(tmp);
 	fd = open(file->content, O_RDONLY);
 	set_redir(data, fd, STDIN_FILENO, file->content);
 	free(tmp);
@@ -37,7 +38,7 @@ t_list *exec_output(t_list *token, t_list *head, t_data *data, t_list *c)
 
 	file = advanced(&token);
 	tmp = file->content;
-	file->content = expander(tmp);
+	file->content = expandchr(tmp);
 	fd = open(file->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	set_redir(data, fd, STDOUT_FILENO, file->content);
 	free(tmp);
@@ -54,7 +55,7 @@ t_list *exec_append(t_list *token, t_list *head, t_data *data, t_list *c)
 
 	file = advanced(&token);
 	tmp = file->content;
-	file->content = expander(tmp);
+	file->content = expandchr(tmp);
 	fd = open(file->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	set_redir(data, fd, STDOUT_FILENO, file->content);
 	free(tmp);
@@ -73,7 +74,7 @@ t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 
 	delimiter = advanced(&token);
 	tmp = delimiter->content;
-	delimiter->content = expander(tmp);
+	delimiter->content = expandchr(tmp);
 	fd = open("/tmp/heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	set_redir(data, fd, STDIN_FILENO, delimiter->content);
 	//chamar o fork por aqui.

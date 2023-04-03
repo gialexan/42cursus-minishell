@@ -6,35 +6,52 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 18:14:40 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 12:42:12 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static char     *get_key(char *str);
-static t_bool   valid_string(char *str);
-static t_bool   export_error(char *str);
+static char	*get_key(char *str);
+static int	valid_string(char *str);
+static int	export_error(char *str);
+static int	exec_export(t_list *export, int exit);
 
-void    exec_export(char *str)
+int	ft_export(t_list *token)
+{
+	t_list *tmp;
+	
+	tmp = expandlst(token, NULL);
+	if (!tmp->next)
+		declare_x(*get_envp());
+	else
+		exec_export(tmp->next, EXIT_SUCCESS);
+}
+
+static	int    exec_export(t_list *token, int exit)
 {
 	char	*key;
 	t_list	*node;
+	int		string;
     int     lenght;
-	t_bool	string;
 
-	key = get_key(str);
+	if (!token)
+		return (exit);
+	key = get_key(token->content);
 	string = valid_string(key);
+	if (string)
+		exit = string;
 	node = search_envp(key, *get_envp());
 	if (node && string)
 	{
-        lenght = ft_strlen(str);
-		if (ft_strncmp(str, node->content, lenght))
-			update_envp(str, node);
+        lenght = ft_strlen(token->content);
+		if (ft_strncmp(token->content, node->content, lenght))
+			update_envp(token->content, node);
 	}
-	else if (string)
-		insert_envp(str, get_envp());
+	else if (!string)
+		insert_envp(token->content, get_envp());
 	free(key);
+	return (exec_export(token->next, exit));
 }
 
 static char    *get_key(char *str)
@@ -57,7 +74,7 @@ static char    *get_key(char *str)
 	return (key);
 }
 
-static t_bool   valid_string(char *str)
+static int   valid_string(char *str)
 {
 	int	i;
 
@@ -69,21 +86,12 @@ static t_bool   valid_string(char *str)
 		if (str[i] != '_' && !ft_isalnum(str[i]))
 			return (export_error(str));
 	}
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }
 
-void	declare_x(t_list *envp)
-{
-	if (envp == NULL)
-		return ;
-	ft_putstr_fd("declare -x ", STDOUT_FILENO);
-	ft_putendl_fd(envp->content, STDOUT_FILENO);
-	return (declare_x(envp->next));
-}
-
-static t_bool	export_error(char *str)
+static int	export_error(char *str)
 {
 	msh_error("export", str, 0);
     ft_putendl_fd(": not a valid identifier", STDERR_FILENO);
-	return (FALSE);
+	return (EXIT_FAILURE);
 }

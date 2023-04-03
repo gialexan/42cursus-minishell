@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:57:14 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 11:36:03 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/03 09:32:17 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 # include "scanner.h"
 # include "execute.h"
 # include "builtins.h"
+# include "../libft/libft.h"
 
 #endif
