@@ -6,11 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:24:58 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 12:39:45 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:16:45 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+#define LINE_BREAK "-n"
 
 static void	next(t_list **token);
 static void	write_output(t_list *token);
@@ -23,11 +25,11 @@ int	ft_echo(t_list *token)
 		return (EXIT_SUCCESS);
 	}
     next(&token);
-	if (token && !ft_strncmp(token->content, "-n", 2))
+	if (token && !ft_strncmp(token->content, LINE_BREAK, 2))
 	{
 		if (!token->next)
 			return (EXIT_SUCCESS);
-        while(token && !ft_strncmp(token->content, "-n", 2))
+        while(token && !ft_strncmp(token->content, LINE_BREAK, 2))
             next(&token);
 		write_output(token);
 	}
@@ -43,7 +45,7 @@ static void	write_output(t_list *token)
 {
     if (!token)
         return ;
-    token->content = expandchr(token->content);
+    token->content = expand(token->content);
 	ft_putstr_fd(token->content, STDOUT_FILENO);
 	return (write_output(token->next));
 }

@@ -6,13 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 21:59:07 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 10:59:09 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:13:31 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-
-#define PATH_MAX 4096
 
 int ft_pwd(t_list *token)
 {

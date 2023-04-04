@@ -6,16 +6,15 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 12:40:10 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:35:42 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+#include <errno.h>
 /* TO DO
  * Criar o executor de comando;
  * Pegar o exception dos file abertos;
- * Criar expansor de arquivos;
  * Criar exit
 */
 
@@ -27,28 +26,10 @@ void	init_data(t_data *data)
 	data->error = FALSE;
 }
 
-void	exec_builtins(t_list *token, t_data *data)
-{
-	char *tmp;
-
-	if (!token)
-		return ;
-	token->content = expandchr(token->content);
-	if (!ft_strncmp(token->content, "export", 6))
-		ft_export(token);
-	else if (!ft_strncmp(token->content, "unset", 5))
-		ft_unset(token);
-	else if (!ft_strncmp(token->content, "echo", 5))
-		ft_echo(token);
-	else if (!ft_strncmp(token->content, "pwd", 4))
-		ft_pwd(token);
-	else if (!ft_strncmp(token->content, "env", 4))
-		ft_env(token);
-}
-
 void	execute_cmdlst(t_cmd *cmd, t_data *data)   
 {
 	t_list	*tmp;
+
 	if (!cmd)
 		return ;
 	init_data(data);
@@ -64,8 +45,8 @@ void	msh_loop(void)
     t_scanner	scanner;
 	t_list		*token = NULL;
 	t_cmd		*parser = NULL;
-
-	char command[] = "echo \"''''$PWD''''$USER\"''$HOME''";
+	
+	char command[] = "cd src/test";
     scanner = init_scanner(command);
     token = lexical_analysis(&scanner, token);
 	parser = syntax_analysis(token);
@@ -76,12 +57,14 @@ int main(int argc, char **argv, char **envp)
 {
 	(void)argv;
 	(void)argc;
+
 	init_envment(envp, get_envp());
 	init_arraypath();
 	msh_loop();
 	clear_arraypath();
 	clear_envment();
 }
+
 
 
 

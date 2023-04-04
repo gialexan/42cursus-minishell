@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 10:34:57 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 14:06:14 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
 	t_list	*file;
 
 	file = advanced(&token);
-	file->content = expandchr(file->content);
+	file->content = expand(file->content);
 	
 	
 	fd = open(file->content, O_RDONLY);
@@ -37,7 +37,7 @@ t_list *exec_output(t_list *token, t_list *head, t_data *data, t_list *c)
 	t_list	*file;
 
 	file = advanced(&token);
-	file->content = expandchr(file->content);
+	file->content = expand(file->content);
 
 
 	fd = open(file->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -55,7 +55,7 @@ t_list *exec_append(t_list *token, t_list *head, t_data *data, t_list *c)
 	t_list	*file;
 
 	file = advanced(&token);
-	file->content = expandchr(file->content);
+	file->content = expand(file->content);
 
 
 	fd = open(file->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -75,7 +75,7 @@ t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 	t_list		*delimiter;
 
 	delimiter = advanced(&token);
-	delimiter->content = expandchr(delimiter->content);
+	delimiter->content = expand(delimiter->content);
 
 
 	fd = open("/tmp/heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);

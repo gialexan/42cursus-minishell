@@ -6,22 +6,22 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 09:45:16 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 13:52:24 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static char	*get_key(char *str);
-static int	valid_string(char *str);
-static int	export_error(char *str);
-static int	exec_export(t_list *export, int exit);
+static char		*get_key(char *str);
+static int		valid_string(char *str);
+static int		exec_export(t_list *export, int exit);
+static t_list	*expand_export(t_list *token, t_list *head);
 
 int	ft_export(t_list *token)
 {
 	t_list *aux;
 
-	aux = expandlst(token, NULL);
+	aux = expand_export(token, NULL);
 	if (!aux->next)
 		return (declare_x(*get_envp()));
 	return (exec_export(aux->next, EXIT_SUCCESS));
@@ -88,13 +88,17 @@ static int   valid_string(char *str)
 	return (EXIT_SUCCESS);
 }
 
-static int	export_error(char *str)
+static t_list	*expand_export(t_list *token, t_list *head)
 {
-	char *err_msg;
+	t_list	*tmp;
 
-	err_msg = "`arg': not a valid identifier";
-	err_msg = ft_strreplace(err_msg, "arg", str);
-	msh_error("export", err_msg, 0);
-	free(err_msg);
-	return (EXIT_FAILURE);
+	if (!token)
+		return head;
+	tmp = advanced(&token);
+	tmp->content = pathname_expansion(tmp->content, 0, 0);
+	if (!strncmp(tmp->content, EMPY, 1))
+		ft_lstdelone(tmp, free);
+	else
+		ft_lstadd_back(&head, tmp);
+	return (expand_export(token, head));
 }

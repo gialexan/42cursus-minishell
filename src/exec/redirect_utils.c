@@ -6,12 +6,12 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:06:49 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 19:03:22 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 14:05:53 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
-
+#include "helper.h"
 /*
 * TO DO:
 * Preciso executar o heredoc no processo filho.
@@ -54,7 +54,7 @@ void	set_redir(t_data *data, int fd, int stdfd, char *filename)
 {
 	if (fd < 0)
 	{
-		printf("%s\n", filename);
+		msh_error(filename, NULL, 0);
 		data->retcode = 1;
 		data->error = TRUE;
 	}
