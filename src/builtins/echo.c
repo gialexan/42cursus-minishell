@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:24:58 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 19:25:38 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:24:44 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	write_output(t_list *token)
         return ;
     tmp = token->content;
     token->content = expandchr(tmp);
-	ft_putstr_fd(token->content, 1);
+	ft_putstr_fd(token->content, STDOUT_FILENO);
     free(tmp);
 	return (write_output(token->next));
 }

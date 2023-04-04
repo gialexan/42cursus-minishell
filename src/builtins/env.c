@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 10:12:39 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 10:42:11 by gialexan         ###   ########.fr       */
+/*   Created: 2023/04/04 09:57:20 by gialexan          #+#    #+#             */
+/*   Updated: 2023/04/04 10:28:58 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	ft_unset(t_list *token)
+static void    write_output(t_list *token);
+
+int ft_env(t_list *token)
 {
-	if (!token)
-		return (EXIT_SUCCESS);
-	token->content = pathname_expansion(token->content, 0, 0);
-	delete_envp(token->content, get_envp(), NULL);
-	return (ft_unset(token->next));
+    t_list *envp;
+
+    envp = *get_envp();
+    if (!envp)
+        msh_error("envp", "Environment doesn't exist.", 0);
+    else
+        write_output(envp);
+    return (EXIT_SUCCESS);
+}
+
+static void    write_output(t_list *envp)
+{
+    if (!envp)
+        return ;
+    ft_putendl_fd(envp->content, STDOUT_FILENO);
+    return(write_output(envp->next));
 }

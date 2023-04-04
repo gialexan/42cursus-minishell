@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 20:17:06 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 09:45:16 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,11 @@ static int   valid_string(char *str)
 
 static int	export_error(char *str)
 {
-	msh_error("export", str, 0);
-    ft_putendl_fd(": not a valid identifier", STDERR_FILENO);
+	char *err_msg;
+
+	err_msg = "`arg': not a valid identifier";
+	err_msg = ft_strreplace(err_msg, "arg", str);
+	msh_error("export", err_msg, 0);
+	free(err_msg);
 	return (EXIT_FAILURE);
 }

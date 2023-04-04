@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 20:27:41 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:05:24 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ void	exec_builtins(t_list *token, t_data *data)
 		ft_unset(token);
 	else if (!ft_strncmp(token->content, "echo", 5))
 		ft_echo(token);
+	else if (!ft_strncmp(token->content, "pwd", 4))
+		ft_pwd(token);
+	else if (!ft_strncmp(token->content, "env", 4))
+		ft_env(token);
 }
 
 void	execute_cmdlst(t_cmd *cmd, t_data *data)   
@@ -61,11 +65,20 @@ void	msh_loop(void)
 	t_list		*token = NULL;
 	t_cmd		*parser = NULL;
 
-	char command[] = "unset test test1";
+	char command[] = "env";
     scanner = init_scanner(command);
     token = lexical_analysis(&scanner, token);
 	parser = syntax_analysis(token);
 	execute_cmdlst(parser, get_data());
+
+	/*
+	t_list *tmp = *get_envp();
+	while(tmp != NULL)
+	{
+		printf("%s\n", (char *)tmp->content);
+		tmp = tmp->next;
+	}
+	*/
 }
 
 int main(int argc, char **argv, char **envp)

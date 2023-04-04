@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 11:24:30 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:40:40 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "parser.h"
 # include <fcntl.h>
 # include <stdio.h>
-# include <unistd.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 

@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/13 15:27:43 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 09:41:34 by gialexan         ###   ########.fr       */
+/*   Created: 2023/04/03 21:59:07 by gialexan          #+#    #+#             */
+/*   Updated: 2023/04/04 10:15:51 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "helper.h"
+#include "builtins.h"
 
-void	msh_error(char *name, char *msg, int error)
+int ft_pwd(t_list *token)
 {
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	if (msg == NULL && error == 0)
-	{
-		perror(name);
-		return ;
-	}
-	ft_putstr_fd(name, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	if (msg)
-		ft_putendl_fd(msg, STDERR_FILENO);
+    t_list  *pwd;
+
+    (void)token;
+    pwd = search_envp("PWD", *get_envp());
+    if (!pwd)
+        msh_error("pwd", "Environment variable doesn't exist.", 0);
+    else
+        ft_putendl_fd(ft_strchr(pwd->content, '=') + 1, STDOUT_FILENO);
+    return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 20:15:01 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:34:57 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ t_list *exec_append(t_list *token, t_list *head, t_data *data, t_list *c)
 
 	file = advanced(&token);
 	file->content = expandchr(file->content);
-	
-	
+
+
 	fd = open(file->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	set_redir(data, fd, STDOUT_FILENO, file->content);
 
