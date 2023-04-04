@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 10:05:24 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:57:00 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	msh_loop(void)
 	t_list		*token = NULL;
 	t_cmd		*parser = NULL;
 
-	char command[] = "env";
+	char command[] = "pwd";
     scanner = init_scanner(command);
     token = lexical_analysis(&scanner, token);
 	parser = syntax_analysis(token);

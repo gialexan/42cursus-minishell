@@ -6,21 +6,22 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 21:59:07 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 10:15:51 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:59:09 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
+#define PATH_MAX 4096
+
 int ft_pwd(t_list *token)
 {
-    t_list  *pwd;
+   char  pwd[PATH_MAX];
 
     (void)token;
-    pwd = search_envp("PWD", *get_envp());
+    getcwd(pwd, sizeof(pwd));
     if (!pwd)
         msh_error("pwd", "Environment variable doesn't exist.", 0);
-    else
-        ft_putendl_fd(ft_strchr(pwd->content, '=') + 1, STDOUT_FILENO);
+    ft_putendl_fd(pwd, STDOUT_FILENO);
     return (EXIT_SUCCESS);
 }
