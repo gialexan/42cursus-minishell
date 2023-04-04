@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 10:57:00 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:40:10 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,31 +65,22 @@ void	msh_loop(void)
 	t_list		*token = NULL;
 	t_cmd		*parser = NULL;
 
-	char command[] = "pwd";
+	char command[] = "echo \"''''$PWD''''$USER\"''$HOME''";
     scanner = init_scanner(command);
     token = lexical_analysis(&scanner, token);
 	parser = syntax_analysis(token);
 	execute_cmdlst(parser, get_data());
-
-	/*
-	t_list *tmp = *get_envp();
-	while(tmp != NULL)
-	{
-		printf("%s\n", (char *)tmp->content);
-		tmp = tmp->next;
-	}
-	*/
 }
 
 int main(int argc, char **argv, char **envp)
 {
 	(void)argv;
-	(void)envp;
+	(void)argc;
 	init_envment(envp, get_envp());
 	init_arraypath();
 	msh_loop();
 	clear_arraypath();
-	ft_lstclear(get_envp(), free);
+	clear_envment();
 }
 
 

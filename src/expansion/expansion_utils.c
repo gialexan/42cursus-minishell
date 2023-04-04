@@ -6,11 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:04:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 17:13:33 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 13:07:03 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
+
+static t_bool	empty_quotes(char *str);
 
 char	*slice_word(t_scanner *scanner)
 {
@@ -49,16 +51,7 @@ char	*unquote(char *str)
 	return (ft_strdup(str));
 }
 
-t_bool	empty_quotes(char *str)
-{
-	if (ft_chrcmp(str[0], '\'') && ft_chrcmp(str[1], '\''))
-		return (TRUE);
-	else if (ft_chrcmp(str[0], '"') && ft_chrcmp(str[1], '"'))
-		return (TRUE);
-	return (FALSE);
-}
-
-char *concatenate(char *str, char *append)
+char	*concatenate(char *str, char *append)
 {
 	char	*tmp;
 
@@ -66,4 +59,13 @@ char *concatenate(char *str, char *append)
 	str = ft_strjoin(tmp, append);
 	free(tmp);
 	return (str);
+}
+
+static t_bool	empty_quotes(char *str)
+{
+	if (ft_chrcmp(str[0], '\'') && ft_chrcmp(str[1], '\''))
+		return (TRUE);
+	else if (ft_chrcmp(str[0], '"') && ft_chrcmp(str[1], '"'))
+		return (TRUE);
+	return (FALSE);
 }

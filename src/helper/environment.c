@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:08:36 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 20:24:55 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:49:36 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_envment(char **environment, t_list **envp)
 	return (init_envment(++environment, envp));
 }
 
-t_list *search_envp(char *search, t_list *envp)
+t_list *search_envp(const char *search, t_list *envp)
 {
 	int lenght;
 
@@ -38,7 +38,7 @@ t_list *search_envp(char *search, t_list *envp)
 	return (search_envp(search, envp->next));
 }
 
-t_bool	delete_envp(char *dell, t_list **envp, t_list *prev)
+t_bool	delete_envp(const char *dell, t_list **envp, t_list *prev)
 {
 	t_list	*tmp;
 	int		lenght;
@@ -63,7 +63,7 @@ t_bool	delete_envp(char *dell, t_list **envp, t_list *prev)
 	return (delete_envp(dell, &(*envp)->next, *envp));
 }
 
-t_bool	insert_envp(char *insert, t_list **envp)
+t_bool	insert_envp(const char *insert, t_list **envp)
 {
 	if (!insert)
 		return (FALSE);
@@ -71,7 +71,7 @@ t_bool	insert_envp(char *insert, t_list **envp)
 	return (TRUE);
 }
 
-t_bool	update_envp(char *update, t_list *envp)
+t_bool	update_envp(const char *update, t_list *envp)
 {
 	if (!update)
 		return (FALSE);

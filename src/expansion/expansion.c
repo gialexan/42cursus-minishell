@@ -6,13 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 09:48:43 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/04 13:05:08 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
 
-#define EMPY ""
+# define EMPY ""
 
 static char	*variable_expansion(char *str, char *key);
 static char	*word_splitting(t_scanner *scanner, char *result);
@@ -34,14 +34,13 @@ t_list	*expandlst(t_list *token, t_list *head)
 
 char	*expandchr(char *str)
 {
-	char		*result;
+	char		*aux;
 	t_scanner	scanner;
 
-	result = NULL;
 	scanner = init_scanner(str);
-	result = word_splitting(&scanner, result);
+	aux = word_splitting(&scanner, NULL);
 	free(str);
-	return (result);
+	return (aux);
 }
 
 char	*pathname_expansion(char *path, int i, int init)
@@ -99,10 +98,7 @@ static char	*variable_expansion(char *str, char *key)
 			aux = ft_strdup("");
 	}
 	else
-	{
-		aux = ft_strchr(envp->content, '=') + 1;
-		aux = ft_strreplace(str, key, aux);
-	}
+		aux = ft_strreplace(str, key, ft_strchr(envp->content, '=') + 1);
 	free(key);
 	free(str);
 	return (aux);
