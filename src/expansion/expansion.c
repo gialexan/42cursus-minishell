@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 09:27:06 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:45:53 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 static char	*variable_expansion(char *str, char *key);
 static char	*word_splitting(t_scanner *scanner, char *result);
 
-char	*expand(char *str)
+char	*expand(char *oldstr)
 {
-	char		*tmp;
+	char		*newstr;
 	t_scanner	scanner;
 
-	scanner = init_scanner(str);
-	tmp = word_splitting(&scanner, NULL);
-	free(str);
-	return (tmp);
+	scanner = init_scanner(oldstr);
+	newstr = word_splitting(&scanner, NULL);
+	free(oldstr);
+	return (newstr);
 }
 
 static char	*word_splitting(t_scanner *scanner, char *result)
@@ -50,44 +50,51 @@ static char	*word_splitting(t_scanner *scanner, char *result)
 	return (word_splitting(scanner, result));
 }
 
-char	*pathname_expansion(char *path, int i, int init)
+char	*pathname_expansion(char *str, int i, int init)
 {
-	if (i >= ft_strlen(path))
-		return (path);
-	else if (ft_chrcmp(path[i], '$'))
+	if (!str)
+		return (NULL);
+	if (i >= ft_strlen(str))
+		return (str);
+	else if (ft_chrcmp(str[i], '$'))
 	{
 		init = i++;
-		if (ft_chrcmp(path[i], '?'))
+		if (ft_chrcmp(str[i], '?'))
 			return (ft_strdup("1"));
-		else if (ft_isalpha(path[i]) || ft_chrcmp(path[i], '_'))
+		else if (ft_isalpha(str[i]) || ft_chrcmp(str[i], '_'))
 		{
-			while (path[i] && (ft_isalnum(path[i]) || ft_chrcmp(path[i],'_')))
+			while (str[i] && (ft_isalnum(str[i]) || ft_chrcmp(str[i],'_')))
 				i++;
-			path = variable_expansion(path, ft_substr(path, init, i - init));
+			str = variable_expansion(str, ft_substr(str, init, i - init));
 		}
 	}
-	return (pathname_expansion(path, i + 1, init));
+	return (pathname_expansion(str, i + 1, init));
 }
 
-static char	*variable_expansion(char *str, char *key)
+static char *variable_expansion(char *str, char *key)
 {
-	char	*tmp;
-	t_list	*envp;
+    t_list	*envp;
+    char	*expd_str;
+	char	*env_value;
 
-	envp = search_envp(key + 1, *get_envp());
-	if (!envp)
-	{
-		if (ft_chrcmp(str[0], '"'))
-			tmp = ft_strdup(str);
+    if (!key || key[0] != '$')
+        return (ft_strdup(str));
+    envp = search_envp(key + 1, *get_envp());
+    if (!envp)
+        if (ft_chrcmp(str[0], '"'))
+            expd_str = ft_strdup(str);
 		else
-			tmp = ft_strdup("");
-	}
-	else
+            expd_str = ft_strdup("");
+    else
 	{
-		tmp = ft_strchr(envp->content, '=') + 1;
-		tmp = ft_strreplace(str, key, tmp);
-	}
-	free(key);
-	free(str);
-	return (tmp);
+        env_value = ft_strchr(envp->content, '=') + 1;
+        if (!env_value)
+            return ft_strdup(str);
+        expd_str = ft_strreplace(str, key, env_value);
+    }
+    if (!expd_str)
+        return NULL;
+    free(key);
+    free(str);
+    return (expd_str);
 }

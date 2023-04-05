@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:04:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 09:21:27 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:48:11 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ char	*slice_word(t_scanner *scanner)
 char	*slice_quotes(t_scanner *scanner)
 {
 	char	c;
-	char	end;
+	char	close;
 	char	*sliced;
 
-	end = advance(scanner);
+	close = advance(scanner);
 	c = advance(scanner);
-	while (c != end && c != 0)
+	while (c != close && c != 0)
 		c = advance(scanner);
 	return (ft_substr(scanner->cmd, scanner->start,
 		scanner->current - scanner->start));
@@ -42,6 +42,8 @@ char	*slice_quotes(t_scanner *scanner)
 
 char	*unquote(const char *str)
 {
+	if (!str)
+		return NULL;
 	if (empty_quotes(str))
 		return (ft_strdup(""));
 	else if (ft_chrcmp(str[0], '\''))
@@ -51,14 +53,13 @@ char	*unquote(const char *str)
 	return (ft_strdup(str));
 }
 
-char	*concatenate(char *str, const char *append)
+char	*concatenate(char *oldstr, const char *append)
 {
-	char	*tmp;
+	char	*newstr;
 
-	tmp = str;
-	str = ft_strjoin(tmp, append);
-	free(tmp);
-	return (str);
+	newstr = ft_strjoin(oldstr, append);
+	free(oldstr);
+	return (newstr);
 }
 
 static t_bool	empty_quotes(const char *str)

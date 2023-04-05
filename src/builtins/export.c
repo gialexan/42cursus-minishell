@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 09:52:00 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:12:46 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ static t_list	*expand_export(t_list *token, t_list *head);
 int	ft_export(t_list *token)
 {
 	t_list *aux;
-
+	
+	if (!token)
+		return (EXIT_FAILURE);
 	aux = expand_export(token, NULL);
 	if (!aux->next)
 		return (declare_x(*get_envp()));
@@ -40,7 +42,6 @@ static int exec_export(t_list *token, int exit)
 		return (exit);
 	key = get_key(token->content);
 	string = valid_string(key);
-	printf("%s\n", key);
 	if (string)
 		exit = string;
 	node = search_envp(key, *get_envp());
@@ -96,7 +97,7 @@ static t_list	*expand_export(t_list *token, t_list *head)
 	t_list	*tmp;
 
 	if (!token)
-		return head;
+		return (head);
 	tmp = advanced(&token);
 	tmp->content = pathname_expansion(tmp->content, 0, 0);
 	if (!strncmp(tmp->content, EMPY, 1))

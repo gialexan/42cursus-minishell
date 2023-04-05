@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:11:31 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 09:30:11 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 11:55:49 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static t_bool	change_dir(t_list *token, int size)
 static t_bool	update_pwd(void)
 {
 	t_list	*node;
-	char	*tmp;
+	char	*new_pwd;
 	char	*get_result;
 	char	new_path[PATH_MAX];
 
@@ -70,11 +70,11 @@ static t_bool	update_pwd(void)
 	node = search_envp("PWD", *get_envp());
 	if (!node)
 		return (FALSE);
-	tmp = ft_strjoin("PWD=", new_path);
-	if (!tmp)
+	new_pwd = ft_strjoin("PWD=", new_path);
+	if (!new_pwd)
 		return (FALSE);
-	update_envp(tmp, node);
-	free(tmp);
+	update_envp(new_pwd, node);
+	free(new_pwd);
 	return (TRUE);
 }
 
@@ -96,12 +96,14 @@ static t_bool	update_oldpwd(void)
 
 static char	*get_key_value(char *key)
 {
-	t_list	*tmp;
-	char	*value;
+	t_list	*envp;
+	char	*envp_value;
 
-	tmp = search_envp(key, *get_envp());
-	if (!tmp)
+	envp = search_envp(key, *get_envp());
+	if (!envp)
 		return (NULL);
-	value = ft_strchr(tmp->content, '=') + 1;
-	return (value);
+	envp_value = ft_strchr(envp->content, '=') + 1;
+	if (!get_envp)
+		return (NULL);
+	return (envp_value);
 }
