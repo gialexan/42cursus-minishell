@@ -6,19 +6,19 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 09:39:07 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:15:40 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+#define GREEN_PROMPT "\e[m\e[1;32m❯ \e[m"
 
 /* TO DO
  * Criar o executor de comando;
  * Pegar o exception dos file abertos;
  * Criar exit
 */
-
-#define GREEN_PROMPT "\e[m\e[1;32m❯ \e[m"
 
 void	init_data(t_data *data)
 {
@@ -47,8 +47,8 @@ void	msh_loop(void)
     t_scanner	scanner;
 	t_list		*token;
 	t_cmd		*parser;
-	
-	char *command = "";
+	char 		*command;
+
 	while (TRUE)
 	{
 		token = NULL;

@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/04/04 17:10:25 by gialexan         ###   ########.fr        #
+#    Updated: 2023/04/05 14:58:18 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SOURCES_FILES = main.c				\
 				cleaner.c 			\
 				print.c 			\
 				error.c				\
-				path.c
+				path.c				
 
 SOURCES_BASE = src
 VPATH = $(SOURCES_BASE)				\

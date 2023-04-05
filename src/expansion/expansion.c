@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 13:54:17 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:12:31 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ static char *variable_expansion(char *str, char *key)
 		else
             expd_str = ft_strdup("");
 	}
-	else if (str[0] == '\'')
-		expd_str = ft_strdup(str);
     else
 	{
 		env_value = ft_strchr(envp->content, '=');

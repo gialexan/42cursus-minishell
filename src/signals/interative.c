@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   interative.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 00:57:14 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 15:00:02 by gialexan         ###   ########.fr       */
+/*   Created: 2023/02/23 16:31:33 by dardo-na          #+#    #+#             */
+/*   Updated: 2023/04/05 14:55:02 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "signal.h"
 
-# include "parser.h"
-# include "helper.h"
-# include "scanner.h"
-# include "execute.h"
-# include "builtins.h"
-# include "../libft/libft.h"
+void	turnoff_interrupt_signal(void)
+{
+	signal_hook(get_signal(), SIG_IGN, SIGINT);
+}
 
-#endif
+void	turnoff_quit_signal(void)
+{
+	signal_hook(get_signal(), SIG_IGN, SIGQUIT);
+}
+
+void	turnoff_signals(void)
+{
+	turnoff_interrupt_signal();
+	turnoff_quit_signal();
+}

@@ -6,14 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 09:16:20 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:00:45 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HELPER_H
 # define HELPER_H
 
-# include "parser.h"
 # include "execute.h"
 # include <errno.h>
 
@@ -27,9 +26,10 @@ void	init_arraypath(void);
  * HELPER/INTERFACE.C
 \***************************************************************************/
 
-t_data	*get_data(void);
-t_list	**get_envp(void);
-char	***get_path(void);
+t_data	    *get_data(void);
+t_list	    **get_envp(void);
+char	    ***get_path(void);
+/* t_sigaction *get_signal(void); */
 
 /***************************************************************************\
  * HELPER/ERROR.C

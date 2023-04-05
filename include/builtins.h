@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:53:43 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 17:13:41 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:01:51 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 # include "helper.h"
 
-# define CD "cd"
-# define ENV "env"
-# define PWD "pwd"
-# define ECHO "echo"
-# define EXIT "exit"
-# define UNSET "unset"
-# define EXPORT "export"
+# define FT_CD "cd"
+# define FT_ENV "env"
+# define FT_PWD "pwd"
+# define FT_ECHO "echo"
+# define FT_EXIT "exit"
+# define FT_UNSET "unset"
+# define FT_EXPORT "export"
 # define PATH_MAX 4096
 
 typedef int	(*t_builtin)(t_list *);

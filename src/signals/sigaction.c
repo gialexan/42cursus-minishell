@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   sigaction.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 00:57:14 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 15:00:02 by gialexan         ###   ########.fr       */
+/*   Created: 2023/02/26 18:11:36 by dardo-na          #+#    #+#             */
+/*   Updated: 2023/04/05 14:54:48 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "signal.h"
 
-# include "parser.h"
-# include "helper.h"
-# include "scanner.h"
-# include "execute.h"
-# include "builtins.h"
-# include "../libft/libft.h"
-
-#endif
+void	signal_hook(t_sigaction *action, t_signal handler, int signal)
+{
+	action->sa_handler = handler;
+	action->sa_flags = SA_RESTART;
+	sigemptyset(&action->sa_mask);
+	sigaction(signal, action, NULL);
+}

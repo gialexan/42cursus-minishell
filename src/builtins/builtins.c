@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:50:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:47:46 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:52:01 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,19 @@ static int	is_builtin(const char *str)
 	if (!str)
 		return (-1);
     lenght = ft_strlen(str);
-	if (!strncmp(str, ECHO, lenght))
+	if (!strncmp(str, FT_ECHO, lenght))
 		return (0);
-	else if (!strncmp(str, CD, lenght))
+	else if (!strncmp(str, FT_CD, lenght))
 		return (1);
-	else if (!strncmp(str, PWD, lenght))
+	else if (!strncmp(str, FT_PWD, lenght))
 		return (2);
-    else if (!strncmp(str, ENV, lenght))
+    else if (!strncmp(str, FT_ENV, lenght))
 		return (3);
-	else if (!strncmp(str, EXIT, lenght))
+	else if (!strncmp(str, FT_EXIT, lenght))
 		return (4);
-    else if (!strncmp(str, UNSET, lenght))
+    else if (!strncmp(str, FT_UNSET, lenght))
 		return (5);
-    else if (!strncmp(str, EXPORT, lenght))
+    else if (!strncmp(str, FT_EXPORT, lenght))
 	    return (6);
 	return (-1);
 }
