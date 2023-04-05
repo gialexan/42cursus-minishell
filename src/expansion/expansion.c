@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:45:53 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 13:54:17 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static char	*word_splitting(t_scanner *scanner, char *result)
 	if (scanner->current >= ft_strlen(scanner->cmd))
 		return (result);
 	scanner->start = scanner->current;
-	if (ft_chrcmp(scanner->cmd[scanner->current], '\'') ||
-		ft_chrcmp(scanner->cmd[scanner->current], '"'))
+	if (scanner->cmd[scanner->current] == '\'' ||
+		scanner->cmd[scanner->current] == '"')
 		sliced = slice_quotes(scanner);
 	else
 		sliced = slice_word(scanner);
@@ -56,14 +56,14 @@ char	*pathname_expansion(char *str, int i, int init)
 		return (NULL);
 	if (i >= ft_strlen(str))
 		return (str);
-	else if (ft_chrcmp(str[i], '$'))
+	else if (str[i] == '$')
 	{
 		init = i++;
-		if (ft_chrcmp(str[i], '?'))
+		if (str[i] == '?')
 			return (ft_strdup("1"));
-		else if (ft_isalpha(str[i]) || ft_chrcmp(str[i], '_'))
+		else if (ft_isalpha(str[i]) || str[i] == '_')
 		{
-			while (str[i] && (ft_isalnum(str[i]) || ft_chrcmp(str[i],'_')))
+			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 				i++;
 			str = variable_expansion(str, ft_substr(str, init, i - init));
 		}
@@ -77,24 +77,27 @@ static char *variable_expansion(char *str, char *key)
     char	*expd_str;
 	char	*env_value;
 
-    if (!key || key[0] != '$')
+    if (!key || key[0] != '$' || str[0] == '\'')
         return (ft_strdup(str));
     envp = search_envp(key + 1, *get_envp());
     if (!envp)
-        if (ft_chrcmp(str[0], '"'))
+	{
+        if (str[0] == '"')
             expd_str = ft_strdup(str);
 		else
             expd_str = ft_strdup("");
+	}
+	else if (str[0] == '\'')
+		expd_str = ft_strdup(str);
     else
 	{
-        env_value = ft_strchr(envp->content, '=') + 1;
-        if (!env_value)
-            return ft_strdup(str);
-        expd_str = ft_strreplace(str, key, env_value);
+		env_value = ft_strchr(envp->content, '=');
+		if (!env_value)
+			expd_str = ft_strdup("");
+		else
+			expd_str = ft_strreplace(str, key, env_value + 1);
     }
-    if (!expd_str)
-        return NULL;
+	free(str);
     free(key);
-    free(str);
     return (expd_str);
 }

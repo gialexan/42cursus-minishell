@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:12:46 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:08:25 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ static char    *get_key(char *str)
 	key = ft_strdup(str);
 	sign = ft_strchr(str, '=');
     if (!sign)
-        return key;
+        return (key);
     key_length = sign - str;
     if (key_length == 0)
-        return key;
+        return (key);
 	tmp = key;
 	key = ft_substr(str, 0, key_length);
 	free(tmp);

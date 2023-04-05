@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:11:31 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 11:55:49 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:07:03 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static t_bool	change_dir(t_list *token, int size);
 int	ft_cd(t_list *token)
 {
 	int	size;
+
 	size = ft_lstsize(token);
 	if (size > 2)
 	{
@@ -97,13 +98,13 @@ static t_bool	update_oldpwd(void)
 static char	*get_key_value(char *key)
 {
 	t_list	*envp;
-	char	*envp_value;
+	char	*env_value;
 
 	envp = search_envp(key, *get_envp());
 	if (!envp)
 		return (NULL);
-	envp_value = ft_strchr(envp->content, '=') + 1;
-	if (!get_envp)
+	env_value = ft_strchr(envp->content, '=');
+	if (!env_value)
 		return (NULL);
-	return (envp_value);
+	return (env_value + 1);
 }

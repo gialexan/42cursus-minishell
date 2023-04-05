@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:49:25 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 11:38:21 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 13:45:23 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ void    init_arraypath(void)
 	char	**splited_path;
 
 	envp = search_envp("PATH", *get_envp());
-	path = ft_strchr(envp->content, '=') + 1;
-	splited_path = ft_split(path, ':');
+	path = ft_strchr(envp->content, '=');
+	if (!path)
+		return ;
+	splited_path = ft_split(path + 1, ':');
 	save_path_ref(splited_path);
 }
 

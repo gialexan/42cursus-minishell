@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:24:17 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/29 18:08:14 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 13:13:43 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ static int  word_count(char *str, char *word)
 
 char    *ft_strreplace(char *str, char *oldw, char *neww)
 {
-	int i;
-	char *result;
-    int newwlen = ft_strlen(neww);
-    int oldwlen = ft_strlen(oldw);
+	int		i;
+    int		newwlen;
+    int		oldwlen;
+	char	*result;
 
+	newwlen = ft_strlen(neww);
+	oldwlen = ft_strlen(oldw);
 	result = malloc(ft_strlen(str) + word_count(str, oldw)
 			* (newwlen - oldwlen) + 1);
 	if (!result)

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 18:46:45 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:13:40 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,7 @@ static t_cmd	*syntax_error(t_list *token, t_cmd *head, t_list *c)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (is_error(c))
-	{
-		ft_putstr_fd("syntax error unclosed quotes ` ", STDERR_FILENO);
-		ft_putstr_fd(c->content, STDERR_FILENO);
-	}
+		ft_putendl_fd("unmatched string", STDERR_FILENO);
 	else
 	{
 		ft_putstr_fd("syntax error near unexpected token ", STDERR_FILENO);
@@ -92,8 +89,8 @@ static t_cmd	*syntax_error(t_list *token, t_cmd *head, t_list *c)
 			ft_putstr_fd("newline", STDERR_FILENO);
 		else
 			ft_putstr_fd(c->content, STDERR_FILENO);
+		ft_putendl_fd("\'", STDERR_FILENO);
 	}
-	ft_putendl_fd("\'", STDERR_FILENO);
 	clear_dlst(head, free);
 	ft_lstclear(&token, free);
 	ft_lstclear(&c, free);

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:04:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:48:11 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 13:55:25 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ char	*unquote(const char *str)
 		return NULL;
 	if (empty_quotes(str))
 		return (ft_strdup(""));
-	else if (ft_chrcmp(str[0], '\''))
+	else if (str[0] == '\'')
 		return (ft_strtrim(str, "'"));
-	else if (ft_chrcmp(str[0], '"'))
+	else if (str[0] == '"')
 		return (ft_strtrim(str, "\""));
 	return (ft_strdup(str));
 }
@@ -64,9 +64,9 @@ char	*concatenate(char *oldstr, const char *append)
 
 static t_bool	empty_quotes(const char *str)
 {
-	if (ft_chrcmp(str[0], '\'') && ft_chrcmp(str[1], '\''))
+	if (str[0] == '\'' && str[1] == '\'')
 		return (TRUE);
-	else if (ft_chrcmp(str[0], '"') && ft_chrcmp(str[1], '"'))
+	else if (str[0] == '"' && str[1] == '"')
 		return (TRUE);
 	return (FALSE);
 }
