@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 09:57:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 10:28:58 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 08:01:54 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,16 @@ int ft_env(t_list *token)
 {
     t_list *envp;
 
+    if (token->next)
+        return (EXIT_FAILURE);
     envp = *get_envp();
-    if (!envp)
-        msh_error("envp", "Environment doesn't exist.", 0);
-    else
+    if (envp)
         write_output(envp);
+    else
+    {
+        msh_error("envp", "Environment doesn't exist.", 0);
+        return (EXIT_FAILURE);
+    }
     return (EXIT_SUCCESS);
 }
 

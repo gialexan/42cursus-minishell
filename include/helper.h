@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 13:50:58 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 09:16:20 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 # include "parser.h"
 # include "execute.h"
-
-# define EMPY ""
+# include <errno.h>
 
 /***************************************************************************\
  * HELPER/PATH.C
@@ -70,11 +69,11 @@ t_bool	delete_envp(const char *dell, t_list **envp, t_list *prev);
  * EXPANSION/EXPANSION.C
 \***************************************************************************/
 
-char	*unquote(char *str);
 char	*expand(char *word);
+char	*unquote(const char *str);
 char	*slice_word(t_scanner *scanner);
 char	*slice_quotes(t_scanner *scanner);
-char    *concatenate(char *str, char *append);
+char    *concatenate(char *str, const char *append);
 char	*pathname_expansion(char *path, int i, int init);
 
 #endif

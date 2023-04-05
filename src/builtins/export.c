@@ -6,11 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 13:52:24 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 09:52:00 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+# define EMPY ""
 
 static char		*get_key(char *str);
 static int		valid_string(char *str);
@@ -33,21 +35,22 @@ static int exec_export(t_list *token, int exit)
 	t_list	*node;
 	int		string;
     int     lenght;
-
+	
 	if (!token)
 		return (exit);
 	key = get_key(token->content);
 	string = valid_string(key);
+	printf("%s\n", key);
 	if (string)
 		exit = string;
 	node = search_envp(key, *get_envp());
-	if (node && string)
+	if (node && !string)
 	{
         lenght = ft_strlen(token->content);
 		if (ft_strncmp(token->content, node->content, lenght))
 			update_envp(token->content, node);
 	}
-	else if (!string)
+	else if (!string && !node)
 		insert_envp(token->content, get_envp());
 	free(key);
 	return (exec_export(token->next, exit));

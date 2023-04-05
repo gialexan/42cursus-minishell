@@ -6,13 +6,18 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:50:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 17:23:16 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 09:34:17 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
 static int	is_builtin(const char *str);
+
+int	ft_exit(t_list *str)
+{
+	return  1;
+}
 
 void    exec_builtins(t_list *token, t_data *data)
 {
@@ -27,7 +32,7 @@ void    exec_builtins(t_list *token, t_data *data)
 		&ft_cd,
 		&ft_pwd,
 		&ft_env,
-		//&ft_exit,
+		&ft_exit,
 		&ft_unset,
 		&ft_export,
 	};

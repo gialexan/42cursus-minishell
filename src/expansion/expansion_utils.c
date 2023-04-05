@@ -6,13 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:04:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 13:07:03 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 09:21:27 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
 
-static t_bool	empty_quotes(char *str);
+static t_bool	empty_quotes(const char *str);
 
 char	*slice_word(t_scanner *scanner)
 {
@@ -40,7 +40,7 @@ char	*slice_quotes(t_scanner *scanner)
 		scanner->current - scanner->start));
 }
 
-char	*unquote(char *str)
+char	*unquote(const char *str)
 {
 	if (empty_quotes(str))
 		return (ft_strdup(""));
@@ -51,7 +51,7 @@ char	*unquote(char *str)
 	return (ft_strdup(str));
 }
 
-char	*concatenate(char *str, char *append)
+char	*concatenate(char *str, const char *append)
 {
 	char	*tmp;
 
@@ -61,7 +61,7 @@ char	*concatenate(char *str, char *append)
 	return (str);
 }
 
-static t_bool	empty_quotes(char *str)
+static t_bool	empty_quotes(const char *str)
 {
 	if (ft_chrcmp(str[0], '\'') && ft_chrcmp(str[1], '\''))
 		return (TRUE);
