@@ -6,80 +6,22 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:50:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 23:38:10 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 00:06:03 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
 static int	is_builtin(const char *str);
+static void	fork_bultin(const t_builtin builtin, t_list *token, t_data *data);
 
-int	ft_exit(t_list *str)
-{
-	return  1;
-}
-
-void	redirect_io(int saved[], t_data *data)
-{
-	saved[STDIN_FILENO] = STDIN_FILENO;
-	saved[STDOUT_FILENO] = STDOUT_FILENO;
-	if (data->fd[STDIN_FILENO] != STDIN_FILENO)
-	{
-		saved[STDIN_FILENO] = dup(STDIN_FILENO);
-		dup2(data->fd[STDIN_FILENO], STDIN_FILENO);
-		close(data->fd[STDIN_FILENO]);
-	}
-	if (data->fd[STDOUT_FILENO] != STDOUT_FILENO)
-	{
-		saved[STDOUT_FILENO] = dup(STDOUT_FILENO);
-		dup2(data->fd[STDOUT_FILENO], STDOUT_FILENO);
-		close(data->fd[STDOUT_FILENO]);
-	}
-}
-
-void	restore_io(int saved[])
-{
-	if (saved[STDIN_FILENO] != STDIN_FILENO)
-	{
-		dup2(saved[STDIN_FILENO], STDIN_FILENO);
-		close (saved[STDIN_FILENO]);
-	}
-	if (saved[STDOUT_FILENO] != STDOUT_FILENO)
-	{
-		dup2(saved[STDOUT_FILENO], STDOUT_FILENO);
-		close (saved[STDOUT_FILENO]);
-	}
-}
-
-void	forked_bultin(const t_builtin builtin, t_list *token, t_data *data)
-{
-	int pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		dup2(data->fd[STDIN_FILENO], STDIN_FILENO);
-		dup2(data->fd[STDOUT_FILENO], STDOUT_FILENO);
-		data->retcode = builtin(token);
-		close(data->fd[STDIN_FILENO]);
-		close(data->fd[STDOUT_FILENO]);
-		msh_clear();
-		exit(data->retcode);
-	}
-	waitpid(pid, NULL, 0);
-	if (data->fd[STDIN_FILENO] != STDIN_FILENO)
-		close(data->fd[STDIN_FILENO]);
-	if (data->fd[STDOUT_FILENO] != STDOUT_FILENO)
-		close(data->fd[STDOUT_FILENO]);
-}
-
-void    exec_builtins(t_list *token, t_data *data)
+t_bool    exec_builtins(t_list *token, t_data *data)
 {
     int index;
 	int	saved_fd[2];
 
     if (!token)
-        return ;
+        return (FALSE);
     token->content = expand(token->content);
     index = is_builtin(token->content);
 	const t_builtin	builtin[] = {
@@ -94,14 +36,16 @@ void    exec_builtins(t_list *token, t_data *data)
 	if (index >= 0 && index <= 7)
 	{
 		if (data->pipeline)
-			forked_bultin(builtin[index], token, data);
+			fork_bultin(builtin[index], token, data);
 		else
 		{
 			redirect_io(saved_fd, data);
 			builtin[index](token);
 			restore_io(saved_fd);
 		}
+		return (TRUE);
 	}
+	return (FALSE);
 }
 
 static int	is_builtin(const char *str)
@@ -126,4 +70,26 @@ static int	is_builtin(const char *str)
     else if (!strncmp(str, FT_EXPORT, length))
 	    return (6);
 	return (-1);
+}
+
+static void	fork_bultin(const t_builtin builtin, t_list *token, t_data *data)
+{
+	int pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		dup2(data->fd[STDIN_FILENO], STDIN_FILENO);
+		dup2(data->fd[STDOUT_FILENO], STDOUT_FILENO);
+		data->retcode = builtin(token);
+		close(data->fd[STDIN_FILENO]);
+		close(data->fd[STDOUT_FILENO]);
+		msh_clear();
+		exit(data->retcode);
+	}
+	waitpid(pid, NULL, 0);
+	if (data->fd[STDIN_FILENO] != STDIN_FILENO)
+		close(data->fd[STDIN_FILENO]);
+	if (data->fd[STDOUT_FILENO] != STDOUT_FILENO)
+		close(data->fd[STDOUT_FILENO]);
 }

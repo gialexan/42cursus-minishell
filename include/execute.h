@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 23:29:19 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:56:43 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@ typedef struct s_data
 	t_bool		pipeline;
 }	t_data;
 
+
 t_cmd	**get_cmdlst_ref(void);
+void	restore_io(int saved[]);
+void	refresh_data(t_data *data);
 void	save_cmdlst_ref(t_cmd *root);
+void	redirect_io(int saved[], t_data *data);
 t_list *exec_redirect(t_list *token, t_data *data, t_list *head);
 void	set_redir(t_data *data, int fd, int stdfd, char *filename);
 void	set_pipe(t_data *data, t_bool pipeline, int stdfd, int fdclose);

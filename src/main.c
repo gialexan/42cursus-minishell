@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 23:39:31 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 00:04:26 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,15 @@
  * Criar exit
 */
 
-void	refresh_data(t_data *data)
-{
-	data->fd[STDIN_FILENO] = STDIN_FILENO;
-	data->fd[STDOUT_FILENO] = STDOUT_FILENO;
-	data->retcode = 0;
-	data->error = FALSE;
-}
-
 void	execute_cmdlst(t_cmd *root, t_data *data)   
 {
 	t_list	*cmd;
+	t_bool 	builtin;
 
 	if (!root)
 		return ;
 	cmd = exec_redirect(root->token, data, NULL);
-	exec_builtins(cmd, data);
+	builtin = exec_builtins(cmd, data);
 	ft_lstclear(&cmd, free);
 	refresh_data(data);
 	execute_cmdlst(root->next, data);

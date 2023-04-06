@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:53:43 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 23:38:05 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 00:05:26 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@
 
 typedef int	(*t_builtin)(t_list *);
 
+int	    ft_exit(t_list *str);
 int     ft_cd(t_list *token);
 int     ft_env(t_list *token);
 int     ft_pwd(t_list *token);
 int     ft_echo(t_list *token);
 int     ft_unset(t_list *token);
 int     ft_export(t_list *token);
-void    exec_builtins(t_list *token, t_data *data);
+t_bool    exec_builtins(t_list *token, t_data *data);
 
 #endif
