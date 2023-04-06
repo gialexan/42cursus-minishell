@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 14:08:25 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:21:11 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static t_list	*expand_export(t_list *token, t_list *head)
 		return (head);
 	tmp = advanced(&token);
 	tmp->content = pathname_expansion(tmp->content, 0, 0);
-	if (!strncmp(tmp->content, EMPY, 1))
+	if (!ft_strncmp(tmp->content, EMPY, 1))
 		ft_lstdelone(tmp, free);
 	else
 		ft_lstadd_back(&head, tmp);

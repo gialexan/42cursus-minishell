@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 14:26:24 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 15:02:02 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:17:44 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 # define SIGNAL_H
 
 # include "helper.h"
-# include <term.h>
-# include <signal.h>
-# include <sys/wait.h>
-# include <sys/stat.h>
-# include <sys/types.h>
-# include <sys/resource.h>
 
 typedef struct sigaction	t_sigaction;
 typedef void				(*t_signal)(int);

@@ -6,18 +6,25 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:49:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 12:19:55 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:38:37 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
+#include "execute.h"
 
-void	clear_dlst(t_cmd *lst, void (*del)(void *))
+void	msh_clear(void)
+{
+	clear_envment();
+	clear_cmdlst(*get_cmdlst_ref(), free);
+}
+
+void	clear_cmdlst(t_cmd *lst, void (*del)(void *))
 {
 	if (!lst)
 		return ;
 	ft_lstclear(&lst->token, del);
-	clear_dlst(lst->next, del);
+	clear_cmdlst(lst->next, del);
 	del(lst);
 }
 

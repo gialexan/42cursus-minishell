@@ -6,12 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 14:06:14 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:30:36 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
-#include "helper.h"
 
 t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
 {
@@ -100,7 +99,7 @@ t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 
 t_list	*exec_pipe(t_list *token, t_list *head, t_data *data, t_list *c)
 {
-	if (data->fd[STDIN_FILENO] == STDIN_FILENO && data->readpipe)
+	if (data->fd[STDIN_FILENO] == STDIN_FILENO && data->pipeline)
 		set_pipe(data, FALSE, STDIN_FILENO, STDOUT_FILENO);
 	else
 	{

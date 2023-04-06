@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:53:43 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 15:01:51 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:38:05 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BUILTINS_H
 
 # include "helper.h"
+# include "execute.h"
 
 # define FT_CD "cd"
 # define FT_ENV "env"

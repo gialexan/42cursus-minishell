@@ -6,15 +6,16 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 15:00:45 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:35:55 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HELPER_H
 # define HELPER_H
 
-# include "execute.h"
-# include <errno.h>
+# include "parser.h"
+# include <stdio.h>
+# include <string.h>
 
 /***************************************************************************\
  * HELPER/PATH.C
@@ -26,7 +27,6 @@ void	init_arraypath(void);
  * HELPER/INTERFACE.C
 \***************************************************************************/
 
-t_data	    *get_data(void);
 t_list	    **get_envp(void);
 char	    ***get_path(void);
 /* t_sigaction *get_signal(void); */
@@ -42,9 +42,10 @@ void	msh_error(char *name, char *msg, int error);
  * HELPER/CLEANER.C
 \***************************************************************************/
 
+void	msh_clear(void);
 void    clear_envment(void);
 void    clear_arraypath(void);
-void	clear_dlst(t_cmd *lst, void (*del)(void *));
+void	clear_cmdlst(t_cmd *lst, void (*del)(void *));
 
 /***************************************************************************\
  * HELPER/PRINT.C

@@ -6,12 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:06:49 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 14:05:53 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:30:21 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
-#include "helper.h"
 /*
 * TO DO:
 * Preciso executar o heredoc no processo filho.
@@ -23,7 +22,7 @@ t_list *exec_redirect(t_list *token, t_data *data, t_list *head)
 
     if (!token)
         return head;
-	else if (data->readpipe == TRUE)
+	else if (data->pipeline == TRUE)
 		exec_pipe(token, head, data, NULL);
 	c = advanced(&token);
     if (match(c, TK_LESS))
@@ -40,14 +39,14 @@ t_list *exec_redirect(t_list *token, t_data *data, t_list *head)
 	return (exec_redirect(token, data, head));
 }
 
-void	set_pipe(t_data *data, t_bool readpipe, int stdfd, int fdclose)
+void	set_pipe(t_data *data, t_bool pipeline, int stdfd, int fdclose)
 {
 	int ppfd[2];
 
 	pipe(ppfd);
 	set_redir(data, ppfd[stdfd], stdfd, "pipe");
 	close(ppfd[fdclose]);
-	data->readpipe = readpipe;
+	data->pipeline = pipeline;
 }
 
 void	set_redir(t_data *data, int fd, int stdfd, char *filename)

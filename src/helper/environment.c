@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:08:36 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 13:58:40 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:02:57 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void	init_envment(char **environment, t_list **envp)
 
 t_list *search_envp(const char *search, t_list *envp)
 {
-	int lenght;
+	int length;
 
 	if (!envp)
 		return (NULL);
 	else if (!ft_strncmp(search, envp->content, 1))
 	{
-		lenght = ft_strlen(search);
-		if (!ft_strncmp(search, envp->content, lenght))
+		length = ft_strlen(search);
+		if (!ft_strncmp(search, envp->content, length))
 			return (envp);
 	}
 	return (search_envp(search, envp->next));
@@ -41,15 +41,15 @@ t_list *search_envp(const char *search, t_list *envp)
 t_bool	delete_envp(const char *dell, t_list **envp, t_list *prev)
 {
 	t_list	*tmp;
-	int		lenght;
+	int		length;
 
 	if (!*envp)
 		return (FALSE);
 	tmp = *envp;
 	if (!ft_strncmp(dell, tmp->content, 1))
 	{
-		lenght = ft_strlen(dell);
-		if (!ft_strncmp(dell, tmp->content, lenght))
+		length = ft_strlen(dell);
+		if (!ft_strncmp(dell, tmp->content, length))
 		{
 			if (!prev)
 				*envp = (*envp)->next;

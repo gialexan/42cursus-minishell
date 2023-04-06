@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/04/05 14:58:18 by gialexan         ###   ########.fr        #
+#    Updated: 2023/04/05 23:06:48 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SOURCES_FILES = main.c				\
 				pwd.c 				\
 				env.c 				\
 				cd.c 				\
+				exit_utils.c 		\
 				cleaner.c 			\
 				print.c 			\
 				error.c				\
@@ -96,6 +97,8 @@ fclean: clean
 re: fclean all
 
 run:
-	valgrind ./minishell
-
+	valgrind --leak-check=full --trace-children=yes --show-leak-kinds=all --suppressions=readline.supp ./minishell
+#--trace-children=yes -> processo filho.
+#--leak-check=full --show-leak-kinds=all -> tudp que é tipo de leak.
+#valgrind --track-fds=yes --track-fds=yes ./minishell -> descritores de arq.
 .PHONY: all clean fclean re
