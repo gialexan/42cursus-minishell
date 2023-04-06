@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 10:37:18 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 14:16:40 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ typedef struct s_data
 	t_bool		pipeline;
 }	t_data;
 
-
+int 	*get_exit_code(void);
 t_cmd	**get_cmdlst_ref(void);
 void	restore_io(int saved[]);
+void	set_exit_code(int code);
 void	refresh_data(t_data *data);
 void	save_cmdlst_ref(t_cmd *root);
 void	redirect_io(int saved[], t_data *data);

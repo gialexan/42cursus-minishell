@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 12:37:06 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:02:15 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,26 @@
 #include <unistd.h>
 
 /* TO DO
- * Criar o executor de comando;
- * Pegar o exception dos file abertos;
  * Criar exit
 */
 
-char	*find_path(char *cmd, char **paths, int i)
+char	*find_path(char *cmd, char **paths)
 {
 	char	*tmp_path;
 	char	*full_path;
 
-	if (!paths[i])
+	if (!paths)
 	{
 		msh_error(cmd, "command not found", 0);
 		return (NULL);
 	}
-	tmp_path = ft_strjoin(paths[i], "/");
+	tmp_path = ft_strjoin(*paths, "/");
 	full_path = ft_strjoin(tmp_path, cmd);
 	free(tmp_path);
-	if (!access(full_path, X_OK | F_OK | R_OK))
+	if (!access(full_path, X_OK))
 		return (full_path);
 	free(full_path);
-	return (find_path(cmd, paths, i + 1));
+	return (find_path(cmd, ++paths));
 }
 
 t_bool	is_abspath(char *path)
@@ -76,7 +74,7 @@ t_bool	exec_abspath(t_list *token, t_data *data)
 {
 	char *path;
 	char **array;
-	
+
 	path = token->content;
 	if (access(path, F_OK))
 	{
@@ -101,17 +99,19 @@ t_bool	exec_abspath(t_list *token, t_data *data)
 
 t_bool	exec_nopath(t_list *token, t_data *data)
 {
+	char	*aux;
 	char	*path;
 	char	**array;
 
-	path = find_path(token->content, *get_path(), 0);
+	path = find_path(token->content, *get_path());
 	if (!path)
 		return (FALSE);
-	token->content = ft_strdup(path);
+	aux = token->content;
+	token->content = path;
 	array = ft_convert_array(token);
 	if (!array)
 		return (FALSE);
-	free(path);
+	free(aux);
 	return (spawn_process(array, data));
 }
 
@@ -133,10 +133,11 @@ void	execute_cmdlst(t_cmd *root, t_data *data)
 	if (!root)
 		return ;
 	cmd = exec_redirect(root->token, data, NULL);
-	//builtin = exec_builtins(cmd, data);
-	execve = exec_execve(cmd, data, FALSE);
-	ft_lstclear(&cmd, free);
+	builtin = exec_builtins(cmd, data);
+	execve = exec_execve(cmd, data, builtin);
 	refresh_data(data);
+	set_exit_code(data->retcode);
+	ft_lstclear(&cmd, free);
 	execute_cmdlst(root->next, data);
 	free(root);
 	root = NULL;
@@ -148,7 +149,7 @@ void	execute(t_cmd *root)
 
 	data.fd[STDIN_FILENO] = STDIN_FILENO;
 	data.fd[STDOUT_FILENO] = STDOUT_FILENO;
-	data.retcode = 0;
+	data.retcode = *get_exit_code();
 	data.error = FALSE;
 	data.pipeline = FALSE;
 	save_cmdlst_ref(root);
@@ -173,8 +174,6 @@ void	msh_loop(void)
 		execute(root);
 		free(command);
 		command = NULL;
-		token = NULL;
-		root = NULL;
 	}
 	free(command);
 }

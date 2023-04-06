@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 23:48:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 23:59:09 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 14:51:31 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	refresh_data(t_data *data)
 {
 	data->fd[STDIN_FILENO] = STDIN_FILENO;
 	data->fd[STDOUT_FILENO] = STDOUT_FILENO;
-	data->retcode = 0;
 	data->error = FALSE;
 }
 

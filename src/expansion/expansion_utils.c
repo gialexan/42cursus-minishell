@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:04:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 13:55:25 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:59:53 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ char	*unquote(const char *str)
 
 char	*concatenate(char *oldstr, const char *append)
 {
+	char	*aux;
 	char	*newstr;
 
-	newstr = ft_strjoin(oldstr, append);
-	free(oldstr);
+	aux = oldstr;
+	newstr = ft_strjoin(aux, append);
+	free(aux);
 	return (newstr);
 }
 

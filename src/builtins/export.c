@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 23:21:11 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:16:59 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_list	*expand_export(t_list *token, t_list *head);
 int	ft_export(t_list *token)
 {
 	t_list *aux;
-	
+
 	if (!token)
 		return (EXIT_FAILURE);
 	aux = expand_export(token, NULL);
@@ -47,12 +47,15 @@ static int exec_export(t_list *token, int exit)
 	node = search_envp(key, *get_envp());
 	if (node && !string)
 	{
-        lenght = ft_strlen(token->content);
-		if (ft_strncmp(token->content, node->content, lenght))
+		if (ft_strncmp(token->content, node->content, ft_strlen(token->content)))
 			update_envp(token->content, node);
 	}
 	else if (!string && !node)
+	{
 		insert_envp(token->content, get_envp());
+		if (!ft_strncmp(token->content, "PATH", 4))
+			init_arraypath();
+	}
 	free(key);
 	return (exec_export(token->next, exit));
 }

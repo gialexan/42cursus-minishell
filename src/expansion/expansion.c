@@ -6,11 +6,12 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 15:53:13 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:54:10 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
+#include "execute.h"
 
 # define EMPY ""
 
@@ -52,6 +53,8 @@ static char	*word_splitting(t_scanner *scanner, char *result)
 
 char	*pathname_expansion(char *str, int i, int init)
 {
+	char *value;
+
 	if (!str)
 		return (NULL);
 	if (i >= ft_strlen(str))
@@ -60,7 +63,11 @@ char	*pathname_expansion(char *str, int i, int init)
 	{
 		init = i++;
 		if (str[i] == '?')
-			return (ft_strdup("1"));
+		{
+			value = str;
+			str = ft_utoa(*get_exit_code());
+			free(value);
+		}
 		else if (ft_isalpha(str[i]) || str[i] == '_')
 		{
 			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))

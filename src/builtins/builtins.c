@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:50:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 00:06:03 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:31:38 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_bool    exec_builtins(t_list *token, t_data *data)
 		else
 		{
 			redirect_io(saved_fd, data);
-			builtin[index](token);
+			data->retcode = builtin[index](token);
 			restore_io(saved_fd);
 		}
 		return (TRUE);
