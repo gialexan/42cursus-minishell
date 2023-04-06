@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 12:14:25 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 12:37:06 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,30 @@
  * Criar exit
 */
 
-char	*find_path(char *cmd, char **paths)
+char	*find_path(char *cmd, char **paths, int i)
 {
 	char	*tmp_path;
 	char	*full_path;
 
-	if (!*paths)
+	if (!paths[i])
 	{
 		msh_error(cmd, "command not found", 0);
 		return (NULL);
 	}
-	tmp_path = ft_strjoin(*paths, "/");
+	tmp_path = ft_strjoin(paths[i], "/");
 	full_path = ft_strjoin(tmp_path, cmd);
 	free(tmp_path);
 	if (!access(full_path, X_OK | F_OK | R_OK))
 		return (full_path);
 	free(full_path);
-	return (find_path(cmd, ++paths));
+	return (find_path(cmd, paths, i + 1));
 }
-
 
 t_bool	is_abspath(char *path)
 {
-	if (ft_strchr("./", path[0]))
-		return (TRUE);
-	return (FALSE);
+	if (ft_strchr("./", path[0]) == 0)
+		return (FALSE);
+	return (TRUE);
 }
 
 t_bool	spawn_process(char **cmd, t_data *data)
@@ -69,6 +68,7 @@ t_bool	spawn_process(char **cmd, t_data *data)
 	 	close (data->fd[STDOUT_FILENO]);
 	waitpid(pid, NULL, 0);
 	ft_free_split((void *)cmd);
+	cmd = NULL;
 	return (TRUE);
 }
 
@@ -76,17 +76,17 @@ t_bool	exec_abspath(t_list *token, t_data *data)
 {
 	char *path;
 	char **array;
-
+	
 	path = token->content;
 	if (access(path, F_OK))
 	{
-		//msh_error(path, NULL, ENOENT);
+		msh_error(path, NULL, ENOENT);
 		data->retcode = 127;
 		return (FALSE);
 	}
 	else if (access(path, X_OK))
 	{
-		//msh_error(path, NULL, EACCES);
+		msh_error(path, NULL, EACCES);
 		data->retcode = 126;
 		return (FALSE);
 	}
@@ -101,21 +101,17 @@ t_bool	exec_abspath(t_list *token, t_data *data)
 
 t_bool	exec_nopath(t_list *token, t_data *data)
 {
-	t_list	*node;
 	char	*path;
 	char	**array;
 
-	printf("%s\n", (char *)token->content);
-	path = find_path(token->content, *get_path());
+	path = find_path(token->content, *get_path(), 0);
 	if (!path)
 		return (FALSE);
-	node = ft_lstnew(path);
-	ft_lstadd_front(&token, node);
+	token->content = ft_strdup(path);
 	array = ft_convert_array(token);
 	if (!array)
 		return (FALSE);
 	free(path);
-	free(node);
 	return (spawn_process(array, data));
 }
 
@@ -137,12 +133,13 @@ void	execute_cmdlst(t_cmd *root, t_data *data)
 	if (!root)
 		return ;
 	cmd = exec_redirect(root->token, data, NULL);
-	builtin = exec_builtins(cmd, data);
-	execve = exec_execve(cmd, data, builtin);
+	//builtin = exec_builtins(cmd, data);
+	execve = exec_execve(cmd, data, FALSE);
 	ft_lstclear(&cmd, free);
 	refresh_data(data);
 	execute_cmdlst(root->next, data);
 	free(root);
+	root = NULL;
 }
 
 void	execute(t_cmd *root)
