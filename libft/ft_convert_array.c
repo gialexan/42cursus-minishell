@@ -1,18 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isquote.c                                       :+:      :+:    :+:   */
+/*   ft_convert_array.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/29 13:07:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/01/29 18:44:09 by gialexan         ###   ########.fr       */
+/*   Created: 2023/04/06 08:27:55 by gialexan          #+#    #+#             */
+/*   Updated: 2023/04/06 08:28:19 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isquote(int c)
+char	**ft_convert_array(t_list *token)
 {
-	return (c == '\'' || c == '"');
+	int		i;
+	int		lstsize;
+	char	**array;
+
+	lstsize = ft_lstsize(token);
+	array = malloc((lstsize + 1) * sizeof(char *));
+	if (!array)
+		return (NULL);
+	i = 0;
+	while(token != NULL)
+	{
+		array[i] = ft_strdup(token->content);
+		token = token->next;
+		i++;
+	}
+	array[i] = NULL;
+	return (array);
 }

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 23:30:36 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 10:49:24 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
 	file = advanced(&token);
 	file->content = expand(file->content);
 	
+
 	
 	fd = open(file->content, O_RDONLY);
 	set_redir(data, fd, STDIN_FILENO, file->content);
-	
+
 
 	ft_lstdelone(c, free);
 	ft_lstdelone(file, free);
@@ -68,10 +69,10 @@ t_list *exec_append(t_list *token, t_list *head, t_data *data, t_list *c)
 
 t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 {
-	int			fd;
-	char		*input;
-	char		*expanded;
-	t_list		*delimiter;
+	int		fd;
+	char	*input;
+	char	*expanded;
+	t_list	*delimiter;
 
 	delimiter = advanced(&token);
 	delimiter->content = expand(delimiter->content);
@@ -99,12 +100,12 @@ t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 
 t_list	*exec_pipe(t_list *token, t_list *head, t_data *data, t_list *c)
 {
-	if (data->fd[STDIN_FILENO] == STDIN_FILENO && data->pipeline)
-		set_pipe(data, FALSE, STDIN_FILENO, STDOUT_FILENO);
+	if (data->fd[STDIN_FILENO] == STDIN_FILENO && data->pipeline == TRUE)
+		set_pipe(data, FALSE, STDOUT_FILENO);
 	else
 	{
 		if (data->fd[STDOUT_FILENO] == STDOUT_FILENO)
-			set_pipe(data, TRUE, STDOUT_FILENO, STDIN_FILENO);
+			set_pipe(data, TRUE, STDOUT_FILENO);
 		ft_lstdelone(c, free);
 		return (exec_redirect(token, data, head));
 	}

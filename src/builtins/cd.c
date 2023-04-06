@@ -6,13 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:11:31 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 14:07:03 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 05:17:26 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-#define NO_FILE_OR_DIRECTOR 2
+#define ENOENT 2
 
 static t_bool	update_pwd(void);
 static t_bool	update_oldpwd(void);
@@ -54,7 +54,7 @@ static t_bool	change_dir(t_list *token, int size)
 		path = get_key_value("HOME");
 	if (chdir(path) == 0)
 		return (TRUE);
-	msh_error("cd", NULL, NO_FILE_OR_DIRECTOR);
+	msh_error("cd", NULL, ENOENT);
 	return (FALSE);
 }
 

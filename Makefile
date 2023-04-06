@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/04/06 00:03:18 by gialexan         ###   ########.fr        #
+#    Updated: 2023/04/06 11:15:24 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,8 +99,12 @@ fclean: clean
 re: fclean all
 
 run:
-	valgrind --leak-check=full --trace-children=yes --show-leak-kinds=all --suppressions=readline.supp ./minishell
-#--trace-children=yes -> processo filho.
-#--leak-check=full --show-leak-kinds=all -> tudp que é tipo de leak.
-#valgrind --track-fds=yes --track-fds=yes ./minishell -> descritores de arq.
+	valgrind --suppressions=readline.supp --leak-check=full --trace-children-skip='/bin/,/sbin/' \
+                    --track-origins=yes --show-leak-kinds=all ./$(NAME)
+				
+#--track-origins=yes 						-> valores não inicializados.					
+#--trace-children-skip='/bin/,/sbin/' 		-> elimina os binário.
+#--trace-children=yes 						-> processo filho.
+#--leak-check=full --show-leak-kinds=all 	-> tudp que é tipo de leak.
+#valgrind --track-fds=yes 					-> descritores de arq.
 .PHONY: all clean fclean re
