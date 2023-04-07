@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 14:46:44 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:06:56 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,20 @@ typedef struct s_data
 	t_bool		pipeline;
 }	t_data;
 
+void	execute(t_cmd *root);
 int 	*get_exit_code(void);
 t_cmd	**get_cmdlst_ref(void);
-void	restore_io(int saved[]);
 void	set_exit_code(int code);
 void	refresh_data(t_data *data);
 void	save_cmdlst_ref(t_cmd *root);
-void	redirect_io(int saved[], t_data *data);
+t_bool	exec_nopath(t_list *token, t_data *data);
+void	execute_cmdlst(t_cmd *root, t_data *data); 
+t_bool	exec_abspath(t_list *token, t_data *data);
+t_bool	exec_builtins(t_list *token, t_data *data);
+void	set_pipe(t_data *data, t_bool pipeline, int stdfd);
+t_bool	exec_execve(t_list *token, t_data *data, t_bool builtin);
 t_list *exec_redirect(t_list *token, t_data *data, t_list *head);
 void	set_redir(t_data *data, int fd, int stdfd, char *filename);
-void set_pipe(t_data *data, t_bool pipeline, int stdfd);
 t_list *exec_pipe(t_list *token, t_list *head, t_data *data, t_list *c);
 t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c);
 t_list *exec_output(t_list *token, t_list *head, t_data *data, t_list *c);
