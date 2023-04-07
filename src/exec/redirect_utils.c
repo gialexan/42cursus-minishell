@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:06:49 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 11:06:06 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:08:41 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,19 @@ void set_pipe(t_data *data, t_bool pipeline, int stdfd)
     static int ppfd[2] = {-1, -1};
     if (pipeline)
 	{
-		// if (ppfd[STDOUT_FILENO] != -1)
-		// 	close(ppfd[STDOUT_FILENO]);
-		// if (ppfd[STDIN_FILENO] != -1)
-		// 	close(ppfd[STDIN_FILENO]);
         if (pipe(ppfd) == -1) 
 		{
 			msh_error("pipe()", "failed", 0);
             exit(EXIT_FAILURE);
         }
-        data->fd[STDOUT_FILENO] = ppfd[STDOUT_FILENO];
+        data->fd[STDOUT_FILENO] = ppfd[STDOUT_FILENO];  
+		data->fdclose = ppfd[STDIN_FILENO];
     }
 	else
 	{
         data->fd[STDIN_FILENO] = ppfd[STDIN_FILENO];
-    }
+		data->fdclose = ppfd[STDOUT_FILENO];
+	}
     data->pipeline = pipeline;
 }
 
@@ -77,3 +75,25 @@ void	set_redir(t_data *data, int fd, int stdfd, char *filename)
 		data->fd[stdfd] = fd;
 	}
 }
+
+
+// void set_pipe(t_data *data, t_bool pipeline, int stdfd)
+// {
+//     static int ppfd[2] = {-1, -1};
+//     if (pipeline)
+// 	{
+//         if (pipe(ppfd) == -1) 
+// 		{
+// 			msh_error("pipe()", "failed", 0);
+//             exit(EXIT_FAILURE);
+//         }
+//         data->fd[STDOUT_FILENO] = ppfd[STDOUT_FILENO];  
+// 		data->fdclose = ppfd[STDIN_FILENO];
+//     }
+// 	else
+// 	{
+//         data->fd[STDIN_FILENO] = ppfd[STDIN_FILENO];
+// 		data->fdclose = ppfd[STDOUT_FILENO];
+// 	}
+//     data->pipeline = pipeline;
+// }

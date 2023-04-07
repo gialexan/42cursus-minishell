@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:49:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 15:02:43 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:54:53 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	msh_clear(void)
 {
 	clear_envment();
 	clear_cmdlst(*get_cmdlst_ref(), free);
+	clear_arraypath();
 }
 
 void	clear_cmdlst(t_cmd *lst, void (*del)(void *))

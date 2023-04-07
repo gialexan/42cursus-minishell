@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 12:48:56 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:08:12 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,6 @@ t_list	*exec_pipe(t_list *token, t_list *head, t_data *data, t_list *c)
 		return (exec_redirect(token, data, head));
 	}
 	return (NULL);
+	ft_lstdelone(c, free);
+	return (exec_redirect(token, data, head));
 }

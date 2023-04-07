@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/04/06 11:15:24 by gialexan         ###   ########.fr        #
+#    Updated: 2023/04/07 14:01:35 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,8 +98,8 @@ fclean: clean
 
 re: fclean all
 
-run:
-	valgrind --suppressions=readline.supp --leak-check=full --trace-children-skip='/bin/,/sbin/' \
+run: $(NAME)
+	valgrind --suppressions=readline.supp --track-fds=yes  --leak-check=full --trace-children=yes \
                     --track-origins=yes --show-leak-kinds=all ./$(NAME)
 				
 #--track-origins=yes 						-> valores não inicializados.					

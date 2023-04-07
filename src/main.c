@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 16:02:15 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:04:01 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,17 @@ t_bool	spawn_process(char **cmd, t_data *data)
 	{
 		dup2(data->fd[STDIN_FILENO], STDIN_FILENO);
 		dup2(data->fd[STDOUT_FILENO], STDOUT_FILENO);
+		if (data->fdclose >= 0)
+			close (data->fdclose);
 		execve(cmd[0], cmd, NULL);
-		exit(EXIT_SUCCESS);
+		close(data->fd[STDIN_FILENO]);
+		close(data->fd[STDOUT_FILENO]);
+		exit(EXIT_FAILURE);
 	}
 	if (data->fd[STDIN_FILENO] != STDIN_FILENO)
 	 	close(data->fd[STDIN_FILENO]);
 	if (data->fd[STDOUT_FILENO] != STDOUT_FILENO)
 	 	close (data->fd[STDOUT_FILENO]);
-	waitpid(pid, NULL, 0);
 	ft_free_split((void *)cmd);
 	cmd = NULL;
 	return (TRUE);
@@ -146,14 +149,18 @@ void	execute_cmdlst(t_cmd *root, t_data *data)
 void	execute(t_cmd *root)
 {
 	t_data	data;
-
+	int		wstatus;
+	
 	data.fd[STDIN_FILENO] = STDIN_FILENO;
 	data.fd[STDOUT_FILENO] = STDOUT_FILENO;
 	data.retcode = *get_exit_code();
 	data.error = FALSE;
+	data.fdclose = -1;
 	data.pipeline = FALSE;
 	save_cmdlst_ref(root);
 	execute_cmdlst(root, &data);
+	while (wait(&wstatus) != -1)
+		continue ;
 }
 
 void	msh_loop(void)

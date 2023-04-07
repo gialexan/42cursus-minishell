@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 14:16:40 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 14:46:44 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ typedef struct s_data
 {
 	int			fd[2];
 	int			retcode;
-	int			count;
+	int			fdclose;
 	t_bool		error;
+	t_bool		prev_pipe[2];
 	t_bool		pipeline;
 }	t_data;
 

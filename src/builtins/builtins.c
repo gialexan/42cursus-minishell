@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:50:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 15:31:38 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/06 18:00:05 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ t_bool    exec_builtins(t_list *token, t_data *data)
 			fork_bultin(builtin[index], token, data);
 		else
 		{
-			redirect_io(saved_fd, data);
+			//redirect_io(saved_fd, data);
 			data->retcode = builtin[index](token);
-			restore_io(saved_fd);
+			//restore_io(saved_fd);
 		}
 		return (TRUE);
 	}
@@ -80,14 +80,16 @@ static void	fork_bultin(const t_builtin builtin, t_list *token, t_data *data)
 	if (pid == 0)
 	{
 		dup2(data->fd[STDIN_FILENO], STDIN_FILENO);
-		dup2(data->fd[STDOUT_FILENO], STDOUT_FILENO);
+		dup2(data->fd[STDOUT_FILENO], STDOUT_FILENO);      
 		data->retcode = builtin(token);
+		if (data->fdclose >= 0)
+			close(data->fdclose);
 		close(data->fd[STDIN_FILENO]);
 		close(data->fd[STDOUT_FILENO]);
 		msh_clear();
 		exit(data->retcode);
 	}
-	waitpid(pid, NULL, 0);
+	//waitpid(pid, NULL, 0);
 	if (data->fd[STDIN_FILENO] != STDIN_FILENO)
 		close(data->fd[STDIN_FILENO]);
 	if (data->fd[STDOUT_FILENO] != STDOUT_FILENO)
