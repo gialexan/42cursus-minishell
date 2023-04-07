@@ -6,12 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 05:19:46 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:39:21 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "helper.h"
+#include "execute.h"
 
 static t_cmd	*words(t_list *token, t_cmd *cmd, t_cmd *head);
 static t_cmd	*pipes(t_list *token, t_cmd *cmd, t_cmd *head);
@@ -91,8 +92,9 @@ static t_cmd	*syntax_error(t_list *token, t_cmd *head, t_list *c)
 			ft_putstr_fd(c->content, STDERR_FILENO);
 		ft_putendl_fd("\'", STDERR_FILENO);
 	}
+	set_exit_code(2);
 	clear_cmdlst(head, free);
 	ft_lstclear(&token, free);
-	ft_lstclear(&c, free);
+	ft_lstdelone(c, free);
 	return (NULL);
 }

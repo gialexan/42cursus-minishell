@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:14 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 15:52:05 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:59:59 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	execute_cmdlst(t_cmd *root, t_data *data)
 	builtin = exec_builtins(cmd, data);
 	execve = exec_execve(cmd, data, builtin);
 	refresh_data(data);
-	set_exit_code(data->retcode);
 	ft_lstclear(&cmd, free);
 	execute_cmdlst(root->next, data);
 	free(root);

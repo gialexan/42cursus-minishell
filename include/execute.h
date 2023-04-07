@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 16:06:56 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 18:07:38 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 
 # include "helper.h"
 # include <fcntl.h>
+# include <stdint.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/sysmacros.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 
@@ -34,6 +38,7 @@ int 	*get_exit_code(void);
 t_cmd	**get_cmdlst_ref(void);
 void	set_exit_code(int code);
 void	refresh_data(t_data *data);
+t_bool	is_executable(t_list *token);
 void	save_cmdlst_ref(t_cmd *root);
 t_bool	exec_nopath(t_list *token, t_data *data);
 void	execute_cmdlst(t_cmd *root, t_data *data); 

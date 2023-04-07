@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 15:34:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 18:29:57 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 18:10:31 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 <ASSIGNMENT-WORD> ::= <WORD> '=' <WORD>
 
+<PIPELINE> ::=	<PIPELINE> '|' <COMMAND>
+				
 <COMMAND> ::= 		<WORD>
                 |	<REDIRECTION>
 				|	<PIPELINE>

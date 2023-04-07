@@ -6,36 +6,21 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:09 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 15:54:24 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 18:07:20 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 #include "builtins.h"
 
-#define ENOENT 2
-#define EACCES 13
-
 static t_bool	spawn_process(char **cmd, t_data *data);
 
 t_bool	exec_abspath(t_list *token, t_data *data)
 {
-	char *path;
 	char **array;
 
-	path = token->content;
-	if (access(path, F_OK))
-	{
-		msh_error(path, NULL, ENOENT);
-		data->retcode = 127;
+	if (!is_executable(token))
 		return (FALSE);
-	}
-	else if (access(path, X_OK))
-	{
-		msh_error(path, NULL, EACCES);
-		data->retcode = 126;
-		return (FALSE);
-	}
 	else
 	{
 		array = ft_convert_array(token);
@@ -86,6 +71,7 @@ t_bool    exec_builtins(t_list *token, t_data *data)
 			fork_bultin(builtin[index], token, data);
 		else
 			data->retcode = builtin[index](token);
+		set_exit_code(data->retcode);
 		return (TRUE);
 	}
 	return (FALSE);
@@ -93,7 +79,8 @@ t_bool    exec_builtins(t_list *token, t_data *data)
 
 static t_bool	spawn_process(char **cmd, t_data *data)
 {
-	int pid;
+	int			pid;
+	extern char	**environ;
 
 	pid = fork();
 	if (pid == 0)
@@ -102,7 +89,7 @@ static t_bool	spawn_process(char **cmd, t_data *data)
 		dup2(data->fd[STDOUT_FILENO], STDOUT_FILENO);
 		if (data->fdclose >= 0)
 			close (data->fdclose);
-		execve(cmd[0], cmd, NULL);
+		execve(cmd[0], cmd, environ);
 		close(data->fd[STDIN_FILENO]);
 		close(data->fd[STDOUT_FILENO]);
 		exit(EXIT_FAILURE);
@@ -112,6 +99,5 @@ static t_bool	spawn_process(char **cmd, t_data *data)
 	if (data->fd[STDOUT_FILENO] != STDOUT_FILENO)
 	 	close (data->fd[STDOUT_FILENO]);
 	ft_free_split((void *)cmd);
-	cmd = NULL;
 	return (TRUE);
 }

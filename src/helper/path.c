@@ -6,11 +6,12 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:49:25 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 15:58:08 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:40:51 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
+#include "execute.h"
 
 static void save_path_ref(char **path);
 
@@ -38,9 +39,10 @@ char	*find_path(char *cmd, char **paths)
 	char	*tmp_path;
 	char	*full_path;
 
-	if (!paths)
+	if (!paths || !*paths)
 	{
 		msh_error(cmd, "command not found", 0);
+		set_exit_code(127);
 		return (NULL);
 	}
 	tmp_path = ft_strjoin(*paths, "/");

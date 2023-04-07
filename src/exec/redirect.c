@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 15:08:12 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 18:15:13 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
 
 	file = advanced(&token);
 	file->content = expand(file->content);
-	
-
-	
-	fd = open(file->content, O_RDONLY);
-	set_redir(data, fd, STDIN_FILENO, file->content);
-
-
+	if (file->content)
+	{	
+		fd = open(file->content, O_RDONLY);
+		set_redir(data, fd, STDIN_FILENO, file->content);
+	}
 	ft_lstdelone(c, free);
 	ft_lstdelone(file, free);
 	return (exec_redirect(token, data, head));
@@ -38,12 +36,11 @@ t_list *exec_output(t_list *token, t_list *head, t_data *data, t_list *c)
 
 	file = advanced(&token);
 	file->content = expand(file->content);
-
-
-	fd = open(file->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	set_redir(data, fd, STDOUT_FILENO, file->content);
-
-
+	if (file->content)
+	{	
+		fd = open(file->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		set_redir(data, fd, STDOUT_FILENO, file->content);
+	}
 	ft_lstdelone(c, free);
 	ft_lstdelone(file, free);
 	return (exec_redirect(token, data, head));
@@ -56,12 +53,11 @@ t_list *exec_append(t_list *token, t_list *head, t_data *data, t_list *c)
 
 	file = advanced(&token);
 	file->content = expand(file->content);
-
-
-	fd = open(file->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	set_redir(data, fd, STDOUT_FILENO, file->content);
-
-
+	if (file->content)
+	{
+		fd = open(file->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		set_redir(data, fd, STDOUT_FILENO, file->content);
+	}
 	ft_lstdelone(c, free);
 	ft_lstdelone(file, free);
 	return (exec_redirect(token, data, head));
@@ -76,21 +72,20 @@ t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 
 	delimiter = advanced(&token);
 	delimiter->content = expand(delimiter->content);
-
-
-	fd = open("/tmp/heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	set_redir(data, fd, STDIN_FILENO, delimiter->content);
-	while (TRUE)
+	if (delimiter->content)
 	{
-		input = readline("> ");
-		if (!ft_strcmp(input, delimiter->content))
-			break ;
-		expanded = pathname_expansion(input, 0, 0);
-		ft_putendl_fd(expanded, fd);
-		free(expanded);
+		fd = open("/tmp/heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		set_redir(data, fd, STDIN_FILENO, delimiter->content);
+		while (TRUE)
+		{
+			input = readline("> ");
+			if (!ft_strcmp(input, delimiter->content))
+				break ;
+			expanded = pathname_expansion(input, 0, 0);
+			ft_putendl_fd(expanded, fd);
+			free(expanded);
+		}
 	}
-
-
 	close(fd);
 	free(input);
 	ft_lstdelone(c, free);
