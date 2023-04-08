@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/04/08 04:11:59 by gialexan         ###   ########.fr        #
+#    Updated: 2023/04/08 11:38:53 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ HEADERS =	$(INC_BASE)/minishell.h \
 OBJECTS = $(SOURCES_FILES:%.c=$(OBJ_DIR)/%.o)
 
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror $(INCLUDES)
+CFLAGS = -g $(INCLUDES)
 READLINE = -lreadline
 RM = rm -rf
 

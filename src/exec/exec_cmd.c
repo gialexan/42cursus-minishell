@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:09 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 11:32:36 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 16:30:29 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_bool	exec_nopath(t_list *token, t_data *data)
 	char	*path;
 	char	**array;
 
-	path = find_path(token->content, *get_path(), 0);
+	path = find_path(token->content, *get_path());
 	if (!path)
 		return (FALSE);
 	aux = token->content;
@@ -100,10 +100,10 @@ static t_bool	spawn_process(char **cmd, t_data *data)
 		close(data->fd[STDOUT_FILENO]);
 		exit(EXIT_FAILURE);
 	}
+	ft_free_split(cmd);
 	if (data->fd[STDIN_FILENO] != STDIN_FILENO)
 	 	close(data->fd[STDIN_FILENO]);
 	if (data->fd[STDOUT_FILENO] != STDOUT_FILENO)
 	 	close (data->fd[STDOUT_FILENO]);
-	ft_free_split((void *)cmd);
 	return (TRUE);
 }

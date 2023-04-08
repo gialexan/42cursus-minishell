@@ -6,13 +6,12 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 04:13:09 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:38:10 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-#define SAVE 0
 #define HDOC_FILE "/tmp/heredoc.txt"
 
 t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
@@ -76,7 +75,8 @@ t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 	if (delimiter->content)
 	{
 		turnoff_signals();
-		save_and_clean(token, delimiter, SAVE);
+		save_and_clean(token, SAVE_ACTION);
+		save_and_clean(delimiter, SAVE_ACTION);
 		here_doc(data, delimiter->content);
 		if (data->hdoc_fd != 0)
 		{

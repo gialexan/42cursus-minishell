@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 11:29:59 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 16:28:29 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void	msh_loop(void)
 		execute(root);
 		free(command);
 		command = NULL;
+		token = NULL;
+		root = NULL;
 	}
-	msh_clear();
 	free(command);
 }
 

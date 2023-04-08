@@ -6,17 +6,19 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:49:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 11:30:24 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:37:50 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
 #include "execute.h"
 
+#define MAX_SAVED_POINTERS 100
+
 void	msh_clear(void)
 {
 	clear_envment();
-	//clear_arraypath();
+	clear_arraypath();
 	rl_clear_history();
 	clear_cmdlst(*get_cmdlst_ref(), free);
 }
@@ -33,33 +35,27 @@ void	clear_cmdlst(t_cmd *lst, void (*del)(void *))
 
 void    clear_arraypath(void)
 {
-    char ***path;
+    char **path;
     void *tmp;
 	
-	path = get_path();
-	if (!*path)
+	path = *get_path();
+	if (!path)
 		return ;
-	tmp = path;
-    ft_free_split(tmp);
+    ft_free_split(path);
     path = NULL;
 }
 
-void	save_and_clean(t_list *ref, t_list *ref1, int type)
+void	save_and_clean(t_list *saveptr, t_action action)
 {
-	static t_list *tmp;
-	static t_list *tmp1;
+	static t_list	*savedptr[MAX_SAVED_POINTERS];
+	static int		num_ptr_saved;
 
-	if (type == SAVE)
+	if (action == SAVE_ACTION)
+		savedptr[num_ptr_saved++] = saveptr;
+	else if (action == CLEAN_ACTION)
 	{
-		tmp = ref;
-		tmp1 = ref1;
-	}
-	else if (type == CLEAN)
-	{
-		if (!tmp && !tmp1)
-			return  ;
-		ft_lstclear(&tmp, free);
-		ft_lstdelone(tmp1, free);
+		while (num_ptr_saved--)
+			ft_lstclear(&savedptr[num_ptr_saved], free);
 	}
 }
 

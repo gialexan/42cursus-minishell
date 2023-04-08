@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 11:25:03 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:36:47 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 # include "signals.h"
 # include <stdio.h>
 # include <string.h>
-
-# define SAVE 0
-# define CLEAN 1
 
 typedef enum s_action
 {
@@ -33,7 +30,7 @@ typedef enum s_action
 
 void	init_arraypath(void);
 t_bool	is_abspath(char *path);
-char	*find_path(char *cmd, char **paths, int i);
+char	*find_path(char *cmd, char **paths);
 
 /***************************************************************************\
  * HELPER/INTERFACE.C
@@ -58,7 +55,7 @@ void	msh_clear(void);
 void    clear_envment(void);
 void    clear_arraypath(void);
 void	clear_cmdlst(t_cmd *lst, void (*del)(void *));
-void	save_and_clean(t_list *ref, t_list *ref1, int type);
+void	save_and_clean(t_list *saveptr, t_action action);
 
 /***************************************************************************\
  * HELPER/PRINT.C

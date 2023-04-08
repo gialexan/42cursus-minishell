@@ -6,13 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 19:05:07 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 13:17:39 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 16:31:29 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_split(void **str)
+void	ft_free_split(char **str)
 {
 	int	i;
 
