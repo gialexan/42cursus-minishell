@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 22:40:12 by dardo-na          #+#    #+#             */
-/*   Updated: 2023/04/07 23:15:08 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 11:05:29 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static void	build_path(char *path)
 
 	getcwd(path, PATH_MAX);
 	home = getenv(HOME_K);
-	if (home == NULL)
+	if (!home)
 		return ;
-	if (!str_starts_with(path, home))
+	if (ft_strcmp(path, home) == 0)
 		return ;
 	length = ft_strlen(home) - 1;
 	while (length--)
@@ -34,9 +34,9 @@ static char	*find_username(void)
 	char	*username;
 
 	username = getenv(USERNAME_K);
-	if (username == NULL)
+	if (!username)
 		username = getenv(USER_K);
-	if (username == NULL)
+	if (!username)
 		username = "???";
 	return (username);
 }
@@ -65,11 +65,10 @@ char	*prompt(void)
 
 	parse = build_parse();
 	line = readline(parse);
-	if (line == NULL)
-		return (NULL);
-	if (!str_is_equal(line, EMP_STR))
-		add_history(line);
 	free(parse);
-	parse = NULL;
+	if (!line)
+		return (NULL);
+	if (ft_strcmp(line, EMP_STR) != 0)
+		add_history(line);
 	return (line);
 }

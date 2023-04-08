@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 03:31:16 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 11:29:59 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ void	msh_loop(void)
 	{
 		set_interactive_hooks();
 		command = prompt();
-		if (command)
-		{
-			scanner = init_scanner(command);
-			token = lexical_analysis(&scanner, NULL);
-			root = syntax_analysis(token);
-			execute(root);
-			free(command);
-			command = NULL;
-		}
+		if (!command)
+			break ;
+		scanner = init_scanner(command);
+		token = lexical_analysis(&scanner, NULL);
+		root = syntax_analysis(token);
+		execute(root);
+		free(command);
+		command = NULL;
 	}
+	msh_clear();
 	free(command);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:09 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 03:48:42 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 11:32:36 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_bool	exec_nopath(t_list *token, t_data *data)
 	char	*path;
 	char	**array;
 
-	path = find_path(token->content, *get_path());
+	path = find_path(token->content, *get_path(), 0);
 	if (!path)
 		return (FALSE);
 	aux = token->content;

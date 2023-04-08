@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 04:14:19 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 11:25:03 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,19 @@
 # define SAVE 0
 # define CLEAN 1
 
+typedef enum s_action
+{
+    SAVE_ACTION,
+    CLEAN_ACTION
+}   t_action;
+
 /***************************************************************************\
  * HELPER/PATH.C
 \***************************************************************************/
 
 void	init_arraypath(void);
 t_bool	is_abspath(char *path);
-char	*find_path(char *cmd, char **paths);
+char	*find_path(char *cmd, char **paths, int i);
 
 /***************************************************************************\
  * HELPER/INTERFACE.C

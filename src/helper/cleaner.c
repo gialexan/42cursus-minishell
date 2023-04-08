@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:49:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 04:18:31 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 11:30:24 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	msh_clear(void)
 {
 	clear_envment();
-	clear_arraypath();
+	//clear_arraypath();
 	rl_clear_history();
 	clear_cmdlst(*get_cmdlst_ref(), free);
 }
@@ -39,9 +39,9 @@ void    clear_arraypath(void)
 	path = get_path();
 	if (!*path)
 		return ;
-	tmp = *path;
+	tmp = path;
     ft_free_split(tmp);
-    *path = NULL;
+    path = NULL;
 }
 
 void	save_and_clean(t_list *ref, t_list *ref1, int type)

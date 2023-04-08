@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 23:56:40 by dardo-na          #+#    #+#             */
-/*   Updated: 2023/04/07 23:11:10 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 11:01:02 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ char	*ft_strjoin_free(char *s1, const char *s2)
 	return (new_string);
 }
 
-t_bool	str_is_equal(char *s1, char *s2)
-{
-	if (s1 == s2)
-		return (TRUE);
-	if (s1 == NULL || s2 == NULL)
-		return (FALSE);
-	while (*s1 || *s2)
-		if (*s1++ != *s2++)
-			return (FALSE);
-	return (TRUE);
-}
+// t_bool	str_is_equal(char *s1, char *s2)
+// {
+// 	if (s1 == s2)
+// 		return (TRUE);
+// 	if (s1 == NULL || s2 == NULL)
+// 		return (FALSE);
+// 	while (*s1 || *s2)
+// 		if (*s1++ != *s2++)
+// 			return (FALSE);
+// 	return (TRUE);
+// }
