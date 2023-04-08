@@ -6,13 +6,11 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 21:15:34 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 03:31:16 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-#define GREEN_PROMPT "\e[m\e[1;32m❯ \e[m"
 
 void	msh_loop(void)
 {
@@ -24,16 +22,16 @@ void	msh_loop(void)
 	while (TRUE)
 	{
 		set_interactive_hooks();
-		
-		command = readline(GREEN_PROMPT);
-		if (!ft_strncmp(command, "exit", 5))
-			break ;
-    	scanner = init_scanner(command);
-    	token = lexical_analysis(&scanner, NULL);
-		root = syntax_analysis(token);
-		execute(root);
-		free(command);
-		command = NULL;
+		command = prompt();
+		if (command)
+		{
+			scanner = init_scanner(command);
+			token = lexical_analysis(&scanner, NULL);
+			root = syntax_analysis(token);
+			execute(root);
+			free(command);
+			command = NULL;
+		}
 	}
 	free(command);
 }
@@ -46,6 +44,7 @@ int main(int argc, char **argv, char **envp)
 	init_envment(envp, get_envp());
 	init_arraypath();
 	msh_loop();
-	clear_arraypath();
 	clear_envment();
+	clear_arraypath();
+	rl_clear_history();
 }

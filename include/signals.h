@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 14:26:24 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 21:58:11 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 23:49:12 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct sigaction	t_sigaction;
 typedef void				(*t_signal)(int);
 
 void    fork_hook(void);
+void    set_hdoc_hooks(void);
+void	turnoff_signals(void);
 void	set_quit_signal(void);
 void	turnoff_quit_signal(void);
 void	set_interactive_hooks(void);

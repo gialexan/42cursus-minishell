@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 21:27:29 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 12:06:22 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 02:18:40 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
 	t_list	*tmp;
 
-	if (!*lst)
+	if (!*lst || !lst)
 		return ;
 	tmp = *lst;
 	(*lst) = (*lst)->next;

@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_fork_hooks.c                                   :+:      :+:    :+:   */
+/*   heredoc_signal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 15:07:15 by dardo-na          #+#    #+#             */
-/*   Updated: 2023/04/07 23:48:06 by gialexan         ###   ########.fr       */
+/*   Created: 2023/04/07 23:33:53 by gialexan          #+#    #+#             */
+/*   Updated: 2023/04/08 03:29:21 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "signals.h"
+#include "signal.h"
 #include "helper.h"
 
-static void    handle_interrupt(int sig)
-{
-    (void)sig;
-    ft_putstr_fd("\n", STDOUT_FILENO);
-}
-
-static void    handle_quit(int signal)
+static void    handle_interrupt(int signal)
 {
     (void)signal;
-    ft_putstr_fd("Quit (core dumpt)\n", STDOUT_FILENO);
+    ft_putstr_fd("\n", STDOUT_FILENO);
+    //quit_shell();
+    printf("oi\n");
+    msh_clear();
+    exit(1);
 }
 
 static void    set_interrupt_hook(void)
@@ -30,13 +28,8 @@ static void    set_interrupt_hook(void)
     signal_hook(get_signal(), handle_interrupt, SIGINT);
 }
 
-static void    set_quit_hook(void)
-{
-    signal_hook(get_signal(), handle_quit, SIGQUIT);
-}
-
-void    fork_hook(void)
+void    set_hdoc_hooks(void)
 {
     set_interrupt_hook();
-    set_quit_hook();
+    turnoff_quit_signal();
 }

@@ -6,16 +6,12 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:50:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 22:26:50 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 03:28:17 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-/*
-* To Do:
-* Arrumar a saida dos bultins para arquivos e etc...
-*/
 int	is_builtin(char *str)
 {
     int length;

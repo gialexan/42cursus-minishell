@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 21:55:58 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 02:54:10 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@
 # include <stdio.h>
 # include <string.h>
 
+# define SAVE 0
+# define CLEAN 1
+
 /***************************************************************************\
  * HELPER/PATH.C
 \***************************************************************************/
 
 void	init_arraypath(void);
+t_bool	is_abspath(char *path);
 char	*find_path(char *cmd, char **paths);
 
 /***************************************************************************\
@@ -48,6 +52,7 @@ void	msh_clear(void);
 void    clear_envment(void);
 void    clear_arraypath(void);
 void	clear_cmdlst(t_cmd *lst, void (*del)(void *));
+void	save_and_clean(t_list *ref, t_list *ref1, int type);
 
 /***************************************************************************\
  * HELPER/PRINT.C

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:49:25 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 16:40:51 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 02:10:36 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void    init_arraypath(void)
 	if (!envp_value)
 		return ;
 	splited_path = ft_split(envp_value + 1, ':');
-	// if (!splited_path)
-	// 	return(save_path_ref(&envp_value));
 	return(save_path_ref(splited_path));
 }
 
@@ -39,6 +37,7 @@ char	*find_path(char *cmd, char **paths)
 	char	*tmp_path;
 	char	*full_path;
 
+	//if (!paths || !*paths)
 	if (!paths || !*paths)
 	{
 		msh_error(cmd, "command not found", 0);
@@ -54,6 +53,12 @@ char	*find_path(char *cmd, char **paths)
 	return (find_path(cmd, ++paths));
 }
 
+t_bool	is_abspath(char *path)
+{
+	if (ft_strchr("./", path[0]) == 0)
+		return (FALSE);
+	return (TRUE);
+}
 
 static void save_path_ref(char **path)
 {

@@ -6,11 +6,14 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 18:25:13 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 03:22:01 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+#define SAVE 0
+#define HDOC_FILE "/tmp/heredoc.txt"
 
 t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
 {
@@ -74,19 +77,14 @@ t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 	delimiter->content = expand(delimiter->content);
 	if (delimiter->content)
 	{
-		fd = open("/tmp/heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		set_redir(data, fd, STDIN_FILENO, delimiter->content);
-		while (TRUE)
+		turnoff_signals();
+		save_and_clean(token, delimiter, SAVE);
+		here_doc(data, delimiter->content);
+		if (data->hdoc_fd != 0)
 		{
-			input = readline("> ");
-			if (!ft_strcmp(input, delimiter->content))
-				break ;
-			expanded = pathname_expansion(input, 0, 0);
-			ft_putendl_fd(expanded, fd);
-			free(expanded);
+			fd = open(HDOC_FILE, O_RDONLY);
+			set_redir(data, fd, STDIN_FILENO, "heredoc");
 		}
-		close(fd);
-		free(input);
 	}
 	ft_lstdelone(c, free);
 	ft_lstdelone(delimiter, free);
@@ -96,15 +94,13 @@ t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 t_list	*exec_pipe(t_list *token, t_list *head, t_data *data, t_list *c)
 {
 	if (data->fd[STDIN_FILENO] == STDIN_FILENO && data->pipeline == TRUE)
-		set_pipe(data, FALSE, STDOUT_FILENO);
+		set_pipe(data, FALSE);
 	else
 	{
 		if (data->fd[STDOUT_FILENO] == STDOUT_FILENO)
-			set_pipe(data, TRUE, STDOUT_FILENO);
+			set_pipe(data, TRUE);
 		ft_lstdelone(c, free);
 		return (exec_redirect(token, data, head));
 	}
-	return (NULL);
-	ft_lstdelone(c, free);
 	return (exec_redirect(token, data, head));
 }

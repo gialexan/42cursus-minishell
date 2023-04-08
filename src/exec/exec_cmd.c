@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:09 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 22:28:52 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 03:00:53 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_bool	exec_abspath(t_list *token, t_data *data)
 {
 	char **array;
 
-	if (!is_executable(token))
+	if (is_executable(token))
 		return (FALSE);
 	else
 	{
@@ -51,6 +51,7 @@ t_bool	exec_nopath(t_list *token, t_data *data)
 t_bool    exec_builtins(t_list *token, t_data *data)
 {
     int index;
+	int	saved_fd[2];
 
     if (!token)
         return (FALSE);
@@ -71,9 +72,9 @@ t_bool    exec_builtins(t_list *token, t_data *data)
 			fork_bultin(builtin[index], token, data);
 		else
 		{
-			
+			redirect_io(data, saved_fd);
 			data->retcode = builtin[index](token);
-			
+			restore_io(saved_fd);
 		}
 		set_exit_code(data->retcode);
 		return (TRUE);

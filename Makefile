@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/04/07 21:38:34 by gialexan         ###   ########.fr        #
+#    Updated: 2023/04/08 03:27:19 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,11 @@ SOURCES_FILES = main.c				\
 				set_fork_hooks.c 	\
 				set_hooks.c 		\
 				set_sigquit.c 		\
-				sigaction.c
+				sigaction.c			\
+				prompt_utils.c 		\
+				prompt.c 			\
+				heredoc_signal.c    \
+				heredoc_utils.c
 				
 
 SOURCES_BASE = src
@@ -61,7 +65,8 @@ VPATH = $(SOURCES_BASE)				\
 		$(SOURCES_BASE)/builtin 	\
 		$(SOURCES_BASE)/expansion 	\
 		$(SOURCES_BASE)/env 		\
-		$(SOURCES_BASE)/signal
+		$(SOURCES_BASE)/signal		\
+		$(SOURCES_BASE)/prompt
 
 OBJ_DIR = obj
 INCLUDES = -I./include
@@ -73,7 +78,8 @@ HEADERS =	$(INC_BASE)/minishell.h \
 			$(INC_BASE)/execute.h	\
 			$(INC_BASE)/helper.h 	\
 			$(INC_BASE)/builtins.h 	\
-			$(INC_BASE)/signals.h
+			$(INC_BASE)/signals.h	\
+			$(INC_BASE)/prompt.h
 
 OBJECTS = $(SOURCES_FILES:%.c=$(OBJ_DIR)/%.o)
 

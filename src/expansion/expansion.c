@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 21:12:12 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 03:39:31 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define EMPY ""
 
+static char *get_value(char *str);
 static char	*variable_expansion(char *str, char *key);
 static char	*word_splitting(t_scanner *scanner, char *result);
 
@@ -51,13 +52,6 @@ static char	*word_splitting(t_scanner *scanner, char *result)
 	return (word_splitting(scanner, result));
 }
 
-
-/*
-* To Do
-*
-* Arrumar o questão de voltar o exitcode Ex: echo "'$?'"
-*
-*/
 char	*pathname_expansion(char *str, int i, int init)
 {
 	char *value;
@@ -70,11 +64,7 @@ char	*pathname_expansion(char *str, int i, int init)
 	{
 		init = i++;
 		if (str[i] == '?')
-		{
-			value = str;
-			str = ft_utoa(*get_exit_code());
-			free(value);
-		}
+			str = get_value(str);
 		else if (ft_isalpha(str[i]) || str[i] == '_')
 		{
 			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
@@ -112,4 +102,16 @@ static char *variable_expansion(char *str, char *key)
 	free(str);
     free(key);
     return (expd_str);
+}
+
+static char *get_value(char *str)
+{
+	char *expd_str;
+	char *exit_code;
+
+	exit_code = ft_utoa(*get_exit_code());
+	expd_str = ft_strreplace(str, "$?", exit_code);
+	free(str);
+	free(exit_code);
+	return (expd_str);
 }

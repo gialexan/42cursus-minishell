@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 23:48:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 18:07:24 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 00:21:51 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #define ENOENT 2
 #define EACCES 13
 #define EISDIR 21
-
-static t_bool	is_abspath(char *path);
 
 t_bool	is_executable(t_list *token)
 {
@@ -62,9 +60,3 @@ t_bool	exec_execve(t_list *token, t_data *data, t_bool builtin)
 	return (exec_nopath(token, data));
 }
 
-static t_bool	is_abspath(char *path)
-{
-	if (ft_strchr("./", path[0]) == 0)
-		return (FALSE);
-	return (TRUE);
-}

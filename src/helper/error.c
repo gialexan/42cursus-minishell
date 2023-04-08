@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:27:43 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 16:40:45 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 00:11:19 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,3 @@ int	export_error(char *str)
 	free(err_msg);
 	return (EXIT_FAILURE);
 }
-
-// static void	cd_error(char *path)
-// {
-// 	if (!path)
-// 		msh_error("cd", NULL, 2);
-// 	else
-// 		msh_error("cd", NULL, 2);
-// }

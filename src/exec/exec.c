@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:14 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 22:28:32 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 03:21:08 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	execute_cmdlst(t_cmd *root, t_data *data)
 	execute_cmdlst(root->next, data);
 	free(root);
 	root = NULL;
+	cmd = NULL;
 }
 
 void	execute(t_cmd *root)
@@ -40,6 +41,7 @@ void	execute(t_cmd *root)
 	data.retcode = *get_exit_code();
 	data.error = FALSE;
 	data.fdclose = -1;
+	data.hdoc_fd = 0;
 	data.pipeline = FALSE;
 	save_cmdlst_ref(root);
 	execute_cmdlst(root, &data);
