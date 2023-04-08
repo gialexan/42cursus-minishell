@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 23:48:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 00:21:51 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 04:18:09 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_bool	is_executable(t_list *token)
 		set_exit_code(126);
 		return (FALSE);
 	}
+	return (TRUE);
 }
 
 void	refresh_data(t_data *data)

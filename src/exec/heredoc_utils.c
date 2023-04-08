@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hdoc_utils.c                                       :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 00:21:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 02:51:08 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 04:20:53 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,19 @@
 #define END_OF_FILE "here-document delimited by end-of-file (wanted `eof')"
 #define HDOC_FILE "/tmp/heredoc.txt"
 
-static t_bool  check_input(char *input, char *delimiter);
-static void		hdoc_loop(t_data * data, char *delimiter);
+static t_bool	check_input(char *input, char *delimiter);
+static void		heredoc_loop(t_data * data, char *delimiter);
 
 void	here_doc(t_data *data, char *delimiter)
 {
 	int pid;
-	char *input;
-	char *expanded;
 
 	data->hdoc_fd = open(HDOC_FILE, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	pid = fork();
 	if (pid == 0)
 	{
 		set_hdoc_hooks();
-		hdoc_loop(data, delimiter);
+		heredoc_loop(data, delimiter);
 		close(data->hdoc_fd);
 		msh_clear();
 		save_and_clean(NULL, NULL, CLEAN);
@@ -41,7 +39,7 @@ void	here_doc(t_data *data, char *delimiter)
 	set_interactive_hooks();
 }
 
-static void	hdoc_loop(t_data * data, char *delimiter)
+static void	heredoc_loop(t_data * data, char *delimiter)
 {
 	char *input;
 	char *expanded;

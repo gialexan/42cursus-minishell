@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 23:33:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 03:29:21 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 04:08:46 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void    handle_interrupt(int signal)
     (void)signal;
     ft_putstr_fd("\n", STDOUT_FILENO);
     //quit_shell();
-    printf("oi\n");
-    msh_clear();
     exit(1);
 }
 

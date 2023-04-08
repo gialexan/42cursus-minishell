@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:49:25 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 03:50:48 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 04:18:42 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void save_path_ref(char **path);
 
 void    init_arraypath(void)
 {
-	char	*path;
 	t_list	*envp;
 	char	*envp_value;
 	char	**splited_path;

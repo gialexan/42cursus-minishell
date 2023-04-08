@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:11:31 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 05:17:26 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 04:17:37 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	ft_cd(t_list *token)
 static t_bool	change_dir(t_list *token, int size)
 {
 	char	*path;
-	int		result;
 
 	if (size == 1 || !ft_strncmp((token->next->content), "~", 1))
 	{

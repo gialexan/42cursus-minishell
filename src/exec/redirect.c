@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 03:22:01 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 04:13:09 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ t_list *exec_append(t_list *token, t_list *head, t_data *data, t_list *c)
 t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 {
 	int		fd;
-	char	*input;
-	char	*expanded;
 	t_list	*delimiter;
 
 	delimiter = advanced(&token);

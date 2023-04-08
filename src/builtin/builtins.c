@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:50:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 03:28:17 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 04:15:45 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 int	is_builtin(char *str)
 {
-    int length;
-
 	if (!str)
 		return (-1);
-    length = ft_strlen(str);
-	if (ft_strcmp(str, FT_ECHO) == 0)
+	else if (ft_strcmp(str, FT_ECHO) == 0)
 		return (0);
 	else if (ft_strcmp(str, FT_CD) == 0)
 		return (1);

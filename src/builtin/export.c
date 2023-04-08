@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 03:54:23 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 04:17:10 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int exec_export(t_list *token, int exit)
 	char	*key;
 	t_list	*node;
 	int		string;
-    int     lenght;
 	
 	if (!token)
 		return (exit);
@@ -73,7 +72,7 @@ static char    *get_key(char *str)
         return (key);
     key_length = sign - str;
     if (key_length == 0)
-        return (key);
+		return (key);
 	tmp = key;
 	key = ft_substr(str, 0, key_length);
 	free(tmp);

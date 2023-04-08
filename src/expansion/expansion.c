@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 03:44:03 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 04:38:16 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ static char	*word_splitting(t_scanner *scanner, char *result)
 	return (word_splitting(scanner, result));
 }
 
-char	*pathname_expansion(char *str, int i, int init)
+char	*pathname_expansion(char *str, size_t i , size_t init)
 {
-	char *value;
+	char *key;
+	char *tmp;
 
 	if (!str)
 		return (NULL);
@@ -69,7 +70,11 @@ char	*pathname_expansion(char *str, int i, int init)
 		{
 			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 				i++;
-			str = variable_expansion(str, ft_substr(str, init, i - init));
+			tmp = str;
+			key = ft_substr(tmp, init, i - init);
+			str = variable_expansion(tmp, key);
+			free(key);
+			free(tmp);
 		}
 	}
 	return (pathname_expansion(str, i + 1, init));
@@ -78,30 +83,25 @@ char	*pathname_expansion(char *str, int i, int init)
 static char *variable_expansion(char *str, char *key)
 {
     t_list	*envp;
-    char	*expd_str;
 	char	*env_value;
 
     if (!key || key[0] != '$' || str[0] == '\'')
-        return (ft_strdup(str));
+		return(ft_strdup(str));
     envp = search_envp(key + 1, *get_envp());
     if (!envp)
 	{
         if (str[0] == '"')
-            expd_str = ft_strdup(str);
-		else
-            expd_str = ft_strdup("");
+            return(ft_strdup(str));
+        return(ft_strdup(""));
 	}
     else
 	{
 		env_value = ft_strchr(envp->content, '=');
 		if (!env_value)
-			expd_str = ft_strdup("");
+			return(ft_strdup(""));
 		else
-			expd_str = ft_strreplace(str, key, env_value + 1);
+			return(ft_strreplace(str, key, env_value + 1));
     }
-	free(str);
-    free(key);
-    return (expd_str);
 }
 
 static char *get_value(char *str)

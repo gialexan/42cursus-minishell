@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:04:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 15:59:53 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 04:26:37 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	*slice_quotes(t_scanner *scanner)
 {
 	char	c;
 	char	close;
-	char	*sliced;
 
 	close = advance(scanner);
 	c = advance(scanner);
@@ -55,12 +54,12 @@ char	*unquote(const char *str)
 
 char	*concatenate(char *oldstr, const char *append)
 {
-	char	*aux;
+	char	*tmpstr;
 	char	*newstr;
 
-	aux = oldstr;
-	newstr = ft_strjoin(aux, append);
-	free(aux);
+	tmpstr = oldstr;
+	newstr = ft_strjoin(tmpstr, append);
+	free(tmpstr);
 	return (newstr);
 }
 
