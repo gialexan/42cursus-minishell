@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:24:58 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 12:44:47 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 05:18:37 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 #define LINE_BREAK "-n"
 
-static void	next(t_list **token);
 static void	write_output(t_list *token);
 
 int	ft_echo(t_list *token)
@@ -24,13 +23,13 @@ int	ft_echo(t_list *token)
 		ft_putstr_fd("\n", 1);
 		return (EXIT_SUCCESS);
 	}
-    next(&token);
+    token = token->next;
 	if (token && !ft_strncmp(token->content, LINE_BREAK, 2))
 	{
 		if (!token->next)
 			return (EXIT_SUCCESS);
         while(token && !ft_strncmp(token->content, LINE_BREAK, 2))
-            next(&token);
+            token = token->next;
 		write_output(token);
 	}
 	else
@@ -51,7 +50,3 @@ static void	write_output(t_list *token)
 	return (write_output(token->next));
 }
 
-static	void	next(t_list **token)
-{
-	*token = (*token)->next;
-}
