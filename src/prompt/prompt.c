@@ -6,11 +6,31 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 22:40:12 by dardo-na          #+#    #+#             */
-/*   Updated: 2023/04/08 11:05:29 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 18:03:41 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "prompt.h"
+
+static void	cut_str(char *str);
+static char	*build_parse(void);
+static char	*find_username(void);
+static void	build_path(char *path);
+
+char	*prompt(void)
+{
+	char	*line;
+	char	*parse;
+
+	parse = build_parse();
+	line = readline(parse);
+	free(parse);
+	if (!line)
+		return (NULL);
+	if (ft_strcmp(line, EMP_STR) != 0)
+		add_history(line);
+	return (line);
+}
 
 static void	build_path(char *path)
 {
@@ -58,17 +78,11 @@ static char	*build_parse(void)
 	return (parse);
 }
 
-char	*prompt(void)
+static void	cut_str(char *str)
 {
-	char	*line;
-	char	*parse;
-
-	parse = build_parse();
-	line = readline(parse);
-	free(parse);
-	if (!line)
-		return (NULL);
-	if (ft_strcmp(line, EMP_STR) != 0)
-		add_history(line);
-	return (line);
+	while (*str != '\0')
+	{
+		*str = *(str + 1);
+		str++;
+	}
 }

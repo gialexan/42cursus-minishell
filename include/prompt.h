@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 23:10:03 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 23:16:09 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 18:08:38 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,5 @@
 # define USERNAME_K "USERNAME"
 
 char	*prompt(void); 
-void	cut_str(char *str);
-t_bool	str_is_equal(char *s1, char *s2);
-t_bool	str_starts_with(char *str, char *start);
-char	*ft_strjoin_free(char *s1, const char *s2);
 
 #endif

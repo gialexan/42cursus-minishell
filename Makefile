@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/24 23:20:30 by gialexan          #+#    #+#              #
-#    Updated: 2023/04/08 11:38:53 by gialexan         ###   ########.fr        #
+#    Updated: 2023/04/08 18:07:26 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,6 @@ SOURCES_FILES = main.c				\
 				set_hooks.c 		\
 				set_sigquit.c 		\
 				sigaction.c			\
-				prompt_utils.c 		\
 				prompt.c 			\
 				heredoc_signal.c    \
 				heredoc_utils.c
