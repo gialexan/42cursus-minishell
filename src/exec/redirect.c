@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 18:15:13 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 18:25:13 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 			ft_putendl_fd(expanded, fd);
 			free(expanded);
 		}
+		close(fd);
+		free(input);
 	}
-	close(fd);
-	free(input);
 	ft_lstdelone(c, free);
 	ft_lstdelone(delimiter, free);
 	return (exec_redirect(token, data, head));

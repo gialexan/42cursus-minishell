@@ -6,32 +6,36 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:50:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 15:45:04 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 22:26:50 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	is_builtin(const char *str)
+/*
+* To Do:
+* Arrumar a saida dos bultins para arquivos e etc...
+*/
+int	is_builtin(char *str)
 {
     int length;
 
 	if (!str)
 		return (-1);
     length = ft_strlen(str);
-	if (!strncmp(str, FT_ECHO, length))
+	if (ft_strcmp(str, FT_ECHO) == 0)
 		return (0);
-	else if (!strncmp(str, FT_CD, length))
+	else if (ft_strcmp(str, FT_CD) == 0)
 		return (1);
-	else if (!strncmp(str, FT_PWD, length))
+	else if (ft_strcmp(str, FT_PWD) == 0)
 		return (2);
-    else if (!strncmp(str, FT_ENV, length))
+    else if (ft_strcmp(str, FT_ENV) == 0)
 		return (3);
-	else if (!strncmp(str, FT_EXIT, length))
+	else if (ft_strcmp(str, FT_EXIT) == 0)
 		return (4);
-    else if (!strncmp(str, FT_UNSET, length))
+    else if (ft_strcmp(str, FT_UNSET) == 0)
 		return (5);
-    else if (!strncmp(str, FT_EXPORT, length))
+    else if (ft_strcmp(str, FT_EXPORT) == 0)
 	    return (6);
 	return (-1);
 }

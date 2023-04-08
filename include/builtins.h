@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:53:43 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 15:45:24 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 22:25:24 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int     ft_pwd(t_list *token);
 int     ft_echo(t_list *token);
 int     ft_unset(t_list *token);
 int     ft_export(t_list *token);
-int		is_builtin(const char *str);
+int		is_builtin(char *str);
 void	fork_bultin(const t_builtin builtin, t_list *token, t_data *data);
 
 #endif

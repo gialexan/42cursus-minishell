@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 15:45:50 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 21:55:58 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define HELPER_H
 
 # include "parser.h"
+# include "signals.h"
 # include <stdio.h>
 # include <string.h>
 
@@ -30,7 +31,7 @@ char	*find_path(char *cmd, char **paths);
 
 t_list	    **get_envp(void);
 char	    ***get_path(void);
-/* t_sigaction *get_signal(void); */
+t_sigaction *get_signal(void);
 
 /***************************************************************************\
  * HELPER/ERROR.C

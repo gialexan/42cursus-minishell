@@ -6,11 +6,12 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 16:31:33 by dardo-na          #+#    #+#             */
-/*   Updated: 2023/04/05 14:55:02 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 21:43:15 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "signal.h"
+#include "signals.h"
+#include "helper.h"
 
 void	turnoff_interrupt_signal(void)
 {

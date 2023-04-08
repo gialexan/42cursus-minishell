@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.h                                           :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 14:26:24 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 23:17:44 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 21:58:11 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNAL_H
-# define SIGNAL_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-# include "helper.h"
+# include <signal.h>
+# include <stddef.h>
+# include <stdio.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 typedef struct sigaction	t_sigaction;
 typedef void				(*t_signal)(int);

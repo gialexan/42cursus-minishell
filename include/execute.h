@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 18:07:38 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 22:25:10 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 
 # include "helper.h"
 # include <fcntl.h>
-# include <stdint.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
-# include <sys/types.h>
-# include <sys/sysmacros.h>
-# include <readline/history.h>
-# include <readline/readline.h>
+
 
 typedef struct s_data
 {
@@ -29,7 +25,6 @@ typedef struct s_data
 	int			retcode;
 	int			fdclose;
 	t_bool		error;
-	t_bool		prev_pipe[2];
 	t_bool		pipeline;
 }	t_data;
 

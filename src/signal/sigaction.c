@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_fork_hooks.c                                   :+:      :+:    :+:   */
+/*   sigaction.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 15:07:15 by dardo-na          #+#    #+#             */
-/*   Updated: 2023/04/05 14:55:01 by gialexan         ###   ########.fr       */
+/*   Created: 2023/02/26 18:11:36 by dardo-na          #+#    #+#             */
+/*   Updated: 2023/04/07 21:38:10 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "signal.h"
+#include "signals.h"
 
-static void	handle_interrupt(int sig)
+void	signal_hook(t_sigaction *action, t_signal handler, int signal)
 {
-	(void)sig;
-	exit(EXIT_FAILURE);
-}
-
-static void	set_interrupt_hook(void)
-{
-	signal_hook(get_signal(), handle_interrupt, SIGINT);
-}
-
-void	fork_hook(void)
-{
-	set_interrupt_hook();
+	action->sa_handler = handler;
+	action->sa_flags = SA_RESTART;
+	sigemptyset(&action->sa_mask);
+	sigaction(signal, action, NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 15:56:41 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 21:15:34 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	msh_loop(void)
 
 	while (TRUE)
 	{
+		set_interactive_hooks();
+		
 		command = readline(GREEN_PROMPT);
 		if (!ft_strncmp(command, "exit", 5))
 			break ;

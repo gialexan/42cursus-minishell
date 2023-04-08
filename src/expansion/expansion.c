@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 15:54:10 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 21:12:12 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ static char	*word_splitting(t_scanner *scanner, char *result)
 	return (word_splitting(scanner, result));
 }
 
+
+/*
+* To Do
+*
+* Arrumar o questão de voltar o exitcode Ex: echo "'$?'"
+*
+*/
 char	*pathname_expansion(char *str, int i, int init)
 {
 	char *value;

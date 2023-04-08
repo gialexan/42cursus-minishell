@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:09 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 18:07:20 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 22:28:52 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,11 @@ t_bool    exec_builtins(t_list *token, t_data *data)
 		if (data->pipeline)
 			fork_bultin(builtin[index], token, data);
 		else
+		{
+			
 			data->retcode = builtin[index](token);
+			
+		}
 		set_exit_code(data->retcode);
 		return (TRUE);
 	}
@@ -82,6 +86,7 @@ static t_bool	spawn_process(char **cmd, t_data *data)
 	int			pid;
 	extern char	**environ;
 
+	fork_hook();
 	pid = fork();
 	if (pid == 0)
 	{
