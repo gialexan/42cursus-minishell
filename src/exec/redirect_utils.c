@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:06:49 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 17:30:18 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 18:23:22 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_list *exec_redirect(t_list *token, t_data *data, t_list *head)
 	t_list *c;
 
     if (!token)
-        return (head);
+		return (head);
 	if (data->pipeline == TRUE)
 		return (exec_pipe(token, head, data, NULL));
 	c = advanced(&token);

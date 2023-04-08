@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:49:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 17:37:50 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 18:47:54 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,15 @@ void	clear_cmdlst(t_cmd *lst, void (*del)(void *))
 
 void    clear_arraypath(void)
 {
-    char **path;
-    void *tmp;
-	
-	path = *get_path();
+    char ***path;
+	char **tmp;
+
+	path = get_path();
 	if (!path)
 		return ;
-    ft_free_split(path);
-    path = NULL;
+	tmp = *path;
+    ft_free_split(tmp);
+    *path = NULL;
 }
 
 void	save_and_clean(t_list *saveptr, t_action action)
