@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 03:39:31 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 03:44:03 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*expand(char *oldstr)
 	scanner = init_scanner(oldstr);
 	newstr = word_splitting(&scanner, NULL);
 	free(oldstr);
-	return (newstr);
+	return (newstr); 
 }
 
 static char	*word_splitting(t_scanner *scanner, char *result)

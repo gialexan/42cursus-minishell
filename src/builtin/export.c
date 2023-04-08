@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 15:16:59 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 03:54:23 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int exec_export(t_list *token, int exit)
 	else if (!string && !node)
 	{
 		insert_envp(token->content, get_envp());
-		if (!ft_strncmp(token->content, "PATH", 4))
+		if (ft_strcmp(key, "PATH") == 0)
 			init_arraypath();
 	}
 	free(key);

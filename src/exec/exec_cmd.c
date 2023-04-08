@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:09 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 03:00:53 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 03:48:42 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_bool	exec_abspath(t_list *token, t_data *data)
 {
 	char **array;
 
-	if (is_executable(token))
+	if (!is_executable(token))
 		return (FALSE);
 	else
 	{

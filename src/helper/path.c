@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:49:25 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 02:10:36 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 03:50:48 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char	*find_path(char *cmd, char **paths)
 	char	*tmp_path;
 	char	*full_path;
 
-	//if (!paths || !*paths)
 	if (!paths || !*paths)
 	{
 		msh_error(cmd, "command not found", 0);
