@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:09 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 17:53:32 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 19:11:32 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_bool	exec_abspath(t_list *token, t_data *data)
 
 t_bool	exec_nopath(t_list *token, t_data *data)
 {
+	int		i;
 	char	*aux;
 	char	*path;
 	char	**array;
@@ -44,6 +45,9 @@ t_bool	exec_nopath(t_list *token, t_data *data)
 	array = ft_convert_array(token);
 	if (!array)
 		return (FALSE);
+	i = -1;
+	while (array[++i])
+		array[i] = expand(array[i]);
 	free(aux);
 	return (spawn_process(array, data));
 }
