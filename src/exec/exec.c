@@ -6,11 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:14 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 06:09:39 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 06:16:28 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+static void	set_wstatus(t_data *data, int wstatus);
 
 void	execute_cmdlst(t_cmd *root, t_data *data)   
 {
@@ -28,16 +30,6 @@ void	execute_cmdlst(t_cmd *root, t_data *data)
 	free(root);
 	root = NULL;
 	cmd = NULL;
-}
-
-void	set_wstatus(t_data *data, int wstatus)
-{
-	if (WIFEXITED(wstatus))
-    	data->retcode = WEXITSTATUS(wstatus);
-	else if (WIFSIGNALED(wstatus))
-    	data->retcode = WTERMSIG(wstatus);
-	set_exit_code(wstatus);
-
 }
 
 void	execute(t_cmd *root)
@@ -61,4 +53,13 @@ void	execute(t_cmd *root)
 		continue;
 		set_wstatus(&data, wstatus);
 	}
+}
+
+static void	set_wstatus(t_data *data, int wstatus)
+{
+	if (WIFEXITED(wstatus))
+    	data->retcode = WEXITSTATUS(wstatus);
+	else if (WIFSIGNALED(wstatus))
+    	data->retcode = WTERMSIG(wstatus);
+	set_exit_code(wstatus);
 }
