@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:50:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 04:15:45 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:55:32 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,17 @@ int	is_builtin(char *str)
 	return (-1);
 }
 
-void	fork_bultin(const t_builtin builtin, t_list *token, t_data *data)
+void	builtin(const t_builtin builtin, t_list *token, t_data *data)
+{
+	int	saved_fd[2];
+
+	redirect_io(data, saved_fd);
+	data->retcode = builtin(token);
+	restore_io(saved_fd);
+	set_exit_code(data->retcode);
+}
+
+void	fork_builtin(const t_builtin builtin, t_list *token, t_data *data)
 {
 	int pid;
 

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:09 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 16:30:29 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:53:32 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,12 @@ t_bool	exec_nopath(t_list *token, t_data *data)
 t_bool    exec_builtins(t_list *token, t_data *data)
 {
     int index;
-	int	saved_fd[2];
 
     if (!token)
         return (FALSE);
     token->content = expand(token->content);
     index = is_builtin(token->content);
-	const t_builtin	builtin[] = {
+	const t_builtin	builtins[] = {
 		&ft_echo,
 		&ft_cd,
 		&ft_pwd,
@@ -69,14 +68,9 @@ t_bool    exec_builtins(t_list *token, t_data *data)
 	if (index >= 0 && index <= 7)
 	{
 		if (data->pipeline)
-			fork_bultin(builtin[index], token, data);
+			fork_builtin(builtins[index], token, data);
 		else
-		{
-			redirect_io(data, saved_fd);
-			data->retcode = builtin[index](token);
-			restore_io(saved_fd);
-		}
-		set_exit_code(data->retcode);
+			builtin(builtins[index], token, data);
 		return (TRUE);
 	}
 	return (FALSE);

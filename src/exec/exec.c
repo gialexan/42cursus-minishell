@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:14 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 13:01:17 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:49:10 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	set_wstatus(t_data *data, int wstatus);
 void	execute_cmdlst(t_cmd *root, t_data *data)   
 {
 	t_list	*cmd;
-	t_data copy_data;
 	t_bool 	builtin;
 
 	if (!root)
@@ -38,7 +37,6 @@ void	execute(t_cmd *root)
 	t_data	data;
 	int		wstatus;
 
-	
 	wstatus = 0;
 	data.fd[STDIN_FILENO] = STDIN_FILENO;
 	data.fd[STDOUT_FILENO] = STDOUT_FILENO;
