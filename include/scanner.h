@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:58:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/03 09:54:57 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 23:27:16 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define CLOSED 0
 # define UNCLOSED 1
 
-typedef struct	s_scanner
+typedef struct s_scanner
 {
 	size_t			start;
 	size_t			current;
@@ -27,7 +27,7 @@ typedef struct	s_scanner
 }	t_scanner;
 
 char		advance(t_scanner *scanner);
-void		skip_space (t_scanner *scanner);
+void		skip_space(t_scanner *scanner);
 t_list		*scan_token(t_scanner *scanner);
 t_scanner	init_scanner(const char *command);
 t_list		*make_token(t_scanner *scanner, t_tk_type type);

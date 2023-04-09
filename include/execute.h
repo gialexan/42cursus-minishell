@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 23:57:08 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 23:32:18 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_data
 }	t_data;
 
 void	execute(t_cmd *root);
-int 	*get_exit_code(void);
+int		*get_exit_code(void);
 t_cmd	**get_cmdlst_ref(void);
 void	set_exit_code(int code);
 void	restore_io(int saved_fd[]);
@@ -37,10 +37,10 @@ void	refresh_data(t_data *data);
 t_bool	is_executable(t_list *token);
 void	save_cmdlst_ref(t_cmd *root);
 void	here_doc(t_data *data, char *delimiter);
-void 	set_pipe(t_data *data, t_bool pipeline);
+void	set_pipe(t_data *data, t_bool pipeline);
 t_bool	exec_nopath(t_list *token, t_data *data);
 void	redirect_io(t_data *data, int saved_fd[]);
-void	execute_cmdlst(t_cmd *root, t_data *data); 
+void	execute_cmdlst(t_cmd *root, t_data *data);
 t_bool	exec_abspath(t_list *token, t_data *data);
 t_bool	exec_builtins(t_list *token, t_data *data);
 t_bool	exec_execve(t_list *token, t_data *data, t_bool builtin);
