@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:17 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 17:41:37 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:18:54 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ t_cmd	*addcmd(t_cmd *cmd)
 
 t_cmd	*cmdnew(void)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
-	cmd =  malloc(sizeof(t_cmd));
+	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
 	cmd->token = NULL;
@@ -38,9 +38,9 @@ t_cmd	*cmdnew(void)
 	return (cmd);
 }
 
-t_list *advanced(t_list **token)
+t_list	*advanced(t_list **token)
 {
-	t_list *current;
+	t_list	*current;
 
 	current = *token;
 	*token = (*token)->next;

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 23:28:24 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 15:52:23 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:19:42 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 t_bool	is_redirect(t_list *token)
 {
-	if (match(token, TK_GREAT) ||
-		match(token, TK_DLESS) ||
-		match(token, TK_DGREAT) ||
-		match(token, TK_LESS))
+	if (match(token, TK_GREAT)
+		|| match(token, TK_DLESS)
+		|| match(token, TK_DGREAT)
+		|| match(token, TK_LESS))
 		return (TRUE);
 	return (FALSE);
 }

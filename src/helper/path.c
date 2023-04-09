@@ -6,16 +6,16 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:49:25 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 16:16:32 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:25:22 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
 #include "execute.h"
 
-static void save_path_ref(char **path);
+static void	save_path_ref(char **path);
 
-void    init_arraypath(void)
+void	init_arraypath(void)
 {
 	t_list	*envp;
 	char	*envp_value;
@@ -30,7 +30,7 @@ void    init_arraypath(void)
 	splited_path = ft_split(envp_value + 1, ':');
 	if (!splited_path)
 		return ;
-	return(save_path_ref(splited_path));
+	return (save_path_ref(splited_path));
 }
 
 char	*find_path(char *cmd, char **paths)
@@ -60,10 +60,10 @@ t_bool	is_abspath(char *path)
 	return (TRUE);
 }
 
-static void save_path_ref(char **path)
+static void	save_path_ref(char **path)
 {
-	char ***path_ref;
+	char	***path_ref;
 
 	path_ref = get_path();
-    *path_ref = path;
+	*path_ref = path;
 }
