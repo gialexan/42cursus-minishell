@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 00:21:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 17:20:58 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 00:15:14 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 #define GREEN_PROMPT "\e[m\e[1;32m❯ \e[m"
 #define END_OF_FILE "here-document delimited by end-of-file (wanted `eof')"
-#define HEREDOC_FILE "/tmp/heredoc.txt"
 
 static t_bool	check_input(char *input, char *delimiter);
 static void		heredoc_loop(t_data * data, char *delimiter);
@@ -23,24 +22,32 @@ void	here_doc(t_data *data, char *delimiter)
 {
 	int pid;
 
-	data->hdoc_fd = open(HEREDOC_FILE, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	pid = fork();
 	if (pid == 0)
 	{
 		set_hdoc_hooks();
 		heredoc_loop(data, delimiter);
-		close(data->hdoc_fd);
 		if (data->fd[STDIN_FILENO] != STDIN_FILENO)
 	 		close(data->fd[STDIN_FILENO]);
 		if (data->fd[STDOUT_FILENO] != STDOUT_FILENO)
 	 		close (data->fd[STDOUT_FILENO]);
-		msh_clear();
-		save_and_clean(NULL, CLEAN_ACTION);
+		clear_heredoc();
 		exit(EXIT_SUCCESS);
 	}
 	set_interactive_hooks();
     waitpid(pid, NULL, 0);
-	close(data->hdoc_fd);
+}
+
+void	save_hdoc_ref(t_data *data, t_list *token, t_list *delim, t_list *c)
+{
+	t_hdoc *clean;
+	
+	clean = get_clean();
+
+	clean->c = c;
+	clean->token = token;
+	clean->delimiter = delim;
+	clean->fd = data->hdoc_fd;
 }
 
 static void	heredoc_loop(t_data * data, char *delimiter)

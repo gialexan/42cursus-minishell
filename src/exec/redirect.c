@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 19:15:36 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 00:14:52 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 	if (delimiter->content)
 	{
 		turnoff_signals();
-		save_and_clean(token, SAVE_ACTION);
-		save_and_clean(delimiter, SAVE_ACTION);
-		save_and_clean(c, SAVE_ACTION);
+		data->hdoc_fd = open(HDOC_FILE, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		save_hdoc_ref(data, token, delimiter, c);
 		here_doc(data, delimiter->content);
+		close(data->hdoc_fd);
 		if (data->hdoc_fd != 0)
 		{
 			fd = open(HDOC_FILE, O_RDONLY);

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:08:36 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/05 16:02:57 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 22:49:18 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,21 @@ void	init_envment(char **environment, t_list **envp)
 	return (init_envment(++environment, envp));
 }
 
+/*
+* Melhorar a validação das coisas.
+*/
 t_list *search_envp(const char *search, t_list *envp)
 {
-	int length;
+	int		length;
+	char	*var;
 
 	if (!envp)
 		return (NULL);
-	else if (!ft_strncmp(search, envp->content, 1))
+	var = envp->content;
+	if (search[0] == var[0])
 	{
 		length = ft_strlen(search);
-		if (!ft_strncmp(search, envp->content, length))
+		if (!ft_strncmp(search, var, length))
 			return (envp);
 	}
 	return (search_envp(search, envp->next));
@@ -40,16 +45,18 @@ t_list *search_envp(const char *search, t_list *envp)
 
 t_bool	delete_envp(const char *dell, t_list **envp, t_list *prev)
 {
+	char	*var;
 	t_list	*tmp;
 	int		length;
 
 	if (!*envp)
 		return (FALSE);
 	tmp = *envp;
-	if (!ft_strncmp(dell, tmp->content, 1))
+	var = tmp->content;
+	if (dell[0] == var[0])
 	{
 		length = ft_strlen(dell);
-		if (!ft_strncmp(dell, tmp->content, length))
+		if (!ft_strncmp(dell, var, length))
 		{
 			if (!prev)
 				*envp = (*envp)->next;

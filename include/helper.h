@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 17:36:47 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 00:16:00 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@
 # include <stdio.h>
 # include <string.h>
 
-typedef enum s_action
+typedef struct s_hdoc
 {
-    SAVE_ACTION,
-    CLEAN_ACTION
-}   t_action;
+	int     fd;
+	t_list  *c;
+	t_list  *token;
+	t_list  *delimiter;
+}	t_hdoc;
 
 /***************************************************************************\
  * HELPER/PATH.C
@@ -36,6 +38,7 @@ char	*find_path(char *cmd, char **paths);
  * HELPER/INTERFACE.C
 \***************************************************************************/
 
+t_hdoc     *get_clean(void);
 t_list	    **get_envp(void);
 char	    ***get_path(void);
 t_sigaction *get_signal(void);
@@ -52,10 +55,10 @@ void	msh_error(char *name, char *msg, int error);
 \***************************************************************************/
 
 void	msh_clear(void);
+void	clear_heredoc(void);
 void    clear_envment(void);
 void    clear_arraypath(void);
 void	clear_cmdlst(t_cmd *lst, void (*del)(void *));
-void	save_and_clean(t_list *saveptr, t_action action);
 
 /***************************************************************************\
  * HELPER/PRINT.C

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:49:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 18:47:54 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 00:19:12 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,20 @@ void    clear_arraypath(void)
     *path = NULL;
 }
 
-void	save_and_clean(t_list *saveptr, t_action action)
-{
-	static t_list	*savedptr[MAX_SAVED_POINTERS];
-	static int		num_ptr_saved;
-
-	if (action == SAVE_ACTION)
-		savedptr[num_ptr_saved++] = saveptr;
-	else if (action == CLEAN_ACTION)
-	{
-		while (num_ptr_saved--)
-			ft_lstclear(&savedptr[num_ptr_saved], free);
-	}
-}
-
 void	clear_envment(void)
 {
 	ft_lstclear(get_envp(), free);
+}
+
+void	clear_heredoc(void)
+{
+	t_hdoc *clean;
+	
+	clean = get_clean();
+	
+	msh_clear();
+	close(clean->fd);
+	ft_lstdelone(clean->c, free);
+	ft_lstclear(&clean->token, free);
+	ft_lstdelone(clean->delimiter, free);
 }

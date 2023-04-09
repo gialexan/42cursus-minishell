@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:03:26 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 11:29:21 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 00:14:37 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,11 @@ t_sigaction *get_signal(void)
 	static t_sigaction sa;
 
 	return (&sa);
+}
+
+t_hdoc	*get_clean(void)
+{
+	static t_hdoc clean;
+
+	return (&clean);
 }

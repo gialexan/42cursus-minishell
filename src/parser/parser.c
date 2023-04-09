@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/07 16:39:21 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 01:05:36 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_cmd	*syntax_analysis(t_list *token)
 	if (!token)
 		return (NULL);
 	else if (is_eof(token))
-		return (NULL);
+		return (ft_lstdelone(token, free), NULL);
 	else if (is_pipe(token))
 		return (syntax_error(NULL, NULL, token));
 	return (parser(token, cmdnew(), NULL));

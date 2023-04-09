@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:17:53 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 04:46:29 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/08 23:57:08 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	restore_io(int saved_fd[]);
 void	refresh_data(t_data *data);
 t_bool	is_executable(t_list *token);
 void	save_cmdlst_ref(t_cmd *root);
-void 	set_pipe(t_data *data, t_bool pipeline);
 void	here_doc(t_data *data, char *delimiter);
+void 	set_pipe(t_data *data, t_bool pipeline);
 t_bool	exec_nopath(t_list *token, t_data *data);
 void	redirect_io(t_data *data, int saved_fd[]);
 void	execute_cmdlst(t_cmd *root, t_data *data); 
@@ -51,5 +51,6 @@ t_list	*exec_input(t_list *token, t_list *head, t_data *data, t_list *c);
 t_list	*exec_output(t_list *token, t_list *head, t_data *data, t_list *c);
 t_list	*exec_append(t_list *token, t_list *head, t_data *data, t_list *c);
 t_list	*exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c);
+void	save_hdoc_ref(t_data *data, t_list *token, t_list *delim, t_list *c);
 
 #endif

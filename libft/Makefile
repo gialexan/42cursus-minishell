@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 15:43:13 by gialexan          #+#    #+#              #
-#    Updated: 2023/04/08 18:01:56 by gialexan         ###   ########.fr        #
+#    Updated: 2023/04/08 22:21:15 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ ft_get_next_line.c ft_utoa.c ft_itoa.c ft_printf.c ft_printf_utils.c ft_hex.c ft
 ft_free_split.c ft_isspace.c ft_strreplace.c ft_convert_array.c ft_strjoin_free.c
 
 BONUS =	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
-ft_lstclear.c ft_lstiter.c ft_lstmap.c
+ft_lstclear.c ft_lstiter.c ft_lstmap.c ft_lstdup.c
 
 OBJ	=	$(SRC:.c=.o)
 
