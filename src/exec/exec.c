@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:14 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 17:49:10 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:46:27 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void	set_wstatus(t_data *data, int wstatus);
 
-void	execute_cmdlst(t_cmd *root, t_data *data)   
+void	execute_cmdlst(t_cmd *root, t_data *data)
 {
 	t_list	*cmd;
-	t_bool 	builtin;
+	t_bool	builtin;
 
 	if (!root)
 		return ;
@@ -48,7 +48,7 @@ void	execute(t_cmd *root)
 	execute_cmdlst(root, &data);
 	while (wait(&wstatus) != -1)
 	{
-		continue;
+		continue ;
 		set_wstatus(&data, wstatus);
 	}
 }
@@ -56,8 +56,8 @@ void	execute(t_cmd *root)
 static void	set_wstatus(t_data *data, int wstatus)
 {
 	if (WIFEXITED(wstatus))
-    	data->retcode = WEXITSTATUS(wstatus);
+		data->retcode = WEXITSTATUS(wstatus);
 	else if (WIFSIGNALED(wstatus))
-    	data->retcode = WTERMSIG(wstatus);
+		data->retcode = WTERMSIG(wstatus);
 	set_exit_code(wstatus);
 }

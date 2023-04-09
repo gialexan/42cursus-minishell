@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/09 00:14:52 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:36:09 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define HDOC_FILE "/tmp/heredoc.txt"
 
-t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
+t_list	*exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
 {
 	int		fd;
 	t_list	*file;
@@ -31,7 +31,7 @@ t_list *exec_input(t_list *token, t_list *head, t_data *data, t_list *c)
 	return (exec_redirect(token, data, head));
 }
 
-t_list *exec_output(t_list *token, t_list *head, t_data *data, t_list *c)
+t_list	*exec_output(t_list *token, t_list *head, t_data *data, t_list *c)
 {
 	int		fd;
 	t_list	*file;
@@ -48,7 +48,7 @@ t_list *exec_output(t_list *token, t_list *head, t_data *data, t_list *c)
 	return (exec_redirect(token, data, head));
 }
 
-t_list *exec_append(t_list *token, t_list *head, t_data *data, t_list *c)
+t_list	*exec_append(t_list *token, t_list *head, t_data *data, t_list *c)
 {
 	int		fd;
 	t_list	*file;
@@ -65,7 +65,7 @@ t_list *exec_append(t_list *token, t_list *head, t_data *data, t_list *c)
 	return (exec_redirect(token, data, head));
 }
 
-t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
+t_list	*exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 {
 	int		fd;
 	t_list	*delimiter;
