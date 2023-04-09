@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:27:55 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/06 08:28:19 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 14:46:40 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**ft_convert_array(t_list *token)
 	if (!array)
 		return (NULL);
 	i = 0;
-	while(token != NULL)
+	while (token != NULL)
 	{
 		array[i] = ft_strdup(token->content);
 		token = token->next;

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:39:28 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 22:22:15 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 14:46:14 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef enum e_bool
 {
 	FALSE,
 	TRUE,
-}  t_bool;
+}	t_bool;
 
 typedef struct s_list
 {
@@ -111,10 +111,10 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 /*	My		*/
 int		ft_isspace(int c);
 void	ft_free(void **ptr);
-t_list  *ft_lstdup(t_list *lst);
+t_list	*ft_lstdup(t_list *lst);
 void	ft_free_split(char **str);
 char	**ft_array_dup(char **array);
 char	**ft_convert_array(t_list *token);
 char	*ft_strjoin_free(char *s1, const char *s2);
-char    *ft_strreplace(char *str, char *oldw, char *neww);
+char	*ft_strreplace(char *str, char *oldw, char *neww);
 #endif

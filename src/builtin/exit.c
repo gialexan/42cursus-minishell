@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 23:51:31 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/09 00:55:50 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:03:04 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,33 @@ int	ft_exit(t_list *token)
 
 static t_bool	check_exit_code(char *stts)
 {
-    int		tmp;
-    char	*aux;
+	int		tmp;
+	char	*aux;
 
-    if (!stts)
-        return (TRUE);
-    if (ft_strlen(stts) > 11)
-        return (FALSE);
-    tmp = ft_atoi(stts);
-    aux = ft_itoa(tmp);
-    if (ft_strcmp(aux, stts) != 0)
-    {
-        free(aux);
-        return (TRUE);
-    }
-    free(aux);
-    return (FALSE);
+	if (!stts)
+		return (TRUE);
+	if (ft_strlen(stts) > 11)
+		return (FALSE);
+	tmp = ft_atoi(stts);
+	aux = ft_itoa(tmp);
+	if (ft_strcmp(aux, stts) != 0)
+	{
+		free(aux);
+		return (TRUE);
+	}
+	free(aux);
+	return (FALSE);
 }
 
-static t_bool    handled_bad_status(char *token)
+static t_bool	handled_bad_status(char *token)
 {
-    int		i;
-    char    *msg;
+	int		i;
+	char	*msg;
 
-    if (!token)
-        return (FALSE);
-    if (ft_strlen(token) > 19)
-        msh_error("exit", NUMERIC_ARGS, 0);
+	if (!token)
+		return (FALSE);
+	if (ft_strlen(token) > 19)
+		msh_error("exit", NUMERIC_ARGS, 0);
 	else
 	{
 		i = -1;
@@ -78,19 +78,19 @@ static t_bool    handled_bad_status(char *token)
 			}
 		}
 	}
-    return (FALSE);
+	return (FALSE);
 }
 
-static int    get_exit_status(t_list *token)
+static int	get_exit_status(t_list *token)
 {
-    int    stts;
+	int	stts;
 
-    if (!token)
-        return (*get_exit_code());
-    if (handled_bad_status(token->content))
-        return (2);
-    if (!check_exit_code(token->content))
-        return(1);
-    stts = ft_atoi(token->content);
-    return (stts);
+	if (!token)
+		return (*get_exit_code());
+	if (handled_bad_status(token->content))
+		return (2);
+	if (!check_exit_code(token->content))
+		return (1);
+	stts = ft_atoi(token->content);
+	return (stts);
 }
