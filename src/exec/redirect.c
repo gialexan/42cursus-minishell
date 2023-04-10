@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 19:16:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/09 00:14:52 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/10 01:21:24 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,27 @@ t_list *exec_append(t_list *token, t_list *head, t_data *data, t_list *c)
 t_list *exec_heredoc(t_list *token, t_list *head, t_data *data, t_list *c)
 {
 	int		fd;
+	t_cmd	**root;
 	t_list	*delimiter;
 
+	root = get_cmdlst_ref();
 	delimiter = advanced(&token);
 	delimiter->content = expand(delimiter->content);
+	ft_lstdelone(c, free);
 	if (delimiter->content)
 	{
-		turnoff_signals();
+		(*root)->token = token;
 		data->hdoc_fd = open(HDOC_FILE, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		save_hdoc_ref(data, token, delimiter, c);
+		save_hdoc_ref(data, head, delimiter);
 		here_doc(data, delimiter->content);
-		close(data->hdoc_fd);
-		if (data->hdoc_fd != 0)
+		if (data->hdoc_fd != -1)
 		{
-			fd = open(HDOC_FILE, O_RDONLY);
-			set_redir(data, fd, STDIN_FILENO, "heredoc");
+			data->hdoc_fd = open(HDOC_FILE, O_RDONLY, 0644);
+			if (data->fd[STDIN_FILENO] != STDIN_FILENO)
+				close(data->fd[STDIN_FILENO]);
+			data->fd[STDIN_FILENO] = data->hdoc_fd;
 		}
 	}
-	ft_lstdelone(c, free);
 	ft_lstdelone(delimiter, free);
 	return (exec_redirect(token, data, head));
 }

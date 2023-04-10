@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:43:14 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 17:49:10 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/10 01:22:06 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ void	execute(t_cmd *root)
 	data.error = FALSE;
 	data.fdclose = -1;
 	data.pipeline = FALSE;
+	data.hdoc_fd = -1;
 	save_cmdlst_ref(root);
 	execute_cmdlst(root, &data);
+	if (data.hdoc_fd != -1)
+		close(data.hdoc_fd);
 	while (wait(&wstatus) != -1)
 	{
 		continue;

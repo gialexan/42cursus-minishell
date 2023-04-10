@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:49:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/09 00:19:12 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 23:53:08 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	clear_heredoc(void)
 	
 	msh_clear();
 	close(clean->fd);
-	ft_lstdelone(clean->c, free);
-	ft_lstclear(&clean->token, free);
-	ft_lstdelone(clean->delimiter, free);
+	ft_lstclear(&clean->head, free);
+	ft_lstclear(&clean->delimiter, free);
 }

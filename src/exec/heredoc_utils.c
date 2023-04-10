@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 00:21:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/09 00:15:14 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/10 01:35:57 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	here_doc(t_data *data, char *delimiter)
 {
 	int pid;
 
+	turnoff_signals();
 	pid = fork();
 	if (pid == 0)
 	{
@@ -32,21 +33,21 @@ void	here_doc(t_data *data, char *delimiter)
 		if (data->fd[STDOUT_FILENO] != STDOUT_FILENO)
 	 		close (data->fd[STDOUT_FILENO]);
 		clear_heredoc();
+		close(data->hdoc_fd);
 		exit(EXIT_SUCCESS);
 	}
 	set_interactive_hooks();
     waitpid(pid, NULL, 0);
+	close(data->hdoc_fd);
 }
 
-void	save_hdoc_ref(t_data *data, t_list *token, t_list *delim, t_list *c)
+void	save_hdoc_ref(t_data * data, t_list *head, t_list *delimiter)
 {
 	t_hdoc *clean;
-	
-	clean = get_clean();
 
-	clean->c = c;
-	clean->token = token;
-	clean->delimiter = delim;
+	clean = get_clean();
+	clean->head = head;
+	clean->delimiter = delimiter;
 	clean->fd = data->hdoc_fd;
 }
 
@@ -59,7 +60,7 @@ static void	heredoc_loop(t_data * data, char *delimiter)
 	{
 		input = readline(GREEN_PROMPT);
 		if (check_input(input, delimiter))
-			break ;
+			break;
 		expanded = pathname_expansion(input, 0, 0);
 		ft_putendl_fd(expanded, data->hdoc_fd);
 		free(expanded);

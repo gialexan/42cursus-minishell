@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/09 01:04:52 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 23:49:02 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,4 @@ int main(int argc, char **argv, char **envp)
 	msh_loop();
 	clear_envment();
 	clear_arraypath();
-	rl_clear_history();
 }
