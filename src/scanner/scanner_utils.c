@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:02 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/04 12:19:12 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:15:53 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	advance(t_scanner *scanner)
 
 t_scanner	init_scanner(const char *command)
 {
-	t_scanner scanner;
+	t_scanner	scanner;
 
 	scanner.current = 0;
 	scanner.cmd = command;
@@ -43,9 +43,9 @@ void	skip_space(t_scanner *scanner)
 	scanner->start = scanner->current;
 }
 
-t_list *make_token(t_scanner *scanner, t_tk_type type)
+t_list	*make_token(t_scanner *scanner, t_tk_type type)
 {
-	t_list *token;
+	t_list	*token;
 
 	token = malloc(sizeof(t_list));
 	if (!token)

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 23:48:35 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/10 01:10:15 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:24:37 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 t_bool	is_executable(t_list *token)
 {
-	char *path;
-	struct stat sb;
+	char		*path;
+	struct stat	sb;
 
 	path = token->content;
 	if (access(path, F_OK))

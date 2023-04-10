@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:32:19 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/09 01:05:36 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:18:12 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ t_cmd	*syntax_analysis(t_list *token)
 	return (parser(token, cmdnew(), NULL));
 }
 
-static t_cmd *parser(t_list *token, t_cmd *cmd, t_cmd *head)
+static t_cmd	*parser(t_list *token, t_cmd *cmd, t_cmd *head)
 {
-	t_list *c;
+	t_list	*c;
 
 	if (!head)
 		head = cmd;
@@ -51,9 +51,9 @@ static t_cmd *parser(t_list *token, t_cmd *cmd, t_cmd *head)
 	return (syntax_error(token, head, c));
 }
 
-static	t_cmd *words(t_list *token, t_cmd *cmd, t_cmd *head)
+static t_cmd	*words(t_list *token, t_cmd *cmd, t_cmd *head)
 {
-	t_list *c;
+	t_list	*c;
 
 	c = advanced(&token);
 	if (!is_word(c))
@@ -62,7 +62,7 @@ static	t_cmd *words(t_list *token, t_cmd *cmd, t_cmd *head)
 	return (parser(token, cmd, head));
 }
 
-static	t_cmd *pipes(t_list *token, t_cmd *cmd, t_cmd *head)
+static t_cmd	*pipes(t_list *token, t_cmd *cmd, t_cmd *head)
 {	
 	t_list	*c;
 	t_cmd	*node;

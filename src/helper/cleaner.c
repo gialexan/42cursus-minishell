@@ -6,14 +6,12 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 10:49:18 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/09 23:53:08 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:24:25 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helper.h"
 #include "execute.h"
-
-#define MAX_SAVED_POINTERS 100
 
 void	msh_clear(void)
 {
@@ -33,17 +31,17 @@ void	clear_cmdlst(t_cmd *lst, void (*del)(void *))
 	lst = NULL;
 }
 
-void    clear_arraypath(void)
+void	clear_arraypath(void)
 {
-    char ***path;
-	char **tmp;
+	char	***path;
+	char	**tmp;
 
 	path = get_path();
 	if (!path)
 		return ;
 	tmp = *path;
-    ft_free_split(tmp);
-    *path = NULL;
+	ft_free_split(tmp);
+	*path = NULL;
 }
 
 void	clear_envment(void)
@@ -53,10 +51,9 @@ void	clear_envment(void)
 
 void	clear_heredoc(void)
 {
-	t_hdoc *clean;
-	
+	t_hdoc	*clean;
+
 	clean = get_clean();
-	
 	msh_clear();
 	close(clean->fd);
 	ft_lstclear(&clean->head, free);

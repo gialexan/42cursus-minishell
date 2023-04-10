@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:04:59 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 04:26:37 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:30:31 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ static t_bool	empty_quotes(const char *str);
 
 char	*slice_word(t_scanner *scanner)
 {
-	char c;
+	char	c;
 
 	c = advance(scanner);
 	while (c != 0 && c != '\'' && c != '"')
 		c = advance(scanner);
 	scanner->current--;
 	return (ft_substr(scanner->cmd, scanner->start,
-		scanner->current - scanner->start));
+			scanner->current - scanner->start));
 }
 
 char	*slice_quotes(t_scanner *scanner)
@@ -36,13 +36,13 @@ char	*slice_quotes(t_scanner *scanner)
 	while (c != close && c != 0)
 		c = advance(scanner);
 	return (ft_substr(scanner->cmd, scanner->start,
-		scanner->current - scanner->start));
+			scanner->current - scanner->start));
 }
 
 char	*unquote(const char *str)
 {
 	if (!str)
-		return NULL;
+		return (NULL);
 	if (empty_quotes(str))
 		return (ft_strdup(""));
 	else if (str[0] == '\'')

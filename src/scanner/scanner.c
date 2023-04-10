@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:00:04 by gialexan          #+#    #+#             */
-/*   Updated: 2023/03/31 10:38:52 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:16:25 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_list	*scan_token(t_scanner *scanner)
 	{
 		if (match(scanner, '<'))
 			return (make_token(scanner, TK_DLESS));
-		return (make_token(scanner, TK_LESS));	
+		return (make_token(scanner, TK_LESS));
 	}
 	else if (c == '>')
 	{

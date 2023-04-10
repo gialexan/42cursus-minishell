@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:06:38 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/09 23:49:02 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:24:58 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	msh_loop(void)
 {
 	t_cmd		*root;
 	t_list		*token;
-    t_scanner	scanner;
-	char 		*command;
+	t_scanner	scanner;
+	char		*command;
 
 	while (TRUE)
 	{
@@ -35,11 +35,10 @@ void	msh_loop(void)
 	free(command);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	(void)argv;
 	(void)argc;
-
 	init_envment(envp, get_envp());
 	init_arraypath();
 	msh_loop();

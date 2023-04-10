@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 15:27:43 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 00:11:19 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:23:27 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	msh_error(char *name, char *msg, int error)
 
 int	export_error(char *str)
 {
-	char *err_msg;
+	char	*err_msg;
 
 	err_msg = "`arg': not a valid identifier";
 	err_msg = ft_strreplace(err_msg, "arg", str);

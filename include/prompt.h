@@ -6,14 +6,14 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 23:10:03 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 18:08:38 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 23:27:49 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROMPT_H
 # define PROMPT_H
 
-#include "helper.h"
+# include "helper.h"
 
 # define BK "\001\033[0;30m\002"
 # define R "\001\033[0;31m\002"
@@ -43,6 +43,6 @@
 # define USER_K "USER"
 # define USERNAME_K "USERNAME"
 
-char	*prompt(void); 
+char	*prompt(void);
 
 #endif

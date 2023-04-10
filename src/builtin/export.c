@@ -6,13 +6,13 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:14:05 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 04:17:10 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:06:16 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-# define EMPY ""
+#define EMPY ""
 
 static char		*get_key(char *str);
 static int		valid_string(char *str);
@@ -21,7 +21,7 @@ static t_list	*expand_export(t_list *token, t_list *head);
 
 int	ft_export(t_list *token)
 {
-	t_list *aux;
+	t_list	*aux;
 
 	if (!token)
 		return (EXIT_FAILURE);
@@ -31,12 +31,12 @@ int	ft_export(t_list *token)
 	return (exec_export(aux->next, EXIT_SUCCESS));
 }
 
-static int exec_export(t_list *token, int exit)
+static int	exec_export(t_list *token, int exit)
 {
 	char	*key;
 	t_list	*node;
 	int		string;
-	
+
 	if (!token)
 		return (exit);
 	key = get_key(token->content);
@@ -46,7 +46,8 @@ static int exec_export(t_list *token, int exit)
 	node = search_envp(key, *get_envp());
 	if (node && !string)
 	{
-		if (ft_strncmp(token->content, node->content, ft_strlen(token->content)))
+		if (ft_strncmp(token->content, node->content,
+				ft_strlen(token->content)))
 			update_envp(token->content, node);
 	}
 	else if (!string && !node)
@@ -59,19 +60,19 @@ static int exec_export(t_list *token, int exit)
 	return (exec_export(token->next, exit));
 }
 
-static char    *get_key(char *str)
+static char	*get_key(char *str)
 {
 	char	*key;
 	char	*tmp;
-    char	*sign;
+	char	*sign;
 	size_t	key_length;
 
 	key = ft_strdup(str);
 	sign = ft_strchr(str, '=');
-    if (!sign)
-        return (key);
-    key_length = sign - str;
-    if (key_length == 0)
+	if (!sign)
+		return (key);
+	key_length = sign - str;
+	if (key_length == 0)
 		return (key);
 	tmp = key;
 	key = ft_substr(str, 0, key_length);
@@ -79,7 +80,7 @@ static char    *get_key(char *str)
 	return (key);
 }
 
-static int   valid_string(char *str)
+static int	valid_string(char *str)
 {
 	int	i;
 

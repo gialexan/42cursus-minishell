@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:08:36 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 22:49:18 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:23:11 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_envment(char **environment, t_list **envp)
 {
-	t_list *new_node;
+	t_list	*new_node;
 
 	if (!*environment)
 		return ;
@@ -26,7 +26,7 @@ void	init_envment(char **environment, t_list **envp)
 /*
 * Melhorar a validação das coisas.
 */
-t_list *search_envp(const char *search, t_list *envp)
+t_list	*search_envp(const char *search, t_list *envp)
 {
 	int		length;
 	char	*var;
