@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/08 04:38:16 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:22:52 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ static char	*word_splitting(t_scanner *scanner, char *result)
 	return (word_splitting(scanner, result));
 }
 
+/*
+* Precisa ajustar aqui quando testar $PWD$HOME
+*/
 char	*pathname_expansion(char *str, size_t i , size_t init)
 {
 	char *key;
