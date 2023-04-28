@@ -6,7 +6,7 @@
 #    By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/10 15:43:13 by gialexan          #+#    #+#              #
-#    Updated: 2023/04/08 22:21:15 by gialexan         ###   ########.fr        #
+#    Updated: 2023/04/28 10:33:08 by gialexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ OBJ	=	$(SRC:.c=.o)
 
 OBJ_BONUS = $(BONUS:.c=.o)
 		
-CC	=	gcc
+CC	=	gcc -g
 
 CFLAGS	=	-Wall -Wextra -Werror
 
@@ -34,9 +34,8 @@ NAME	=	libft.a
 
 all:	$(NAME)
 
-
-$(NAME):	$(OBJ) $(PRINTF)
-				ar rcs $(NAME) $(OBJ) $(PRINTF)
+$(NAME):	$(OBJ)
+				ar rcs $(NAME) $(OBJ)
 
 bonus:		$(OBJ) $(OBJ_BONUS)
 				ar rcs $(NAME) $(OBJ) $(OBJ_BONUS)

@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:01:16 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/10 17:24:32 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 10:38:32 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #define EMPY ""
 
-static char	*get_value(char *str);
+static char	*get_value_exit_code(char *str);
 static char	*variable_expansion(char *str, char *key);
 static char	*word_splitting(t_scanner *scanner, char *result);
 
@@ -52,9 +52,6 @@ static char	*word_splitting(t_scanner *scanner, char *result)
 	return (word_splitting(scanner, result));
 }
 
-/*
-* Precisa ajustar aqui quando testar $PWD$HOME
-*/
 char	*pathname_expansion(char *str, size_t i , size_t init)
 {
 	char	*key;
@@ -68,7 +65,7 @@ char	*pathname_expansion(char *str, size_t i , size_t init)
 	{
 		init = i++;
 		if (str[i] == '?')
-			str = get_value(str);
+			str = get_value_exit_code(str);
 		else if (ft_isalpha(str[i]) || str[i] == '_')
 		{
 			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
@@ -107,7 +104,7 @@ static char	*variable_expansion(char *str, char *key)
 	}
 }
 
-static char	*get_value(char *str)
+static char	*get_value_exit_code(char *str)
 {
 	char	*expd_str;
 	char	*exit_code;
