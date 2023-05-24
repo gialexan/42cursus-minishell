@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 00:21:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/10 17:24:50 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:51:05 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void	here_doc(t_data *data, char *delimiter)
 		exit(EXIT_SUCCESS);
 	}
 	set_interactive_hooks();
-    waitpid(pid, NULL, 0);
+	waitpid(pid, NULL, 0);
 	close(data->hdoc_fd);
 }
 
-void	save_hdoc_ref(t_data * data, t_list *head, t_list *delimiter)
+void	save_hdoc_ref(t_data *data, t_list *head, t_list *delimiter)
 {
-	t_hdoc *clean;
+	t_hdoc	*clean;
 
 	clean = get_clean();
 	clean->head = head;
@@ -60,7 +60,7 @@ static void	heredoc_loop(t_data *data, char *delimiter)
 	{
 		input = readline(GREEN_PROMPT);
 		if (check_input(input, delimiter))
-			break;
+			break ;
 		expanded = pathname_expansion(input, 0, 0);
 		ft_putendl_fd(expanded, data->hdoc_fd);
 		free(expanded);

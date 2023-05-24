@@ -6,7 +6,7 @@
 /*   By: gialexan <gialexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 17:17:20 by gialexan          #+#    #+#             */
-/*   Updated: 2023/04/10 17:25:35 by gialexan         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:48:44 by gialexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 
 typedef struct s_hdoc
 {
-	int     fd;
-	t_list  *head;
-	t_list  *delimiter;
+	int		fd;
+	t_list	*head;
+	t_list	*delimiter;
 }	t_hdoc;
 
 /***************************************************************************\
