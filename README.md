@@ -29,7 +29,7 @@ Minishell is a duo project at [42](42sp.org.br) that aims to implement some of t
 # To install the readline library, open the terminal window and write
 sudo apt-get install libreadline-dev
 # Clone the project and access the folder
-git clone https://github.com/gialexan/minishell-42 && cd minishell-42/
+git clone https://github.com/gialexan/42cursus-minishell && cd 42cursus-minishell/
 # Run make so you can build the library
 make
 # Execute your program
