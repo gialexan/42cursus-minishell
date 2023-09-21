@@ -50,3 +50,8 @@ The project is regularly updated with bug fixes and code optimization.
 yde-goes | Ygor Sena 👋 [Github](https://github.com/ygor-sena)<br />
 mdias-ma | Marcelo Magalhães 👋 [Github](https://github.com/magalhaesm)<br />
 sjhony-x | Shelson Alves 👋 [Github](https://github.com/shelsonx)
+
+---
+
+Made by:<br />
+Gilmar Alexandro Romani 👋 [See my linkedin](https://www.linkedin.com/in/gilmar-romani/)<br />
